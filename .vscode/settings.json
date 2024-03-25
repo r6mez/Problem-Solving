@@ -66,6 +66,9 @@
         "unordered_map": "cpp",
         "unordered_set": "cpp",
         "string_view": "cpp",
-        "climits": "cpp"
+        "climits": "cpp",
+        "random": "cpp",
+        "queue": "cpp",
+        "stack": "cpp"
     }
 }
