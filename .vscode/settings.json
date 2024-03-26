@@ -69,6 +69,7 @@
         "climits": "cpp",
         "random": "cpp",
         "queue": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "bitset": "cpp"
     }
 }
