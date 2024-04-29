@@ -20,25 +20,65 @@ using namespace std;
 #define loop (n) for (int i = 0; i < (n); i++)
 #define endl '\n'
 
+
 int main() {
-    ios_base::sync_with_stdio(0); cin.tie(0);
-    int n; cin >> n;
-    vector<pair<int,int>> a(n);
-    for (int i = 0; i < n; i++)
-    {
-        cin >> a[i].first >> a[i].second;
+    int num;
+    cin >> num;
+    int h[num], g[num];
+    int host, guest = 0;
+    for (int i = 0; i < num; i++) {
+        cin >> host >> guest;
+        h[i] = host;
+        g[i] = guest;
+    }
+    int hfreq[105] = {0};
+    int gfreq[105] = {0};
+    for (int i = 0; i < num; i++) {
+        hfreq[h[i]]++;
+        gfreq[g[i]]++;
     }
 
-    int counter = 0;
-    for (int i = 0; i < n; i++)
+    int sum = 0;
+    for (int i = 0; i < 105; i++)
     {
-        for (int j = 0; j < n; j++)
-        {   
-            if(i == j) continue;
-            if(a[i].first == a[j].second) counter++;
-        }
+        sum += hfreq[i] * gfreq[i];
     }
-
-    cout << counter;
-    return 0;
+    
+    cout<<sum;
 }
+
+/*
+4
+1 2
+2 4
+3 4
+3 2
+      0 1 2 3 4 
+hFreq 0 1 1 2 0
+gFreq 0 0 2 0 2
+*/
+
+// int main() {
+//     ios_base::sync_with_stdio(0); cin.tie(0);
+//     int n; cin >> n;
+//     vector<pair<int,int>> a(n);
+//     for (int i = 0; i < n; i++)
+//     {
+//         cin >> a[i].first >> a[i].second;
+//     }
+
+//     int counter = 0;
+//     for (int i = 0; i < n; i++)
+//     {
+//         for (int j = 0; j < n; j++)
+//         {   
+//             if(i == j) continue;
+//             if(a[i].first == a[j].second) counter++;
+//         }
+//     }
+
+//     cout << counter;
+//     return 0;
+// }
+
+
