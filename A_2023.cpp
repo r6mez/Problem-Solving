@@ -1,7 +1,7 @@
 // ﷽
-// problem: A. Football
-// URL: https://codeforces.com/problemset/problem/43/A  
-// Start: 5/14/2024, 8:17:11 PM
+// problem: A. 2023
+// URL: https://codeforces.com/problemset/problem/1916/A  
+// Start: 5/15/2024, 11:20:59 PM
 #include <iostream>
 #include <algorithm>
 #include <cmath>
@@ -24,22 +24,19 @@ using ordered_set = tree<T, null_type, less<T>, rb_tree_tag,
 #define vll vector<long long>
 
 void solve(){
-    int n; cin >> n;
-    map<string, int> teams;
-    while(n--){
-        string s; cin >> s;
-        teams[s]++;
-    }
-
-    string maxTeam; int maxScore = 0;
-    for(auto p : teams){
-        if(p.second > maxScore){
-            maxScore = p.second;
-            maxTeam = p.first;
+      ll n, k; cin >> n >> k;
+        ll pr = 1;
+        for (int i = 0; i < n; i++){
+            int x; cin >> x;
+            pr *= x;
         }
-    }
-
-    cout << maxTeam;
+        if((pr <= 2023) and (2023 % pr) == 0){
+            cout << "YES\n";
+            cout << (2023/pr) << " ";
+            for (int i = 0; i < k-1; i++) cout << "1 ";
+            cout << '\n';
+        }
+        else cout << "NO\n";
 }
 
 /*
@@ -51,7 +48,7 @@ int main() {
     ios_base::sync_with_stdio(false); 
     cin.tie(nullptr);
     int t = 1; 
-    // cin >> t;
+    cin >> t;
     while (t--){
         solve();
     }
