@@ -28,7 +28,7 @@ void solve(){
     }
     bool found = false;
     
-    for (auto it = pq.begin(); it != pq.end(); )
+    for (auto it = pq.begin(); it != --pq.end(); )
     {
         int firstQ = (*it).second, secondQ = (*(++it)).second;
         if(firstQ > secondQ) {
