@@ -33,12 +33,12 @@ istream& operator>>(istream& is, vector<T>& v) {
 }
 
 void solve(){
-    int h, n; cin >> h >> n;
-    vi dam(n); cin >> dam;
-    vi cldw(n); cin >> cldw;
+    ll h, n; cin >> h >> n;
+    vll dam(n); cin >> dam;
+    vll cldw(n); cin >> cldw;
 
     priority_queue<pair<ll, ll>, vector<pair<ll, ll>>, greater<pair<ll, ll>>> currCoolDowns;
-    for (int i = 0; i < n; i++) {
+    for (ll i = 0; i < n; i++) {
         currCoolDowns.push({0, i});
     }
     
@@ -60,8 +60,11 @@ void solve(){
         }
         
         turns = currTurn + 1;
+         if (h <= 0) {
+            cout << turns << endl;
+            return;
+        }
     }
-    cout << turns << "\n";
 }
 
 /*
