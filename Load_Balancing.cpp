@@ -2,9 +2,9 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// problem: Problem 2. Bovine Genomics
-// URL: https://usaco.org/index.php?page=viewproblem2&cpid=736  
-// Start: 8/5/2024, 3:33:03 PM
+// problem: Load Balancing
+// URL: https://vjudge.net/problem/USACO-617  
+// Start: 8/6/2024, 5:04:38 PM
 #include <iostream>
 #include <algorithm>
 #include <cmath>
@@ -34,38 +34,41 @@ void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 
 
 int main() {
-    freopen("file.in", "r", stdin);
-    freopen("file.out", "w", stdout);
+    freopen("balancing.in", "r", stdin);
+    freopen("balancing.out", "w", stdout);
     FastIO();
     int t = 1;
     // cin >> t;
     while (t--) {
-        int n, m; cin >> n >> m;
-        vector<string> spotty(n), plain(n); cin >> spotty >> plain;
-        vector<map<char,int>> x(m);
-        vector<map<char,int>> y(m);
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < m; j++)
-            {
-                x[j][spotty[i][j]]++;
-                y[j][plain[i][j]]++;
-            }
+        int n, maxB; cin >> n >> maxB;
+        vi x(n), y(n);
+        set<int> as, bs;
+        for (int i = 0; i < n; i++) {
+            cin >> x[i] >> y[i];
+            as.insert(x[i] + 1);
+            bs.insert(y[i] + 1);
+
         }
 
-        int counter = 0;
-        for (int i = 0; i < m; i++)
-        {
-            int common = false;
-            for(auto [c, freq] : x[i]){
-                if(y[i].find(c) != y[i].end()){
-                    common = true;
-                    break;
+
+        int M = INT_MAX;
+
+        for (int a : as) {
+            for (int b : bs) {
+                int TR = 0, TL = 0, BR = 0, BL = 0;
+
+                for (int i = 0; i < n; i++)
+                {
+                    if (x[i] > a && y[i] > b) TR++;
+                    else if (x[i] > a && y[i] < b) TL++;
+                    else if (x[i] < a && y[i] < b) BL++;
+                    else if (x[i] < a && y[i] > b) BR++;
                 }
-            }   
-            if(!common) counter++;
+
+                M = min(M, max({ TR,TL,BR,BL }));
+            }
         }
-        cout << counter << "\n";
+        cout << M << "\n";
     }
     return 0;
 }

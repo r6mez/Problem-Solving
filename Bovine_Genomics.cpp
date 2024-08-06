@@ -2,9 +2,9 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// problem: Problem 2. Bovine Genomics
-// URL: https://usaco.org/index.php?page=viewproblem2&cpid=736  
-// Start: 8/5/2024, 3:33:03 PM
+// problem: Bovine Genomics
+// URL: https://vjudge.net/problem/USACO-739  
+// Start: 8/6/2024, 3:11:54 PM
 #include <iostream>
 #include <algorithm>
 #include <cmath>
@@ -18,7 +18,9 @@
 #include <map>
 #include <set>
 #include <bitset>
+#include <tuple>
 #include <unordered_map>
+#include <unordered_set>
 using namespace std;
 #define ll long long
 #define ull unsigned long long
@@ -32,38 +34,63 @@ template<typename T> ostream& operator<<(ostream& os, const vector<T>& v);
 template<typename T> istream& operator>>(istream& is, vector<T>& v);
 void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 
+// Define the hash function for std::tuple<char, char, char>
+struct TupleHash {
+    std::size_t operator()(const std::tuple<char, char, char>& t) const {
+        std::size_t h1 = std::hash<char>()(std::get<0>(t));
+        std::size_t h2 = std::hash<char>()(std::get<1>(t));
+        std::size_t h3 = std::hash<char>()(std::get<2>(t));
+        return h1 ^ (h2 << 1) ^ (h3 << 2); // Combine the hashes
+    }
+};
+
+// Define the equality function for std::tuple<char, char, char>
+struct TupleEqual {
+    bool operator()(const std::tuple<char, char, char>& t1, const std::tuple<char, char, char>& t2) const {
+        return t1 == t2;
+    }
+};
 
 int main() {
-    freopen("file.in", "r", stdin);
-    freopen("file.out", "w", stdout);
+    freopen("cownomics.in", "r", stdin);
+    freopen("cownomics.out", "w", stdout);
     FastIO();
     int t = 1;
     // cin >> t;
     while (t--) {
         int n, m; cin >> n >> m;
         vector<string> spotty(n), plain(n); cin >> spotty >> plain;
-        vector<map<char,int>> x(m);
-        vector<map<char,int>> y(m);
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < m; j++)
-            {
-                x[j][spotty[i][j]]++;
-                y[j][plain[i][j]]++;
-            }
-        }
 
         int counter = 0;
         for (int i = 0; i < m; i++)
         {
-            int common = false;
-            for(auto [c, freq] : x[i]){
-                if(y[i].find(c) != y[i].end()){
-                    common = true;
-                    break;
+            for (int j = i + 1; j < m; j++)
+            {
+                for (int k = j + 1; k < m; k++)
+                {
+                    unordered_set<tuple<char, char, char>, TupleHash, TupleEqual> spottySet;
+                    unordered_set<tuple<char, char, char>, TupleHash, TupleEqual> plainSet;
+
+                    for (int cow = 0; cow < n; ++cow) {
+                        spottySet.emplace(spotty[cow][i], spotty[cow][j], spotty[cow][k]);
+                        plainSet.emplace(plain[cow][i], plain[cow][j], plain[cow][k]);
+                    }
+
+                    bool isUnique = true;
+                    for (const auto& s : spottySet) {
+                        if (plainSet.find(s) != plainSet.end()) {
+                            isUnique = false;
+                            break;
+                        }
+                    }
+
+                    if (isUnique) {
+                        ++counter;
+                    }
                 }
-            }   
-            if(!common) counter++;
+
+            }
+
         }
         cout << counter << "\n";
     }

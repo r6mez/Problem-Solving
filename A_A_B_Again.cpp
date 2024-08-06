@@ -2,9 +2,9 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// problem: Problem 2. Bovine Genomics
-// URL: https://usaco.org/index.php?page=viewproblem2&cpid=736  
-// Start: 8/5/2024, 3:33:03 PM
+// problem: A. A+B Again?
+// URL: https://codeforces.com/contest/1999/problem/0  
+// Start: 8/6/2024, 5:35:24 PM
 #include <iostream>
 #include <algorithm>
 #include <cmath>
@@ -31,55 +31,32 @@ struct SegTree; const int MOD = 1000000007;
 template<typename T> ostream& operator<<(ostream& os, const vector<T>& v);
 template<typename T> istream& operator>>(istream& is, vector<T>& v);
 void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
-
-
+ 
+ 
 int main() {
-    freopen("file.in", "r", stdin);
-    freopen("file.out", "w", stdout);
+    // freopen("file.in", "r", stdin);
+    // freopen("file.out", "w", stdout);
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) {
-        int n, m; cin >> n >> m;
-        vector<string> spotty(n), plain(n); cin >> spotty >> plain;
-        vector<map<char,int>> x(m);
-        vector<map<char,int>> y(m);
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < m; j++)
-            {
-                x[j][spotty[i][j]]++;
-                y[j][plain[i][j]]++;
-            }
-        }
-
-        int counter = 0;
-        for (int i = 0; i < m; i++)
-        {
-            int common = false;
-            for(auto [c, freq] : x[i]){
-                if(y[i].find(c) != y[i].end()){
-                    common = true;
-                    break;
-                }
-            }   
-            if(!common) counter++;
-        }
-        cout << counter << "\n";
+        int n; cin >> n;
+        int sum = n/10 + n%10;
+        cout << sum << "\n";
     }
     return 0;
 }
-
+ 
 /*
 NOTES:
-
+ 
 */
-
+ 
 class SegmentTree {
 public:
     int size;
     vector<ll> sums, mins, maxs;
-
+ 
     SegmentTree(int n) {
         size = 1;
         while (size < n) size *= 2;
@@ -87,31 +64,31 @@ public:
         mins.assign(2 * size, LLONG_MAX);
         maxs.assign(2 * size, LLONG_MIN);
     }
-
+ 
     void build(const vi& a) {
         build(a, 0, 0, size);
     }
-
+ 
     void update(int i, int v) {
         update(i, v, 0, 0, size);
     }
-
+ 
     ll sumSeg(int l, int r) {
         return sumSeg(l, r, 0, 0, size);
     }
-
+ 
     ll minSeg(int l, int r) {
         return minSeg(l, r, 0, 0, size);
     }
-
+ 
     ll maxSeg(int l, int r) {
         return maxSeg(l, r, 0, 0, size);
     }
-
+ 
     ll firstElementAtLeastX(int x) {
         return firstElementAtLeastX(x, 0, 0, size);
     }
-
+ 
 private:
     void build(const vi& a, int x, int lx, int rx) {
         if (rx - lx == 1) {
@@ -129,7 +106,7 @@ private:
         mins[x] = min(mins[2 * x + 1], mins[2 * x + 2]);
         maxs[x] = max(maxs[2 * x + 1], maxs[2 * x + 2]);
     }
-
+ 
     void update(int i, int v, int x, int lx, int rx) {
         if (rx - lx == 1) {
             sums[x] = v;
@@ -148,7 +125,7 @@ private:
         mins[x] = min(mins[2 * x + 1], mins[2 * x + 2]);
         maxs[x] = max(maxs[2 * x + 1], maxs[2 * x + 2]);
     }
-
+ 
     ll sumSeg(int l, int r, int x, int lx, int rx) {
         if (lx >= r || l >= rx) return 0;
         if (lx >= l && rx <= r) return sums[x];
@@ -157,7 +134,7 @@ private:
         ll right = sumSeg(l, r, 2 * x + 2, mid, rx);
         return left + right;
     }
-
+ 
     ll minSeg(int l, int r, int x, int lx, int rx) {
         if (lx >= r || l >= rx) return LLONG_MAX;
         if (lx >= l && rx <= r) return mins[x];
@@ -166,7 +143,7 @@ private:
         ll right = minSeg(l, r, 2 * x + 2, mid, rx);
         return min(left, right);
     }
-
+ 
     ll maxSeg(int l, int r, int x, int lx, int rx) {
         if (lx >= r || l >= rx) return LLONG_MIN;
         if (lx >= l && rx <= r) return maxs[x];
@@ -175,17 +152,17 @@ private:
         ll right = maxSeg(l, r, 2 * x + 2, mid, rx);
         return max(left, right);
     }
-
-
+ 
+ 
     ll firstElementAtLeastX(int x, int currentNode, int l, int r) {
         if (maxs[currentNode] < x) {
             return -1;
         }
-
+ 
         if (r - l == 1) { // we're in the bottom of the tree
             return l;
         }
-
+ 
         int mid = (l + r) / 2;
         int res = firstElementAtLeastX(x, 2 * currentNode + 1, l, mid);
         if (res == -1) {
@@ -194,12 +171,12 @@ private:
         return res;
     }
 };
-
+ 
 template<typename T> ostream& operator<<(ostream& os, const vector<T>& v) {
     for (const auto& i : v) os << i << ' ';
     return os;
 }
-
+ 
 template<typename T> istream& operator>>(istream& is, vector<T>& v)
 {
     for (auto& i : v) is >> i;

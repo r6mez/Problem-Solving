@@ -2,9 +2,9 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// problem: Problem 2. Bovine Genomics
-// URL: https://usaco.org/index.php?page=viewproblem2&cpid=736  
-// Start: 8/5/2024, 3:33:03 PM
+// problem: B. Card Game
+// URL: https://codeforces.com/contest/1999/problem/B  
+// Start: 8/6/2024, 9:48:57 PM
 #include <iostream>
 #include <algorithm>
 #include <cmath>
@@ -34,38 +34,27 @@ void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 
 
 int main() {
-    freopen("file.in", "r", stdin);
-    freopen("file.out", "w", stdout);
+    // freopen("file.in", "r", stdin);
+    // freopen("file.out", "w", stdout);
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) {
-        int n, m; cin >> n >> m;
-        vector<string> spotty(n), plain(n); cin >> spotty >> plain;
-        vector<map<char,int>> x(m);
-        vector<map<char,int>> y(m);
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < m; j++)
+        vi a(2), b(2); cin >> a >> b;
+        int rounds = 0;
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++)
             {
-                x[j][spotty[i][j]]++;
-                y[j][plain[i][j]]++;
+                int countA = 0, countB = 0;
+                if (a[i] > b[j]) countA++;
+                else if (a[i] < b[j]) countB++;
+ 
+                if (a[1 - i] > b[1 - j]) countA++;
+                else if (a[1 - i] < b[1 - j]) countB++;
+                if (countA > countB) rounds++;
             }
         }
-
-        int counter = 0;
-        for (int i = 0; i < m; i++)
-        {
-            int common = false;
-            for(auto [c, freq] : x[i]){
-                if(y[i].find(c) != y[i].end()){
-                    common = true;
-                    break;
-                }
-            }   
-            if(!common) counter++;
-        }
-        cout << counter << "\n";
+        cout << rounds << "\n";
     }
     return 0;
 }

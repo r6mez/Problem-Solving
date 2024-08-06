@@ -2,9 +2,9 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// problem: Problem 2. Bovine Genomics
-// URL: https://usaco.org/index.php?page=viewproblem2&cpid=736  
-// Start: 8/5/2024, 3:33:03 PM
+// problem: G1. Ruler (easy version)
+// URL: https://codeforces.com/contest/1999/problem/G1  
+// Start: 8/6/2024, 9:49:02 PM
 #include <iostream>
 #include <algorithm>
 #include <cmath>
@@ -34,38 +34,25 @@ void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 
 
 int main() {
-    freopen("file.in", "r", stdin);
-    freopen("file.out", "w", stdout);
+    // freopen("file.in", "r", stdin);
+    // freopen("file.out", "w", stdout);
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) {
-        int n, m; cin >> n >> m;
-        vector<string> spotty(n), plain(n); cin >> spotty >> plain;
-        vector<map<char,int>> x(m);
-        vector<map<char,int>> y(m);
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < m; j++)
-            {
-                x[j][spotty[i][j]]++;
-                y[j][plain[i][j]]++;
+        int l = 0, r = 1000;
+        while(l < r){
+            int mid = (l+r)/2;
+            cout << "? " << mid << " 1" << endl;
+            int ans; cin >> ans;
+            if(ans == mid){
+                l = mid + 1;
+            } else {
+                r = mid;
             }
-        }
-
-        int counter = 0;
-        for (int i = 0; i < m; i++)
-        {
-            int common = false;
-            for(auto [c, freq] : x[i]){
-                if(y[i].find(c) != y[i].end()){
-                    common = true;
-                    break;
-                }
-            }   
-            if(!common) counter++;
-        }
-        cout << counter << "\n";
+        } 
+ 
+        cout << "! " << l << endl;
     }
     return 0;
 }

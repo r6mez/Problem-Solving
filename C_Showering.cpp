@@ -2,9 +2,9 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// problem: Problem 2. Bovine Genomics
-// URL: https://usaco.org/index.php?page=viewproblem2&cpid=736  
-// Start: 8/5/2024, 3:33:03 PM
+// problem: C. Showering
+// URL: https://codeforces.com/contest/1999/problem/C  
+// Start: 8/6/2024, 9:48:58 PM
 #include <iostream>
 #include <algorithm>
 #include <cmath>
@@ -34,38 +34,29 @@ void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 
 
 int main() {
-    freopen("file.in", "r", stdin);
-    freopen("file.out", "w", stdout);
+    // freopen("file.in", "r", stdin);
+    // freopen("file.out", "w", stdout);
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) {
-        int n, m; cin >> n >> m;
-        vector<string> spotty(n), plain(n); cin >> spotty >> plain;
-        vector<map<char,int>> x(m);
-        vector<map<char,int>> y(m);
-        for (int i = 0; i < n; i++)
+        int n, s, m; cin >> n >> s >> m;
+        vi start(n), end(n);
+        for (int i = 0; i < n; i++){
+            cin >> start[i] >> end[i];
+        }
+        
+        bool isPos = false;
+        for (int i = 1; i < n; i++)
         {
-            for (int j = 0; j < m; j++)
-            {
-                x[j][spotty[i][j]]++;
-                y[j][plain[i][j]]++;
+            if(start[i] - end[i-1] >= s) {
+                isPos = true;
+                break;
             }
         }
-
-        int counter = 0;
-        for (int i = 0; i < m; i++)
-        {
-            int common = false;
-            for(auto [c, freq] : x[i]){
-                if(y[i].find(c) != y[i].end()){
-                    common = true;
-                    break;
-                }
-            }   
-            if(!common) counter++;
-        }
-        cout << counter << "\n";
+        
+        if(isPos || (start[0] >= s || m-end[n-1] >= s)) cout << "YES\n";
+        else cout << "NO\n";
     }
     return 0;
 }
