@@ -2,12 +2,9 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// Contest: USACO 2018 January Contest, Bronze
-// Judge: USACO
-// URL: https://usaco.org/index.php?page=viewproblem2&cpid=783
-// Memory Limit: 256
-// Time Limit: 4000
-// Start: Sun Aug 25 16:30:02 2024
+// problem: {{problemName}}
+// URL: {{problemURL}}  
+// Start: {{time}}
 #include <iostream>
 #include <algorithm>
 #include <cmath>
@@ -22,13 +19,6 @@
 #include <set>
 #include <bitset>
 #include <unordered_map>
-#ifdef YaWaga3Eldebug
-#include "debug.hpp"
-#else
-#define debug(...) 0
-#define debug_itr(...) 0
-#define debug_bits(...) 0
-#endif
 #define ll   long long
 #define ull  unsigned long long
 #define vi   vector<int>
@@ -52,21 +42,53 @@ template<typename T> istream& operator>>(istream& is, vector<T>& v);
 void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 
+int inter_area(vector<int> s1, vector<int> s2) {
+	int bl_a_x = s1[0], bl_a_y = s1[1], tr_a_x = s1[2], tr_a_y = s1[3];
+	int bl_b_x = s2[0], bl_b_y = s2[1], tr_b_x = s2[2], tr_b_y = s2[3];
+
+	return ((min(tr_a_x, tr_b_x) - max(bl_a_x, bl_b_x)) *
+	        (min(tr_a_y, tr_b_y) - max(bl_a_y, bl_b_y)));
+}
+
+struct Rect {
+  int x1, y1, x2, y2;
+  int area() {
+    return (x2 - x1) * (y2 - y1);
+  }
+};
+
+int intersect_area(Rect r1, Rect r2) {
+  int x1 = max(r1.x1, r2.x1);
+  int y1 = max(r1.y1, r2.y1);
+  int x2 = min(r1.x2, r2.x2);
+  int y2 = min(r1.y2, r2.y2);
+  
+  return max((x2 - x1), 0) * max((y2 - y1), 0);
+}
 
 int main() {
-    // UseFile();
-    FastIO();
-    int t = 1;
-    // cin >> t;
-    while (t--) {
-        cout << "Hello world";
-        int x; cin >> x;
-        for (int i = x - 1; i >= 0; i--) {
-            cout << "Hello World: " << x << "\n";
-            
-        }     
-    }
-    return 0;
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+
+  freopen("billboard.in", "r", stdin);
+  freopen("billboard.out","w", stdout);
+
+  Rect r[2];
+  for (int i = 0; i < 2; i++) {
+    cin >> r[i].x1 >> r[i].y1 >> r[i].x2 >> r[i].y2;
+  }
+
+  int area = r[0].area();
+
+  bool cover_top_or_bottom = r[1].x1 <= r[0].x1 && r[1].x2 >= r[0].x2 && (r[1].y1 <= r[0].y1 || r[1].y2 >= r[0].y2);
+  bool cover_left_or_right = r[1].y1 <= r[0].y1 && r[1].y2 >= r[0].y2 && (r[1].x1 <= r[0].x1 || r[1].x2 >= r[0].x2);
+
+  if (cover_top_or_bottom || cover_left_or_right) {
+    area -= intersect_area(r[0], r[1]);
+  }
+
+  cout << area << "\n";
+  return 0;
 }
 
 /*
@@ -75,17 +97,17 @@ NOTES:
 */
 
 class SegmentTree {
-    public:
-        int size;
-        vector<ll> sums, mins, maxs;
+public:
+    int size;
+    vector<ll> sums, mins, maxs;
 
-        SegmentTree(int n) {
-            size = 1;
-            while (size < n) size *= 2;
-            sums.assign(2 * size, 0LL);
-            mins.assign(2 * size, LLONG_MAX);
-            maxs.assign(2 * size, LLONG_MIN);
-        }
+    SegmentTree(int n) {
+        size = 1;
+        while (size < n) size *= 2;
+        sums.assign(2 * size, 0LL);
+        mins.assign(2 * size, LLONG_MAX);
+        maxs.assign(2 * size, LLONG_MIN);
+    }
 
     void build(const vi& a) {
         build(a, 0, 0, size);
