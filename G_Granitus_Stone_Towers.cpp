@@ -1,6 +1,6 @@
 // Ramez Medhat
 // problem: G. Granitus Stone Towers
-// URL: https://codeforces.com/group/qxlLGDBwj5/contest/528100/problem/G  
+// URL https://codeforces.com/group/qxlLGDBwj5/contest/5i28100/problem/G  
 // Start: 6/24/2024, 2:24:47 PM
 #include <iostream>
 #include <algorithm>
