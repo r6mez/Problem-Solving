@@ -2,12 +2,12 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// Contest: CSES Problem Set
-// Judge: CSES
-// URL: https://cses.fi/problemset/task/1662
-// Memory Limit: 512
-// Time Limit: 1000
-// Start: Wed Aug 28 12:03:04 2024 
+// Contest: USACO 2017 February Contest, Silver
+// Judge: USACO
+// URL: https://usaco.org/index.php?page=viewproblem2&cpid=715
+// Memory Limit: 256
+// Time Limit: 4000
+// Start: Wed Aug 28 13:14:00 2024 
 #ifdef ALGOAT
 #include "debug.hpp"
 #else
@@ -38,56 +38,47 @@
 #define vs   vector<string>
 #define pii  pair<int, int>
 #define pll  pair<ll, ll>
-#define f first
-#define s second
+#define F first
+#define S second
 using namespace std;
-struct   segtree;
-const int mod = 1000000007;
+struct   SegTree;
+const int MOD = 1000000007;
 #define all(v)  v.begin(), v.end()
-#define makeunique(v)  v.erase(unique(all(v)), v.end())
-vector<vll> prefixsum2d(vector<vll>& a);
-ll sumofsquare(int x1, int y1, int x2, int y2, vector<vll>& a);
-template<typename t> ostream& operator<<(ostream& os, const vector<t>& v);
-template<typename t> istream& operator>>(istream& is, vector<t>& v);
-void fastio() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
-void usefile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
+#define makeUnique(v)  v.erase(unique(all(v)), v.end())
+vector<vll> prefixSum2D(vector<vll>& a);
+ll sumOfSquare(int x1, int y1, int x2, int y2, vector<vll>& a);
+template<typename T> ostream& operator<<(ostream& os, const vector<T>& v);
+template<typename T> istream& operator>>(istream& is, vector<T>& v);
+void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
+void UseFile() { freopen("maxcross.in", "r", stdin); freopen("maxcross.out", "w", stdout); }
 
 
 int main() {
-    // usefile();
-    fastio();
+    UseFile();
+    FastIO();
     int t = 1;
     // cin >> t;
     while (t--) {
-        int n; cin >> n;
-        vll a(n); cin >> a;
-        partial_sum(all(a), a.begin());
-        
-        map<ll, ll> freq;
-        freq[0] = 1;
-        ll ans = 0;
-        for (int i = 0; i < n; i++) {
-            ll val = (a[i] % n + n) % n;
-            ans += ++freq[val] - 1;
-            debug(freq);
+        int n, k, b; cin >> n >> k >> b;
+        vi a(n, 1);
+        for (int i = 0; i < b; i++) {
+            int x; cin >> x;
+            a[x-1] = 0;
         }
 
-        cout << ans << "\n";
+        partial_sum(all(a), a.begin()); 
+
+        int minDiff = INT_MAX;
+        for (int i = 0; i+k <= n; i++) {
+            minDiff = min(minDiff, k-(a[i+k-1]-(i==0?0:a[i-1])));
+        }
+        cout << minDiff << "\n";
     }
     return 0;
 }
 
 /*
 NOTES:
-5
-3 2 5  -5 10
-3 5 10 5  15
-3 0 0  0  0 
-ans = 10
-
-3 1 2 7 4 
-3 4 6 13 17
-3 4 1 3 2 
 
 */
 
