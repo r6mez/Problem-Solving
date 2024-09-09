@@ -4,10 +4,11 @@
 // ----------------------------------------------------
 // Contest: ITMO Academy: pilot course - Binary Search - Step 2
 // Judge: Codeforces
-// URL: https://codeforces.com/edu/course/2/lesson/6/2/practice/contest/283932/problem/D
-// Memory Limit: 512
+// URL: https://codeforces.com/edu/course/2/lesson/6/2/practice/contest/283932/problem/E
+// Memory Limit: 256
 // Time Limit: 2000
-// Start: Thu 05 Sep 2024 06:09:37 PM EEST 
+// Start: Sun 08 Sep 2024 05:39:30 PM EEST 
+#include <iomanip>
 #ifdef RAMEZ
 #include "debug.hpp"
 #else
@@ -52,69 +53,21 @@ template<typename T> istream& operator>>(istream& is, vector<T>& v);
 void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 
-
-ll calcBallons(ll time, ll t, ll z, ll breakDuration){
-  ll newBallons = 0, currTime = 0, timeBeforeBreak = t*z;
-  while(currTime + timeBeforeBreak + breakDuration <= time) {
-    currTime += timeBeforeBreak + breakDuration;
-    newBallons += z;
-  }
-
-  int over = 0;
-
-  while(currTime + t <= time && over+1 <= z) {
-    currTime += t;
-    over++;
-  }
-
-  newBallons += over;
-
-  return newBallons;
-}
-
-
-bool can(ll mid, ll m, vll &t, vll &z, vll &y){
-  ll ballons = 0;
-  for (int i = 0; i < t.size(); i++) {
-    ballons += calcBallons(mid, t[i], z[i], y[i]);
-  }
-  return ballons >= m;
-}
-
-
 int main() {
     // UseFile();
     FastIO();
     int t = 1;
     // cin >> t;
     while (t--) {
-      ll m, n; cin >> m >> n; 
-      vll t(n), z(n), y(n);
-      for (int i = 0; i < n; i++) {
-        cin >> t[i] >> z[i] >> y[i];
-      }
+      double c; cin >> c;
       
-      if (m == 0) {
-        cout << 0 << endl;
-        for (int i = 0; i < n; i++) cout << 0 << " ";
-        cout << endl;
-        return 0;
+      double l = 1, r = 10e10;
+      while(l + 1e-6 < r){
+        double x = (l+r)/2;
+        if (x*x + sqrt(x) <= c) l = x;
+        else r = x;
       }
-
-      ll l = 0, r = 3000005;
-      while (l + 1 < r){
-        ll mid = (l+r)/2;
-        if(can(mid, m, t, z, y)) r = mid;
-        else l = mid;
-      }
-      cout << r << "\n";
-      ll total = 0;
-      for (int i = 0; i < n; i++) {
-        ll canAdd = calcBallons(r, t[i], z[i], y[i]);
-        ll add = min(m - total, canAdd);
-        total += add;
-        cout << add << " ";
-      } 
+      cout << fixed << setprecision(20) << l << "\n";
     }
     return 0;
 }

@@ -2,12 +2,12 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// Contest: ITMO Academy: pilot course - Binary Search - Step 2
+// Contest: Codeforces Round 577 (Div. 2)
 // Judge: Codeforces
-// URL: https://codeforces.com/edu/course/2/lesson/6/2/practice/contest/283932/problem/D
-// Memory Limit: 512
+// URL: https://codeforces.com/contest/1201/problem/C
+// Memory Limit: 256
 // Time Limit: 2000
-// Start: Thu 05 Sep 2024 06:09:37 PM EEST 
+// Start: Mon 09 Sep 2024 09:39:56 PM EEST 
 #ifdef RAMEZ
 #include "debug.hpp"
 #else
@@ -52,35 +52,16 @@ template<typename T> istream& operator>>(istream& is, vector<T>& v);
 void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 
+bool check(ll x, vll &a, ll &k){
+  ll moves = 0;
+  for (int i = a.size()/2; i < a.size(); i++) {
+    if(x-a[i] <= 0) break;
 
-ll calcBallons(ll time, ll t, ll z, ll breakDuration){
-  ll newBallons = 0, currTime = 0, timeBeforeBreak = t*z;
-  while(currTime + timeBeforeBreak + breakDuration <= time) {
-    currTime += timeBeforeBreak + breakDuration;
-    newBallons += z;
-  }
+    moves += x-a[i];
+  } 
 
-  int over = 0;
-
-  while(currTime + t <= time && over+1 <= z) {
-    currTime += t;
-    over++;
-  }
-
-  newBallons += over;
-
-  return newBallons;
+  return moves <= k;
 }
-
-
-bool can(ll mid, ll m, vll &t, vll &z, vll &y){
-  ll ballons = 0;
-  for (int i = 0; i < t.size(); i++) {
-    ballons += calcBallons(mid, t[i], z[i], y[i]);
-  }
-  return ballons >= m;
-}
-
 
 int main() {
     // UseFile();
@@ -88,39 +69,22 @@ int main() {
     int t = 1;
     // cin >> t;
     while (t--) {
-      ll m, n; cin >> m >> n; 
-      vll t(n), z(n), y(n);
-      for (int i = 0; i < n; i++) {
-        cin >> t[i] >> z[i] >> y[i];
-      }
-      
-      if (m == 0) {
-        cout << 0 << endl;
-        for (int i = 0; i < n; i++) cout << 0 << " ";
-        cout << endl;
-        return 0;
-      }
-
-      ll l = 0, r = 3000005;
-      while (l + 1 < r){
+      ll n, k; cin >> n >> k; 
+      vll a(n); cin >> a; sort(all(a));
+      ll l = 1, r = 3e9, ans = 0;
+      while(l <= r){
         ll mid = (l+r)/2;
-        if(can(mid, m, t, z, y)) r = mid;
-        else l = mid;
+        if(check(mid, a, k)) ans = mid, l = mid+1; else r = mid-1;
       }
-      cout << r << "\n";
-      ll total = 0;
-      for (int i = 0; i < n; i++) {
-        ll canAdd = calcBallons(r, t[i], z[i], y[i]);
-        ll add = min(m - total, canAdd);
-        total += add;
-        cout << add << " ";
-      } 
+      cout << ans;
     }
     return 0;
 }
 
 /*
 NOTES:
+3 2 2 1 0
+3 5 7 8 8
 
 */
 
@@ -273,3 +237,5 @@ vector<vll> prefixSum2D(vector<vll>& a) {
 ll sumOfSquare(int x1, int y1, int x2, int y2, vector<vll>& a) {
     return (a[x2][y2] - a[x1 - 1][y2] - a[x2][y1 - 1]) + a[x1 - 1][y1 - 1];
 }
+
+
