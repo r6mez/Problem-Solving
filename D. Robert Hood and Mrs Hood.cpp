@@ -2,14 +2,17 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// Contest: Codeforces Round 973 (Div. 2)
+// Contest: Codeforces Round 974 (Div. 3)
 // Judge: Codeforces
-// URL: https://codeforces.com/contest/2013/problem/0
+// URL: https://codeforces.com/contest/2014/problem/D
 // Memory Limit: 256
-// Time Limit: 1000
-// Start: Fri 20 Sep 2024 05:36:27 PM EEST 
+// Time Limit: 2000
+// Start: Sat 21 Sep 2024 06:35:08 PM EEST 
+#include <algorithm>
+#include <climits>
 #include <cmath>
 #include <functional>
+#include <numeric>
 #ifdef RAMEZ
 #include "debug.hpp"
 #else
@@ -38,27 +41,168 @@ template<typename T> istream& operator>>(istream& is, vector<T>& v);
 void FastIO(); void UseFile();
 const int MOD = 1000000007;
 
-bool can(ll t, ll n, ll x, ll y){
-  return t*min(x,y) >= n;
-}
+class SegmentTree {
+public:
+    int size;
+    vector<ll> sums, mins, maxs;
 
-void solve(){
-  double n; cin >> n;
-  double x, y; cin >> x >> y;
+    SegmentTree(int n) {
+        size = 1;
+        while (size < n) size *= 2;
+        sums.assign(2 * size, 0LL);
+        mins.assign(2 * size, LLONG_MAX);
+        maxs.assign(2 * size, LLONG_MIN);
+    }
 
-  /*ll l = 0, r = n;*/
-  /*while(l + 1 < r){*/
-  /*  ll mid = (l+r)/2;*/
-  /*  if(can(mid, n, x, y)){*/
-  /*    r = mid;*/
-  /*  } else l = mid;*/
-  /*}*/
-  /**/
-  /*cout << r << "\n";*/
+    void build(const vll& a) {
+        build(a, 0, 0, size);
+    }
 
-  ll ans = ceil(n/min(x,y)); 
+    void update(int i, int v) {
+        update(i, v, 0, 0, size);
+    }
 
-  cout << ans << "\n";
+    ll sumSeg(int l, int r) {
+        return sumSeg(l, r, 0, 0, size);
+    }
+
+    ll minSeg(int l, int r) {
+        return minSeg(l, r, 0, 0, size);
+    }
+
+    ll maxSeg(int l, int r) {
+        return maxSeg(l, r, 0, 0, size);
+    }
+
+    ll firstElementAtLeastX(int x) {
+        return firstElementAtLeastX(x, 0, 0, size);
+    }
+
+private:
+    void build(const vll& a, int x, int lx, int rx) {
+        if (rx - lx == 1) {
+            if (lx < (int)a.size()) {
+                sums[x] = a[lx];
+                mins[x] = a[lx];
+                maxs[x] = a[lx];
+            }
+            return;
+        }
+        int mid = (lx + rx) / 2;
+        build(a, 2 * x + 1, lx, mid);
+        build(a, 2 * x + 2, mid, rx);
+        sums[x] = sums[2 * x + 1] + sums[2 * x + 2];
+        mins[x] = min(mins[2 * x + 1], mins[2 * x + 2]);
+        maxs[x] = max(maxs[2 * x + 1], maxs[2 * x + 2]);
+    }
+
+    void update(int i, int v, int x, int lx, int rx) {
+        if (rx - lx == 1) {
+            sums[x] = v;
+            mins[x] = v;
+            maxs[x] = v;
+            return;
+        }
+        int mid = (lx + rx) / 2;
+        if (i < mid) {
+            update(i, v, 2 * x + 1, lx, mid);
+        }
+        else {
+            update(i, v, 2 * x + 2, mid, rx);
+        }
+        sums[x] = sums[2 * x + 1] + sums[2 * x + 2];
+        mins[x] = min(mins[2 * x + 1], mins[2 * x + 2]);
+        maxs[x] = max(maxs[2 * x + 1], maxs[2 * x + 2]);
+    }
+
+    ll sumSeg(int l, int r, int x, int lx, int rx) {
+        if (lx >= r || l >= rx) return 0;
+        if (lx >= l && rx <= r) return sums[x];
+        int mid = (lx + rx) / 2;
+        ll left = sumSeg(l, r, 2 * x + 1, lx, mid);
+        ll right = sumSeg(l, r, 2 * x + 2, mid, rx);
+        return left + right;
+    }
+
+    ll minSeg(int l, int r, int x, int lx, int rx) {
+        if (lx >= r || l >= rx) return LLONG_MAX;
+        if (lx >= l && rx <= r) return mins[x];
+        int mid = (lx + rx) / 2;
+        ll left = minSeg(l, r, 2 * x + 1, lx, mid);
+        ll right = minSeg(l, r, 2 * x + 2, mid, rx);
+        return min(left, right);
+    }
+
+    ll maxSeg(int l, int r, int x, int lx, int rx) {
+        if (lx >= r || l >= rx) return LLONG_MIN;
+        if (lx >= l && rx <= r) return maxs[x];
+        int mid = (lx + rx) / 2;
+        ll left = maxSeg(l, r, 2 * x + 1, lx, mid);
+        ll right = maxSeg(l, r, 2 * x + 2, mid, rx);
+        return max(left, right);
+    }
+
+
+    ll firstElementAtLeastX(int x, int currentNode, int l, int r) {
+        if (maxs[currentNode] < x) {
+            return -1;
+        }
+
+        if (r - l == 1) { // we're in the bottom of the tree
+            return l;
+        }
+
+        int mid = (l + r) / 2;
+        int res = firstElementAtLeastX(x, 2 * currentNode + 1, l, mid);
+        if (res == -1) {
+            res = firstElementAtLeastX(x, 2 * currentNode + 2, mid, r);
+        }
+        return res;
+    }
+};
+
+void solve() {
+    ll n, d, k;
+    cin >> n >> d >> k;
+
+    vll a(n + 1, 0);
+    for (int i = 0; i < k; i++) {
+        ll l, r;
+        cin >> l >> r;
+        a[l]++; 
+        if (r + 1 <= n) a[r + 1]--;  
+    }
+
+    partial_sum(all(a), a.begin());
+
+    ll minSum = LLONG_MAX, maxSum = LLONG_MIN;
+    ll b = 0, m = 0;
+
+    ll currentSum = 0;
+
+    for (int i = 1; i <= d; i++) {
+        currentSum += a[i];
+    }
+
+    maxSum = currentSum;
+    minSum = currentSum;
+    b = 1;
+    m = 1;
+
+    for (int i = 2; i <= n - d + 1; i++) {
+        currentSum = currentSum - a[i - 1] + a[i + d - 1];
+
+        if (currentSum > maxSum) {
+            maxSum = currentSum;
+            b = i;
+        }
+        if (currentSum < minSum) {
+            minSum = currentSum;
+            m = i;
+        }
+    }
+
+    cout << b << " " << m << "\n";
 }
 
 /*
@@ -163,122 +307,4 @@ vll linearSeive(ll n){
 }
 
 
-class SegmentTree {
-public:
-    int size;
-    vector<ll> sums, mins, maxs;
 
-    SegmentTree(int n) {
-        size = 1;
-        while (size < n) size *= 2;
-        sums.assign(2 * size, 0LL);
-        mins.assign(2 * size, LLONG_MAX);
-        maxs.assign(2 * size, LLONG_MIN);
-    }
-
-    void build(const vi& a) {
-        build(a, 0, 0, size);
-    }
-
-    void update(int i, int v) {
-        update(i, v, 0, 0, size);
-    }
-
-    ll sumSeg(int l, int r) {
-        return sumSeg(l, r, 0, 0, size);
-    }
-
-    ll minSeg(int l, int r) {
-        return minSeg(l, r, 0, 0, size);
-    }
-
-    ll maxSeg(int l, int r) {
-        return maxSeg(l, r, 0, 0, size);
-    }
-
-    ll firstElementAtLeastX(int x) {
-        return firstElementAtLeastX(x, 0, 0, size);
-    }
-
-private:
-    void build(const vi& a, int x, int lx, int rx) {
-        if (rx - lx == 1) {
-            if (lx < (int)a.size()) {
-                sums[x] = a[lx];
-                mins[x] = a[lx];
-                maxs[x] = a[lx];
-            }
-            return;
-        }
-        int mid = (lx + rx) / 2;
-        build(a, 2 * x + 1, lx, mid);
-        build(a, 2 * x + 2, mid, rx);
-        sums[x] = sums[2 * x + 1] + sums[2 * x + 2];
-        mins[x] = min(mins[2 * x + 1], mins[2 * x + 2]);
-        maxs[x] = max(maxs[2 * x + 1], maxs[2 * x + 2]);
-    }
-
-    void update(int i, int v, int x, int lx, int rx) {
-        if (rx - lx == 1) {
-            sums[x] = v;
-            mins[x] = v;
-            maxs[x] = v;
-            return;
-        }
-        int mid = (lx + rx) / 2;
-        if (i < mid) {
-            update(i, v, 2 * x + 1, lx, mid);
-        }
-        else {
-            update(i, v, 2 * x + 2, mid, rx);
-        }
-        sums[x] = sums[2 * x + 1] + sums[2 * x + 2];
-        mins[x] = min(mins[2 * x + 1], mins[2 * x + 2]);
-        maxs[x] = max(maxs[2 * x + 1], maxs[2 * x + 2]);
-    }
-
-    ll sumSeg(int l, int r, int x, int lx, int rx) {
-        if (lx >= r || l >= rx) return 0;
-        if (lx >= l && rx <= r) return sums[x];
-        int mid = (lx + rx) / 2;
-        ll left = sumSeg(l, r, 2 * x + 1, lx, mid);
-        ll right = sumSeg(l, r, 2 * x + 2, mid, rx);
-        return left + right;
-    }
-
-    ll minSeg(int l, int r, int x, int lx, int rx) {
-        if (lx >= r || l >= rx) return LLONG_MAX;
-        if (lx >= l && rx <= r) return mins[x];
-        int mid = (lx + rx) / 2;
-        ll left = minSeg(l, r, 2 * x + 1, lx, mid);
-        ll right = minSeg(l, r, 2 * x + 2, mid, rx);
-        return min(left, right);
-    }
-
-    ll maxSeg(int l, int r, int x, int lx, int rx) {
-        if (lx >= r || l >= rx) return LLONG_MIN;
-        if (lx >= l && rx <= r) return maxs[x];
-        int mid = (lx + rx) / 2;
-        ll left = maxSeg(l, r, 2 * x + 1, lx, mid);
-        ll right = maxSeg(l, r, 2 * x + 2, mid, rx);
-        return max(left, right);
-    }
-
-
-    ll firstElementAtLeastX(int x, int currentNode, int l, int r) {
-        if (maxs[currentNode] < x) {
-            return -1;
-        }
-
-        if (r - l == 1) { // we're in the bottom of the tree
-            return l;
-        }
-
-        int mid = (l + r) / 2;
-        int res = firstElementAtLeastX(x, 2 * currentNode + 1, l, mid);
-        if (res == -1) {
-            res = firstElementAtLeastX(x, 2 * currentNode + 2, mid, r);
-        }
-        return res;
-    }
-};

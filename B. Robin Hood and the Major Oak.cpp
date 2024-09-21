@@ -2,12 +2,12 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// Contest: Codeforces Round 973 (Div. 2)
+// Contest: Codeforces Round 974 (Div. 3)
 // Judge: Codeforces
-// URL: https://codeforces.com/contest/2013/problem/0
+// URL: https://codeforces.com/contest/2014/problem/B
 // Memory Limit: 256
 // Time Limit: 1000
-// Start: Fri 20 Sep 2024 05:36:27 PM EEST 
+// Start: Sat 21 Sep 2024 05:48:50 PM EEST 
 #include <cmath>
 #include <functional>
 #ifdef RAMEZ
@@ -38,27 +38,12 @@ template<typename T> istream& operator>>(istream& is, vector<T>& v);
 void FastIO(); void UseFile();
 const int MOD = 1000000007;
 
-bool can(ll t, ll n, ll x, ll y){
-  return t*min(x,y) >= n;
-}
-
 void solve(){
-  double n; cin >> n;
-  double x, y; cin >> x >> y;
-
-  /*ll l = 0, r = n;*/
-  /*while(l + 1 < r){*/
-  /*  ll mid = (l+r)/2;*/
-  /*  if(can(mid, n, x, y)){*/
-  /*    r = mid;*/
-  /*  } else l = mid;*/
-  /*}*/
-  /**/
-  /*cout << r << "\n";*/
-
-  ll ans = ceil(n/min(x,y)); 
-
-  cout << ans << "\n";
+  ll n, k; cin >> n >> k;
+  ll r = n, l = n-k+1;
+  ll odd = (l-r)/2 + (r%2 || l%2);
+  if(odd%2==0) cout << "YES\n";
+  else cout << "NO\n"; 
 }
 
 /*

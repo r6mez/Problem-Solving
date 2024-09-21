@@ -2,12 +2,12 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// Contest: Codeforces Round 973 (Div. 2)
+// Contest: Educational Codeforces Round 36 (Rated for Div. 2)
 // Judge: Codeforces
-// URL: https://codeforces.com/contest/2013/problem/0
+// URL: https://codeforces.com/problemset/problem/915/A
 // Memory Limit: 256
 // Time Limit: 1000
-// Start: Fri 20 Sep 2024 05:36:27 PM EEST 
+// Start: Sat 21 Sep 2024 05:40:34 PM EEST 
 #include <cmath>
 #include <functional>
 #ifdef RAMEZ
@@ -38,26 +38,14 @@ template<typename T> istream& operator>>(istream& is, vector<T>& v);
 void FastIO(); void UseFile();
 const int MOD = 1000000007;
 
-bool can(ll t, ll n, ll x, ll y){
-  return t*min(x,y) >= n;
-}
-
 void solve(){
-  double n; cin >> n;
-  double x, y; cin >> x >> y;
-
-  /*ll l = 0, r = n;*/
-  /*while(l + 1 < r){*/
-  /*  ll mid = (l+r)/2;*/
-  /*  if(can(mid, n, x, y)){*/
-  /*    r = mid;*/
-  /*  } else l = mid;*/
-  /*}*/
-  /**/
-  /*cout << r << "\n";*/
-
-  ll ans = ceil(n/min(x,y)); 
-
+  int n, k; cin >> n >> k;
+  vi a(n); cin >> a;
+  int choosen = -1;
+  for (int q = 0; q < n; q++) {
+    if(k%a[q] == 0) choosen = max(choosen, a[q]);
+  }
+  int ans = k / choosen;
   cout << ans << "\n";
 }
 
@@ -70,7 +58,7 @@ int main() {
     // UseFile();
     FastIO();
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
     return 0;
 }

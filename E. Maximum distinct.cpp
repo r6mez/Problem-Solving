@@ -2,12 +2,12 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// Contest: Codeforces Round 973 (Div. 2)
+// Contest: Standard #4 (Binary search , two pointers )
 // Judge: Codeforces
-// URL: https://codeforces.com/contest/2013/problem/0
+// URL: https://codeforces.com/group/c3FDl9EUi9/contest/264941/problem/E
 // Memory Limit: 256
 // Time Limit: 1000
-// Start: Fri 20 Sep 2024 05:36:27 PM EEST 
+// Start: Sat 21 Sep 2024 10:20:38 PM EEST 
 #include <cmath>
 #include <functional>
 #ifdef RAMEZ
@@ -38,27 +38,32 @@ template<typename T> istream& operator>>(istream& is, vector<T>& v);
 void FastIO(); void UseFile();
 const int MOD = 1000000007;
 
-bool can(ll t, ll n, ll x, ll y){
-  return t*min(x,y) >= n;
-}
+void solve(){ 
+  ll n, k; cin >> n >> k;
+  string s; cin >> s;
+  vll f(200, 0);
+  ll count = 0;
+  for (int i = 0; i < k; i++) {
+    if (f[s[i]] == 0) count++; 
+    f[s[i]]++;
+  }
 
-void solve(){
-  double n; cin >> n;
-  double x, y; cin >> x >> y;
+  ll l = 0, r = k-1;
+  ll maxCount = count;
+  while (true){
+    if(r+1 == n) break;
 
-  /*ll l = 0, r = n;*/
-  /*while(l + 1 < r){*/
-  /*  ll mid = (l+r)/2;*/
-  /*  if(can(mid, n, x, y)){*/
-  /*    r = mid;*/
-  /*  } else l = mid;*/
-  /*}*/
-  /**/
-  /*cout << r << "\n";*/
+    f[s[l]]--;
+    if(f[s[l]] == 0) count--;
+    l++; 
 
-  ll ans = ceil(n/min(x,y)); 
+    r++;
+    f[s[r]]++;
+    if(f[s[r]] == 1) count++;
+    maxCount = max(maxCount, count);
+  }  
 
-  cout << ans << "\n";
+  cout << maxCount << "\n";
 }
 
 /*
@@ -70,7 +75,7 @@ int main() {
     // UseFile();
     FastIO();
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
     return 0;
 }

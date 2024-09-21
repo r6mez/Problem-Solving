@@ -2,12 +2,12 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// Contest: Codeforces Round 973 (Div. 2)
+// Contest: Codeforces Round 974 (Div. 3)
 // Judge: Codeforces
-// URL: https://codeforces.com/contest/2013/problem/0
+// URL: https://codeforces.com/contest/2014/problem/0
 // Memory Limit: 256
 // Time Limit: 1000
-// Start: Fri 20 Sep 2024 05:36:27 PM EEST 
+// Start: Sat 21 Sep 2024 05:45:27 PM EEST 
 #include <cmath>
 #include <functional>
 #ifdef RAMEZ
@@ -38,27 +38,15 @@ template<typename T> istream& operator>>(istream& is, vector<T>& v);
 void FastIO(); void UseFile();
 const int MOD = 1000000007;
 
-bool can(ll t, ll n, ll x, ll y){
-  return t*min(x,y) >= n;
-}
-
 void solve(){
-  double n; cin >> n;
-  double x, y; cin >> x >> y;
-
-  /*ll l = 0, r = n;*/
-  /*while(l + 1 < r){*/
-  /*  ll mid = (l+r)/2;*/
-  /*  if(can(mid, n, x, y)){*/
-  /*    r = mid;*/
-  /*  } else l = mid;*/
-  /*}*/
-  /**/
-  /*cout << r << "\n";*/
-
-  ll ans = ceil(n/min(x,y)); 
-
-  cout << ans << "\n";
+  ll n, k; cin >> n >> k;
+  vll a(n); cin >> a;
+  ll r = 0, c = 0;
+  for (int i = 0; i < n; i++) {
+    if(a[i] >= k) r += a[i];
+    else if(a[i] == 0 && r) c++, r--;
+  }
+  cout << c << "\n";
 }
 
 /*

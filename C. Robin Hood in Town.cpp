@@ -2,14 +2,15 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// Contest: Codeforces Round 973 (Div. 2)
+// Contest: Codeforces Round 974 (Div. 3)
 // Judge: Codeforces
-// URL: https://codeforces.com/contest/2013/problem/0
+// URL: https://codeforces.com/contest/2014/problem/C
 // Memory Limit: 256
-// Time Limit: 1000
-// Start: Fri 20 Sep 2024 05:36:27 PM EEST 
+// Time Limit: 2000
+// Start: Sat 21 Sep 2024 05:56:55 PM EEST 
 #include <cmath>
 #include <functional>
+#include <numeric>
 #ifdef RAMEZ
 #include "debug.hpp"
 #else
@@ -38,27 +39,33 @@ template<typename T> istream& operator>>(istream& is, vector<T>& v);
 void FastIO(); void UseFile();
 const int MOD = 1000000007;
 
-bool can(ll t, ll n, ll x, ll y){
-  return t*min(x,y) >= n;
+bool appear(ll x, ll sum, ll n, vll &a){
+  double average = ((sum + x) * 1.0)/n;
+  double limit = average/2.0;
+  return a[n/2] < limit;
 }
 
 void solve(){
-  double n; cin >> n;
-  double x, y; cin >> x >> y;
+  ll n; cin >> n;
+  vll a(n); cin >> a;
+  ll sum = accumulate(all(a), 0ll);
+  sort(all(a));
 
-  /*ll l = 0, r = n;*/
-  /*while(l + 1 < r){*/
-  /*  ll mid = (l+r)/2;*/
-  /*  if(can(mid, n, x, y)){*/
-  /*    r = mid;*/
-  /*  } else l = mid;*/
-  /*}*/
-  /**/
-  /*cout << r << "\n";*/
+  if(n <= 2) {
+    cout << "-1 \n";
+    return;
+  }
 
-  ll ans = ceil(n/min(x,y)); 
+  ll l = -1, r = 1;
+  while(!appear(r, sum, n, a)) r*= 2;
 
-  cout << ans << "\n";
+  while(l + 1 < r){
+    ll mid = (r+l)/2;
+    if(appear(mid, sum, n, a)){
+      r = mid;
+    } else l = mid;
+  }
+  cout << r << "\n";
 }
 
 /*
