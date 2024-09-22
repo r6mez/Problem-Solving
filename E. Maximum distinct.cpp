@@ -48,6 +48,8 @@ void solve(){
     f[s[i]]++;
   }
 
+  debug(s);
+
   ll l = 0, r = k-1;
   ll maxCount = count;
   while (true){
