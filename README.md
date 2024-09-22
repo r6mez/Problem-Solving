@@ -1,5 +1,4 @@
 # Problem Solving Resources
-***
-- code for solved problems
-- some resources and templates
+- Code for solved problems
+- Some resources and templates
 
