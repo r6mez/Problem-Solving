@@ -2,12 +2,12 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// Contest: Codeforces Round  828 (Div. 3)
+// Contest: Codeforces Round 461 (Div. 2)
 // Judge: Codeforces
-// URL: https://codeforces.com/problemset/problem/1744/E1
+// URL: https://codeforces.com/problemset/problem/922/C
 // Memory Limit: 256
-// Time Limit: 4000
-// Start: Mon 23 Sep 2024 03:39:14 PM EEST 
+// Time Limit: 1000
+// Start: Mon 23 Sep 2024 03:28:21 PM EEST 
 #include <cmath>
 #include <functional>
 #ifdef RAMEZ
@@ -39,37 +39,7 @@ void FastIO(); void UseFile();
 const int MOD = 1000000007;
 
 void solve(){
-  ll a, b, c, d; cin >> a >> b >> c >> d;
-  
-  ll n = a*b; 
 
-  ll x = -1, y = -1;
-  for (ll testX = a+1; testX <= c; testX++) {
-    ll testY = n/gcd(n, testX);
-    if(testY > d) continue;
-    
-    while(testY <= b) testY += testY;
-    if(testY > d) continue;
-
-    x = testX; y = testY;
-    break;
-  }
-  
-  if (x == -1 || y == -1){
-    for (ll testY = b+1; testY <= d; testY++) {
-      ll testX = n/gcd(n, testY);
-      if(testX > c) continue;
-    
-      while(testX <= a) testX += testX;
-      if(testX > c) continue;
-
-      x = testX; y = testY;
-      break;
-    }
-  }
-
-
-  cout << x << " " << y << "\n"; 
 }
 
 /*
@@ -81,7 +51,7 @@ int main() {
     // UseFile();
     FastIO();
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
     return 0;
 }

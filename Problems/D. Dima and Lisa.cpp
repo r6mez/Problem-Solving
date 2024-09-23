@@ -2,12 +2,13 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// Contest: Codeforces Round  828 (Div. 3)
+// Contest: Codeforces Round 324 (Div. 2)
 // Judge: Codeforces
-// URL: https://codeforces.com/problemset/problem/1744/E1
+// URL: https://codeforces.com/problemset/problem/584/D
 // Memory Limit: 256
-// Time Limit: 4000
-// Start: Mon 23 Sep 2024 03:39:14 PM EEST 
+// Time Limit: 1000
+// Start: Mon 23 Sep 2024 01:08:18 PM EEST 
+#include <algorithm>
 #include <cmath>
 #include <functional>
 #ifdef RAMEZ
@@ -31,47 +32,74 @@ using namespace std;
 #define all(v)  v.begin(), v.end()
 #define makeUnique(v)  v.erase(unique(all(v)), v.end())
 vvll prefixSum2D(vvll& a); ll sumOfSquare(ll x1, ll y1, ll x2, ll y2, vvll& a); 
-vll getDivisors(ll n); bool isPrime(ll n); bool isPrime(ll n, vll &primes); vector<pll> getPrimeFactors(ll n); vll linearSieve(ll n);
+vll getDivisors(ll n); bool isPrime(ll n); vector<pll> getPrimeFactors(ll n); vll linearSeive(ll n);
 ll add(ll a, ll b); ll mul(ll a, ll b); ll sub(ll a, ll b); ll divide(ll a, ll b);
 template<typename T> ostream& operator<<(ostream& os, const vector<T>& v);
 template<typename T> istream& operator>>(istream& is, vector<T>& v);
 void FastIO(); void UseFile();
 const int MOD = 1000000007;
 
-void solve(){
-  ll a, b, c, d; cin >> a >> b >> c >> d;
-  
-  ll n = a*b; 
 
-  ll x = -1, y = -1;
-  for (ll testX = a+1; testX <= c; testX++) {
-    ll testY = n/gcd(n, testX);
-    if(testY > d) continue;
+vll linearSieve(ll n) {
+    vector<bool> isPrime(n + 1, true);
+    vll primes;
+    isPrime[0] = isPrime[1] = false;
     
-    while(testY <= b) testY += testY;
-    if(testY > d) continue;
-
-    x = testX; y = testY;
-    break;
-  }
-  
-  if (x == -1 || y == -1){
-    for (ll testY = b+1; testY <= d; testY++) {
-      ll testX = n/gcd(n, testY);
-      if(testX > c) continue;
-    
-      while(testX <= a) testX += testX;
-      if(testX > c) continue;
-
-      x = testX; y = testY;
-      break;
+    for (ll i = 2; i <= n; i++) {
+        if (isPrime[i]) primes.push_back(i);
+        for (ll p : primes) {
+            if (i * p > n) break;
+            isPrime[i * p] = false;
+            if (i % p == 0) break;
+        }
     }
-  }
 
-
-  cout << x << " " << y << "\n"; 
+    return primes;
 }
 
+// Function to check if a number is prime by testing divisibility using primes up to sqrt(n)
+bool isPrime(ll n, const vll& primes) {
+    if (n < 2) return false;
+    for (ll p : primes) {
+        if (p * p > n) break;
+        if (n % p == 0) return false;
+    }
+    return true;
+}
+
+void solve() {
+    ll n; cin >> n;
+    
+    // Precompute primes up to sqrt(n)
+    ll sqrt_n = sqrt(n) + 1;
+    vll primes = linearSieve(sqrt_n);
+    
+    // Case 1: Check if n is already prime
+    if (isPrime(n, primes)) {
+        cout << "1\n" << n << "\n";
+        return;
+    }
+    
+    // Case 2: Try to represent n as a sum of two primes
+    for (ll p : primes) {
+        if (p > n) break;
+        if (isPrime(n - p, primes)) {
+            cout << "2\n" << p << " " << n - p << "\n";
+            return;
+        }
+    }
+    
+    // Case 3: If no solution found, try to represent n as the sum of three primes
+    // First, subtract 3 from n and check if the remainder can be represented as a sum of two primes
+    n -= 3;
+    for (ll p : primes) {
+        if (p > n) break;
+        if (isPrime(n - p, primes)) {
+            cout << "3\n" << "3 " << p << " " << n - p << "\n";
+            return;
+        }
+    }
+}
 /*
 NOTES:
 
@@ -81,7 +109,7 @@ int main() {
     // UseFile();
     FastIO();
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
     return 0;
 }
@@ -139,16 +167,6 @@ bool isPrime(ll n){
   return true;
 }
 
-// Function to check if a number is prime by testing divisibility using primes up to sqrt(n)
-bool isPrime(ll n, vll& primes) {
-    if (n < 2) return false;
-    for (ll p : primes) {
-        if (p * p > n) break;
-        if (n % p == 0) return false;
-    }
-    return true;
-}
-
 vector<pll> getPrimeFactors(ll n){
   vector<pll> primeFactors;
   for (ll i = 2; i*i <= n; i++) {
@@ -166,24 +184,6 @@ ll add(ll a, ll b) {return ((a%MOD) + (b%MOD))%MOD;}
 ll mul(ll a, ll b) {return ((a%MOD) * (b%MOD))%MOD;}
 ll sub(ll a, ll b) {return ((((a%MOD) - (b%MOD))%MOD)+MOD)%MOD;}
 ll divide(ll a, ll b) { return mul(a, pow(b, MOD-2)); }
-
-vll linearSieve(ll n){
-  vector<bool> isPr(n+1, 1); 
-  vll primes;
-  isPr[0] = isPr[1] = 0;
-
-  for (ll i = 2; i <= n; i++) {
-    if(isPr[i]) primes.push_back(i);
-    for(ll p : primes){
-      if(i * p >= n+1) break;
-      isPr[i*p] = 0;
-      if(i%p == 0) break;
-    }
-  }
-
-  return primes;
-}
-
 
 class SegmentTree {
 public:
