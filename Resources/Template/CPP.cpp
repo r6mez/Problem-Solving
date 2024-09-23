@@ -31,7 +31,7 @@ using namespace std;
 #define all(v)  v.begin(), v.end()
 #define makeUnique(v)  v.erase(unique(all(v)), v.end())
 vvll prefixSum2D(vvll& a); ll sumOfSquare(ll x1, ll y1, ll x2, ll y2, vvll& a); 
-vll getDivisors(ll n); bool isPrime(ll n); vector<pll> getPrimeFactors(ll n); vll linearSeive(ll n);
+vll getDivisors(ll n); bool isPrime(ll n); bool isPrime(ll n, vll &primes); vector<pll> getPrimeFactors(ll n); vll linearSieve(ll n);
 ll add(ll a, ll b); ll mul(ll a, ll b); ll sub(ll a, ll b); ll divide(ll a, ll b);
 template<typename T> ostream& operator<<(ostream& os, const vector<T>& v);
 template<typename T> istream& operator>>(istream& is, vector<T>& v);
@@ -109,6 +109,16 @@ bool isPrime(ll n){
   return true;
 }
 
+// Function to check if a number is prime by testing divisibility using primes up to sqrt(n)
+bool isPrime(ll n, vll& primes) {
+    if (n < 2) return false;
+    for (ll p : primes) {
+        if (p * p > n) break;
+        if (n % p == 0) return false;
+    }
+    return true;
+}
+
 vector<pll> getPrimeFactors(ll n){
   vector<pll> primeFactors;
   for (ll i = 2; i*i <= n; i++) {
@@ -127,14 +137,15 @@ ll mul(ll a, ll b) {return ((a%MOD) * (b%MOD))%MOD;}
 ll sub(ll a, ll b) {return ((((a%MOD) - (b%MOD))%MOD)+MOD)%MOD;}
 ll divide(ll a, ll b) { return mul(a, pow(b, MOD-2)); }
 
-vll linearSeive(ll n){
-  vll isPr(n, 1); vll primes;
+vll linearSieve(ll n){
+  vector<bool> isPr(n+1, 1); 
+  vll primes;
   isPr[0] = isPr[1] = 0;
 
-  for (ll i = 2; i < n; i++) {
+  for (ll i = 2; i <= n; i++) {
     if(isPr[i]) primes.push_back(i);
     for(ll p : primes){
-      if(i * p >= n) break;
+      if(i * p >= n+1) break;
       isPr[i*p] = 0;
       if(i%p == 0) break;
     }
