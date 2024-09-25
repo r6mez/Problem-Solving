@@ -8,8 +8,6 @@
 // Memory Limit: $(MEMLIM)
 // Time Limit: $(TIMELIM)
 // Start: $(DATE) 
-#include <cmath>
-#include <functional>
 #ifdef RAMEZ
 #include "debug.hpp"
 #else
@@ -31,7 +29,9 @@ using namespace std;
 #define all(v)  v.begin(), v.end()
 #define makeUnique(v)  v.erase(unique(all(v)), v.end())
 vvll prefixSum2D(vvll& a); ll sumOfSquare(ll x1, ll y1, ll x2, ll y2, vvll& a); 
-vll getDivisors(ll n); bool isPrime(ll n); bool isPrime(ll n, vll &primes); vector<pll> getPrimeFactors(ll n); vll linearSieve(ll n);
+vll getDivisors(ll n); bool isPrime(ll n); bool isPrime(ll n, vll &primes);
+vector<pll> getPrimeFactors(ll n); vll linearSieve(ll n);
+ll nCr(ll n, ll r); ll nPr(ll n, ll r);
 ll add(ll a, ll b); ll mul(ll a, ll b); ll sub(ll a, ll b); ll divide(ll a, ll b);
 template<typename T> ostream& operator<<(ostream& os, const vector<T>& v);
 template<typename T> istream& operator>>(istream& is, vector<T>& v);
@@ -152,6 +152,26 @@ vll linearSieve(ll n){
   }
 
   return primes;
+}
+
+ll nCr(ll n, ll r){
+	ll ans = 1;
+	ll div = 1; // r! 
+	for (ll i = r + 1; i <= n; i++){
+		ans = ans * i;
+		ans /= div;
+		div++;
+	}
+	return ans;
+}
+
+ll nPr(ll n, ll r){
+	ll ans = 1;
+	for (ll i = (n - r) + 1; i <= n; i++){
+		ans *= i;
+		ans %= MOD;
+	}
+	return ans;
 }
 
 
