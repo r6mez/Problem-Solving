@@ -30,8 +30,8 @@ using namespace std;
 #define makeUnique(v)  v.erase(unique(all(v)), v.end())
 vvll prefixSum2D(vvll& a); ll sumOfSquare(ll x1, ll y1, ll x2, ll y2, vvll& a); 
 vll getDivisors(ll n); bool isPrime(ll n); bool isPrime(ll n, vll &primes);
-vector<pll> getPrimeFactors(ll n); vll linearSieve(ll n);
-ll nCr(ll n, ll r); ll nPr(ll n, ll r);
+vector<pll> getPrimeFactors(ll n); vll linearSieve(ll n); ll nPr(ll n, ll r); ll nCr(ll n, ll r);
+ll pwmod(ll b, ll p); void buildFacAndInvFac(); ll nCr2(ll n, ll r);
 ll add(ll a, ll b); ll mul(ll a, ll b); ll sub(ll a, ll b); ll divide(ll a, ll b);
 template<typename T> ostream& operator<<(ostream& os, const vector<T>& v);
 template<typename T> istream& operator>>(istream& is, vector<T>& v);
@@ -154,6 +154,15 @@ vll linearSieve(ll n){
   return primes;
 }
 
+ll nPr(ll n, ll r){
+	ll ans = 1;
+	for (ll i = (n - r) + 1; i <= n; i++){
+		ans *= i;
+		ans %= MOD;
+	}
+	return ans;
+}
+
 ll nCr(ll n, ll r){
 	ll ans = 1;
 	ll div = 1; // r! 
@@ -165,15 +174,34 @@ ll nCr(ll n, ll r){
 	return ans;
 }
 
-ll nPr(ll n, ll r){
-	ll ans = 1;
-	for (ll i = (n - r) + 1; i <= n; i++){
-		ans *= i;
-		ans %= MOD;
-	}
-	return ans;
-}
+const ll N = 1e6 + 2;
 
+vll fac(N), inv(N);
+
+ll pwmod(ll b, ll p) {
+    if (!p) return 1LL;
+    ll ret = pwmod(b, p >> 1LL);
+    ret = mul(ret,ret);
+    if (p & 1LL)
+        ret = mul(ret,b);
+    return ret;
+}
+ 
+void buildFacAndInvFac(){
+    fac[0] = 1;
+    for (int i = 1; i < N; ++i) {
+        fac[i] = mul(fac[i - 1],i);
+    }
+    inv[0] = 1;
+    for (int i = 1; i < N; ++i) {
+        inv[i] = pwmod(fac[i],MOD-2);
+    }
+}
+ 
+ll nCr2(ll n, ll r){
+    if(r > n) return 0;
+    return mul(mul(fac[n],inv[n - r]),inv[r]);
+}
 
 class SegmentTree {
 public:

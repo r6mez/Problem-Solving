@@ -2,14 +2,12 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// Contest: Codeforces Round 974 (Div. 3)
-// Judge: Codeforces
-// URL: https://codeforces.com/contest/2014/problem/D
-// Memory Limit: 256
-// Time Limit: 2000
-// Start: Mon 30 Sep 2024 01:57:20 PM EEST 
-#include <climits>
-#include <set>
+// Contest: CSES Problem Set
+// Judge: CSES
+// URL: https://cses.fi/problemset/task/1082
+// Memory Limit: 512
+// Time Limit: 1000
+// Start: Thu 26 Sep 2024 03:47:55 PM EEST 
 #ifdef RAMEZ
 #include "debug.hpp"
 #else
@@ -40,38 +38,23 @@ template<typename T> istream& operator>>(istream& is, vector<T>& v);
 void FastIO(); void UseFile();
 const int MOD = 1000000007;
 
-void solve(){
-  ll n, d, k; cin >> n >> d >> k;
-  vector<pll> a(k);
+ll X = 1e12+5;
 
-  for (int i = 0; i < k; i++) {
-    cin >> a[i].first >> a[i].second;
-    a[i].first--; a[i].second--;
-  }
+vll divs(X, 1);
 
-  sort(all(a));
-
-  multiset<ll> currEndTimes;
-
-  pll mn = {LLONG_MAX, LLONG_MAX}, mx = {LLONG_MIN, LLONG_MIN};
-
-  ll idx = 0;
-  for (ll i = 0; i+d-1 < n; i++) {
-    while(idx < k && a[idx].first <= i+d-1){
-      currEndTimes.insert(a[idx].second);
-      idx++;
+void build(){
+  for (int i = 2; i < X; i++) {
+    for (int j = i; j < X; j+=i) {
+      divs[j] = add(divs[j], i);
     } 
-
-    while(!currEndTimes.empty() && *currEndTimes.begin() < i){
-      currEndTimes.erase(currEndTimes.begin());
-    }
-
-    ll c = currEndTimes.size();
-    mn = min(mn, {c,i});
-    mx = max(mx, {c, -i});
   }
+}
 
-  cout << -mx.second+1 << " " << mn.second+1 << endl;
+void solve(){
+  ll n; cin >> n;
+  vll divs = getDivisors(n);
+      
+  cout << ans << "\n"; 
 }
 
 /*
@@ -83,7 +66,7 @@ int main() {
     // UseFile();
     FastIO();
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
     return 0;
 }

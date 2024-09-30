@@ -2,14 +2,12 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// Contest: Codeforces Round 974 (Div. 3)
+// Contest: Codeforces Round 976 (Div. 2) and Divide By Zero 9.0
 // Judge: Codeforces
-// URL: https://codeforces.com/contest/2014/problem/D
+// URL: https://codeforces.com/contest/2020/problem/B
 // Memory Limit: 256
-// Time Limit: 2000
-// Start: Mon 30 Sep 2024 01:57:20 PM EEST 
-#include <climits>
-#include <set>
+// Time Limit: 1000
+// Start: Sun 29 Sep 2024 08:55:58 PM EEST 
 #ifdef RAMEZ
 #include "debug.hpp"
 #else
@@ -40,43 +38,30 @@ template<typename T> istream& operator>>(istream& is, vector<T>& v);
 void FastIO(); void UseFile();
 const int MOD = 1000000007;
 
+bool can(ull n, ull k){
+    ull ans = sqrtl(n);
+    ull res = n - ans;
+    return res >= k;
+}
+
 void solve(){
-  ll n, d, k; cin >> n >> d >> k;
-  vector<pll> a(k);
+  ull k; cin >> k;
 
-  for (int i = 0; i < k; i++) {
-    cin >> a[i].first >> a[i].second;
-    a[i].first--; a[i].second--;
+  ull l = 1, r = 2e18;
+  while(l + 1 < r){
+    ull mid = (l+r)/2;
+    if(can(mid, k)){
+      r = mid;
+    } else l = mid;
   }
 
-  sort(all(a));
-
-  multiset<ll> currEndTimes;
-
-  pll mn = {LLONG_MAX, LLONG_MAX}, mx = {LLONG_MIN, LLONG_MIN};
-
-  ll idx = 0;
-  for (ll i = 0; i+d-1 < n; i++) {
-    while(idx < k && a[idx].first <= i+d-1){
-      currEndTimes.insert(a[idx].second);
-      idx++;
-    } 
-
-    while(!currEndTimes.empty() && *currEndTimes.begin() < i){
-      currEndTimes.erase(currEndTimes.begin());
-    }
-
-    ll c = currEndTimes.size();
-    mn = min(mn, {c,i});
-    mx = max(mx, {c, -i});
-  }
-
-  cout << -mx.second+1 << " " << mn.second+1 << endl;
+  cout << r << "\n";
 }
 
 /*
 NOTES:
-
+    while (ans*ans > n) ans--;
+    while ((ans + 1) * (ans + 1) <= n) ans++;
 */
 
 int main() {

@@ -2,14 +2,12 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// Contest: Codeforces Round 974 (Div. 3)
+// Contest: Level.1 Qualification
 // Judge: Codeforces
-// URL: https://codeforces.com/contest/2014/problem/D
-// Memory Limit: 256
+// URL: https://codeforces.com/group/xD5DijeZnV/contest/553213/problem/F
+// Memory Limit: 512
 // Time Limit: 2000
-// Start: Mon 30 Sep 2024 01:57:20 PM EEST 
-#include <climits>
-#include <set>
+// Start: Thu 26 Sep 2024 05:54:31 PM EEST 
 #ifdef RAMEZ
 #include "debug.hpp"
 #else
@@ -41,37 +39,16 @@ void FastIO(); void UseFile();
 const int MOD = 1000000007;
 
 void solve(){
-  ll n, d, k; cin >> n >> d >> k;
-  vector<pll> a(k);
-
-  for (int i = 0; i < k; i++) {
-    cin >> a[i].first >> a[i].second;
-    a[i].first--; a[i].second--;
+  int a, b, n; cin >> a >> b >> n;
+  
+  int ops = 0;
+  while(a <= n && b <= n){
+    if(a < b) a += b;
+    else b += a;
+    ops++;
   }
-
-  sort(all(a));
-
-  multiset<ll> currEndTimes;
-
-  pll mn = {LLONG_MAX, LLONG_MAX}, mx = {LLONG_MIN, LLONG_MIN};
-
-  ll idx = 0;
-  for (ll i = 0; i+d-1 < n; i++) {
-    while(idx < k && a[idx].first <= i+d-1){
-      currEndTimes.insert(a[idx].second);
-      idx++;
-    } 
-
-    while(!currEndTimes.empty() && *currEndTimes.begin() < i){
-      currEndTimes.erase(currEndTimes.begin());
-    }
-
-    ll c = currEndTimes.size();
-    mn = min(mn, {c,i});
-    mx = max(mx, {c, -i});
-  }
-
-  cout << -mx.second+1 << " " << mn.second+1 << endl;
+  
+  cout << ops << "\n";
 }
 
 /*

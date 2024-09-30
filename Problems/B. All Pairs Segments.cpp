@@ -2,14 +2,15 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// Contest: Codeforces Round 974 (Div. 3)
+// Contest: Codeforces Round 975 (Div. 2)
 // Judge: Codeforces
-// URL: https://codeforces.com/contest/2014/problem/D
+// URL: https://codeforces.com/contest/2019/problem/B
 // Memory Limit: 256
-// Time Limit: 2000
-// Start: Mon 30 Sep 2024 01:57:20 PM EEST 
-#include <climits>
-#include <set>
+// Time Limit: 1500
+// Start: Fri 27 Sep 2024 05:25:04 PM EEST 
+#include <algorithm>
+#include <numeric>
+#include <unordered_map>
 #ifdef RAMEZ
 #include "debug.hpp"
 #else
@@ -40,38 +41,33 @@ template<typename T> istream& operator>>(istream& is, vector<T>& v);
 void FastIO(); void UseFile();
 const int MOD = 1000000007;
 
+
 void solve(){
-  ll n, d, k; cin >> n >> d >> k;
-  vector<pll> a(k);
-
-  for (int i = 0; i < k; i++) {
-    cin >> a[i].first >> a[i].second;
-    a[i].first--; a[i].second--;
+  ll n, q; cin >>n >> q;
+  vll x(n+1); 
+  for (int i = 1; i <= n; i++) {
+    cin >> x[i];
   }
 
-  sort(all(a));
+  unordered_map<ll, ll> f; 
 
-  multiset<ll> currEndTimes;
+  for (int i = 1; i <= n-1; i++) {
+    ll pointsBetween = x[i+1] - x[i] - 1;
+    ll segs1 = i * (n-i);
 
-  pll mn = {LLONG_MAX, LLONG_MAX}, mx = {LLONG_MIN, LLONG_MIN};
-
-  ll idx = 0;
-  for (ll i = 0; i+d-1 < n; i++) {
-    while(idx < k && a[idx].first <= i+d-1){
-      currEndTimes.insert(a[idx].second);
-      idx++;
-    } 
-
-    while(!currEndTimes.empty() && *currEndTimes.begin() < i){
-      currEndTimes.erase(currEndTimes.begin());
-    }
-
-    ll c = currEndTimes.size();
-    mn = min(mn, {c,i});
-    mx = max(mx, {c, -i});
+    if(pointsBetween) f[segs1] += pointsBetween;
+    
+    ll segs2 = (i-1)*(n-i) + (n-1);
+    f[segs2]++;
   }
 
-  cout << -mx.second+1 << " " << mn.second+1 << endl;
+  f[n-1]++;
+
+  while(q--){
+    ll k; cin >> k;
+    cout << f[k] << " ";
+  }
+  cout << "\n";
 }
 
 /*

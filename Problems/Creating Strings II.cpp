@@ -2,14 +2,12 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// Contest: Codeforces Round 974 (Div. 3)
-// Judge: Codeforces
-// URL: https://codeforces.com/contest/2014/problem/D
-// Memory Limit: 256
-// Time Limit: 2000
-// Start: Mon 30 Sep 2024 01:57:20 PM EEST 
-#include <climits>
-#include <set>
+// Contest: CSES Problem Set
+// Judge: CSES
+// URL: https://cses.fi/problemset/task/1715
+// Memory Limit: 512
+// Time Limit: 1000
+// Start: Thu 26 Sep 2024 01:36:20 PM EEST 
 #ifdef RAMEZ
 #include "debug.hpp"
 #else
@@ -32,46 +30,58 @@ using namespace std;
 #define makeUnique(v)  v.erase(unique(all(v)), v.end())
 vvll prefixSum2D(vvll& a); ll sumOfSquare(ll x1, ll y1, ll x2, ll y2, vvll& a); 
 vll getDivisors(ll n); bool isPrime(ll n); bool isPrime(ll n, vll &primes);
-vector<pll> getPrimeFactors(ll n); vll linearSieve(ll n); ll nPr(ll n, ll r); ll nCr(ll n, ll r);
-ll pwmod(ll b, ll p); void buildFacAndInvFac(); ll nCr2(ll n, ll r);
+vector<pll> getPrimeFactors(ll n); vll linearSieve(ll n);
+ll nCr(ll n, ll r); ll nPr(ll n, ll r);
 ll add(ll a, ll b); ll mul(ll a, ll b); ll sub(ll a, ll b); ll divide(ll a, ll b);
 template<typename T> ostream& operator<<(ostream& os, const vector<T>& v);
 template<typename T> istream& operator>>(istream& is, vector<T>& v);
 void FastIO(); void UseFile();
 const int MOD = 1000000007;
 
-void solve(){
-  ll n, d, k; cin >> n >> d >> k;
-  vector<pll> a(k);
 
-  for (int i = 0; i < k; i++) {
-    cin >> a[i].first >> a[i].second;
-    a[i].first--; a[i].second--;
-  }
+const ll N = 1e6 + 2;
 
-  sort(all(a));
+vll fac(N), inv(N);
 
-  multiset<ll> currEndTimes;
-
-  pll mn = {LLONG_MAX, LLONG_MAX}, mx = {LLONG_MIN, LLONG_MIN};
-
-  ll idx = 0;
-  for (ll i = 0; i+d-1 < n; i++) {
-    while(idx < k && a[idx].first <= i+d-1){
-      currEndTimes.insert(a[idx].second);
-      idx++;
-    } 
-
-    while(!currEndTimes.empty() && *currEndTimes.begin() < i){
-      currEndTimes.erase(currEndTimes.begin());
+ll pw(ll b, ll p) {
+    if (!p) return 1LL;
+    ll ret = pw(b, p >> 1LL);
+    ret = mul(ret,ret);
+    if (p & 1LL)
+        ret = mul(ret,b);
+    return ret;
+}
+ 
+void build(){
+    fac[0] = 1;
+    for (int i = 1; i < N; ++i) {
+        fac[i] = mul(fac[i - 1],i);
     }
+    inv[0] = 1;
+    for (int i = 1; i < N; ++i) {
+        inv[i] = pw(fac[i],MOD-2);
+    }
+}
+ 
+ll nCr(ll n, ll r){
+    if(r > n) return 0;
+    return mul(mul(fac[n],inv[n - r]),inv[r]);
+}
 
-    ll c = currEndTimes.size();
-    mn = min(mn, {c,i});
-    mx = max(mx, {c, -i});
+void solve(){
+  string s; cin >> s;
+  ll n = s.size();
+  map<char, ll> freq;
+  for (int i = 0; i < n; i++) {
+    freq[s[i]]++;
   }
 
-  cout << -mx.second+1 << " " << mn.second+1 << endl;
+  ll ans = fac[n];
+  for(auto [c, f] : freq){
+    ans = mul(ans, inv[f]);
+  }
+
+  cout << ans << "\n";
 }
 
 /*
@@ -82,8 +92,9 @@ NOTES:
 int main() {
     // UseFile();
     FastIO();
+    build();
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
     return 0;
 }
@@ -195,45 +206,6 @@ ll nPr(ll n, ll r){
 	return ans;
 }
 
-ll nCr(ll n, ll r){
-	ll ans = 1;
-	ll div = 1; // r! 
-	for (ll i = r + 1; i <= n; i++){
-		ans = ans * i;
-		ans /= div;
-		div++;
-	}
-	return ans;
-}
-
-const ll N = 1e6 + 2;
-
-vll fac(N), inv(N);
-
-ll pwmod(ll b, ll p) {
-    if (!p) return 1LL;
-    ll ret = pwmod(b, p >> 1LL);
-    ret = mul(ret,ret);
-    if (p & 1LL)
-        ret = mul(ret,b);
-    return ret;
-}
- 
-void buildFacAndInvFac(){
-    fac[0] = 1;
-    for (int i = 1; i < N; ++i) {
-        fac[i] = mul(fac[i - 1],i);
-    }
-    inv[0] = 1;
-    for (int i = 1; i < N; ++i) {
-        inv[i] = pwmod(fac[i],MOD-2);
-    }
-}
- 
-ll nCr2(ll n, ll r){
-    if(r > n) return 0;
-    return mul(mul(fac[n],inv[n - r]),inv[r]);
-}
 
 class SegmentTree {
 public:

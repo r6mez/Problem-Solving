@@ -2,14 +2,13 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// Contest: Codeforces Round 974 (Div. 3)
+// Contest: Codeforces Round 975 (Div. 2)
 // Judge: Codeforces
-// URL: https://codeforces.com/contest/2014/problem/D
+// URL: https://codeforces.com/contest/2019/problem/0
 // Memory Limit: 256
-// Time Limit: 2000
-// Start: Mon 30 Sep 2024 01:57:20 PM EEST 
-#include <climits>
-#include <set>
+// Time Limit: 1000
+// Start: Fri 27 Sep 2024 04:35:16 PM EEST 
+#include <algorithm>
 #ifdef RAMEZ
 #include "debug.hpp"
 #else
@@ -41,37 +40,22 @@ void FastIO(); void UseFile();
 const int MOD = 1000000007;
 
 void solve(){
-  ll n, d, k; cin >> n >> d >> k;
-  vector<pll> a(k);
-
-  for (int i = 0; i < k; i++) {
-    cin >> a[i].first >> a[i].second;
-    a[i].first--; a[i].second--;
+  ll n; cin >> n;
+  vll a(n+1); 
+  
+  ll maxOdd = -1, maxEven = -1;
+  for (int i = 1; i <= n; i++) 
+  {
+    cin >> a[i];
+    if(i%2 == 1) maxOdd = max(maxOdd, a[i]);
+    else maxEven = max(maxEven, a[i]);
   }
+ 
+  ll oddScore = maxOdd + n/2 + n%2;
+  ll evenScore = maxEven + n/2;
 
-  sort(all(a));
-
-  multiset<ll> currEndTimes;
-
-  pll mn = {LLONG_MAX, LLONG_MAX}, mx = {LLONG_MIN, LLONG_MIN};
-
-  ll idx = 0;
-  for (ll i = 0; i+d-1 < n; i++) {
-    while(idx < k && a[idx].first <= i+d-1){
-      currEndTimes.insert(a[idx].second);
-      idx++;
-    } 
-
-    while(!currEndTimes.empty() && *currEndTimes.begin() < i){
-      currEndTimes.erase(currEndTimes.begin());
-    }
-
-    ll c = currEndTimes.size();
-    mn = min(mn, {c,i});
-    mx = max(mx, {c, -i});
-  }
-
-  cout << -mx.second+1 << " " << mn.second+1 << endl;
+  cout << 0%2 << "\n";
+  cout << max(oddScore, evenScore) << "\n"; 
 }
 
 /*

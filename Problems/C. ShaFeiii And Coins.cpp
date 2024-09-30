@@ -2,14 +2,12 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// Contest: Codeforces Round 974 (Div. 3)
+// Contest: Level.1 Qualification
 // Judge: Codeforces
-// URL: https://codeforces.com/contest/2014/problem/D
+// URL: https://codeforces.com/group/xD5DijeZnV/contest/553213/problem/C
 // Memory Limit: 256
 // Time Limit: 2000
-// Start: Mon 30 Sep 2024 01:57:20 PM EEST 
-#include <climits>
-#include <set>
+// Start: Thu 26 Sep 2024 05:00:22 PM EEST 
 #ifdef RAMEZ
 #include "debug.hpp"
 #else
@@ -41,37 +39,25 @@ void FastIO(); void UseFile();
 const int MOD = 1000000007;
 
 void solve(){
-  ll n, d, k; cin >> n >> d >> k;
-  vector<pll> a(k);
-
-  for (int i = 0; i < k; i++) {
-    cin >> a[i].first >> a[i].second;
-    a[i].first--; a[i].second--;
+  int w[200] = {0};
+  char l, x, r;
+  for (int i = 0; i < 3; i++) {
+    cin >> l >> x >> r;
+    if(x == '>') w[l]++;
+    else w[r]++;
   }
 
-  sort(all(a));
-
-  multiset<ll> currEndTimes;
-
-  pll mn = {LLONG_MAX, LLONG_MAX}, mx = {LLONG_MIN, LLONG_MIN};
-
-  ll idx = 0;
-  for (ll i = 0; i+d-1 < n; i++) {
-    while(idx < k && a[idx].first <= i+d-1){
-      currEndTimes.insert(a[idx].second);
-      idx++;
-    } 
-
-    while(!currEndTimes.empty() && *currEndTimes.begin() < i){
-      currEndTimes.erase(currEndTimes.begin());
-    }
-
-    ll c = currEndTimes.size();
-    mn = min(mn, {c,i});
-    mx = max(mx, {c, -i});
+  if(w['A'] == w['B'] || w['B'] == w['C'] || w['A'] == w['C']) {
+    cout << "Impossible";
+    return;
   }
-
-  cout << -mx.second+1 << " " << mn.second+1 << endl;
+ 
+  if(w['A'] < w['B'] && w['B'] < w['C']) cout << "ABC";
+  if(w['A'] < w['C'] && w['C'] < w['B']) cout << "ACB";
+  if(w['B'] < w['A'] && w['A'] < w['C']) cout << "BAC";
+  if(w['B'] < w['C'] && w['C'] < w['A']) cout << "BCA";
+  if(w['C'] < w['A'] && w['A'] < w['B']) cout << "CAB";
+  if(w['C'] < w['B'] && w['B'] < w['A']) cout << "CBA";
 }
 
 /*
@@ -83,7 +69,7 @@ int main() {
     // UseFile();
     FastIO();
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
     return 0;
 }

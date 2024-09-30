@@ -2,14 +2,12 @@
 // سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
 // فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
 // ----------------------------------------------------
-// Contest: Codeforces Round 974 (Div. 3)
-// Judge: Codeforces
-// URL: https://codeforces.com/contest/2014/problem/D
-// Memory Limit: 256
-// Time Limit: 2000
-// Start: Mon 30 Sep 2024 01:57:20 PM EEST 
-#include <climits>
-#include <set>
+// Contest: CSES Problem Set
+// Judge: CSES
+// URL: https://cses.fi/problemset/task/1712
+// Memory Limit: 512
+// Time Limit: 1000
+// Start: Thu 26 Sep 2024 03:16:47 PM EEST 
 #ifdef RAMEZ
 #include "debug.hpp"
 #else
@@ -33,45 +31,18 @@ using namespace std;
 vvll prefixSum2D(vvll& a); ll sumOfSquare(ll x1, ll y1, ll x2, ll y2, vvll& a); 
 vll getDivisors(ll n); bool isPrime(ll n); bool isPrime(ll n, vll &primes);
 vector<pll> getPrimeFactors(ll n); vll linearSieve(ll n); ll nPr(ll n, ll r); ll nCr(ll n, ll r);
-ll pwmod(ll b, ll p); void buildFacAndInvFac(); ll nCr2(ll n, ll r);
-ll add(ll a, ll b); ll mul(ll a, ll b); ll sub(ll a, ll b); ll divide(ll a, ll b);
+ll pwmod(ll b, ll p, ll mod); void buildFacAndInvFac(); ll nCr2(ll n, ll r);
+ll add(ll a, ll b); ll mul(ll a, ll b, ll mod); ll sub(ll a, ll b); ll divide(ll a, ll b);
 template<typename T> ostream& operator<<(ostream& os, const vector<T>& v);
 template<typename T> istream& operator>>(istream& is, vector<T>& v);
 void FastIO(); void UseFile();
 const int MOD = 1000000007;
 
 void solve(){
-  ll n, d, k; cin >> n >> d >> k;
-  vector<pll> a(k);
-
-  for (int i = 0; i < k; i++) {
-    cin >> a[i].first >> a[i].second;
-    a[i].first--; a[i].second--;
-  }
-
-  sort(all(a));
-
-  multiset<ll> currEndTimes;
-
-  pll mn = {LLONG_MAX, LLONG_MAX}, mx = {LLONG_MIN, LLONG_MIN};
-
-  ll idx = 0;
-  for (ll i = 0; i+d-1 < n; i++) {
-    while(idx < k && a[idx].first <= i+d-1){
-      currEndTimes.insert(a[idx].second);
-      idx++;
-    } 
-
-    while(!currEndTimes.empty() && *currEndTimes.begin() < i){
-      currEndTimes.erase(currEndTimes.begin());
-    }
-
-    ll c = currEndTimes.size();
-    mn = min(mn, {c,i});
-    mx = max(mx, {c, -i});
-  }
-
-  cout << -mx.second+1 << " " << mn.second+1 << endl;
+  ll a, b ,c; cin >> a >> b >> c;
+  ll p = pwmod(b, c, MOD-1);
+  ll ans = pwmod(a, p, MOD);
+  cout << ans << "\n";
 }
 
 /*
@@ -165,9 +136,9 @@ vector<pll> getPrimeFactors(ll n){
 }
 
 ll add(ll a, ll b) {return ((a%MOD) + (b%MOD))%MOD;}
-ll mul(ll a, ll b) {return ((a%MOD) * (b%MOD))%MOD;}
+ll mul(ll a, ll b, ll mod) {return ((a%mod) * (b%mod))%mod;}
 ll sub(ll a, ll b) {return ((((a%MOD) - (b%MOD))%MOD)+MOD)%MOD;}
-ll divide(ll a, ll b) { return mul(a, pow(b, MOD-2)); }
+ll divide(ll a, ll b) { return mul(a, pow(b, MOD-2), MOD); }
 
 vll linearSieve(ll n){
   vector<bool> isPr(n+1, 1); 
@@ -210,29 +181,13 @@ const ll N = 1e6 + 2;
 
 vll fac(N), inv(N);
 
-ll pwmod(ll b, ll p) {
+ll pwmod(ll b, ll p, ll mod) {
     if (!p) return 1LL;
-    ll ret = pwmod(b, p >> 1LL);
-    ret = mul(ret,ret);
+    ll ret = pwmod(b, p >> 1LL, mod);
+    ret = mul(ret,ret,mod);
     if (p & 1LL)
-        ret = mul(ret,b);
+        ret = mul(ret,b,mod);
     return ret;
-}
- 
-void buildFacAndInvFac(){
-    fac[0] = 1;
-    for (int i = 1; i < N; ++i) {
-        fac[i] = mul(fac[i - 1],i);
-    }
-    inv[0] = 1;
-    for (int i = 1; i < N; ++i) {
-        inv[i] = pwmod(fac[i],MOD-2);
-    }
-}
- 
-ll nCr2(ll n, ll r){
-    if(r > n) return 0;
-    return mul(mul(fac[n],inv[n - r]),inv[r]);
 }
 
 class SegmentTree {
