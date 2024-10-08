@@ -1,7 +1,7 @@
-// -------------------- Ramez -------------------------
-// سَأَحمِلُ روحي عَلى راحَتي    وَأُلقي بِها في مَهاوي الرَدى
-// فَإِمّـا حَــيــاةٌ تُسِــرُّ الـصَديقَ    وَإِمّــا مَمــاتٌ يُغــيظُ العِــدى
-// ----------------------------------------------------
+/*
+"You’ve changed so much Thorfinn,
+that anger in your eyes is gone, i’m glad"
+*/
 // Contest: $(CONTEST)
 // Judge: $(JUDGE)
 // URL: $(URL)
@@ -38,7 +38,7 @@ template<typename T> istream& operator>>(istream& is, vector<T>& v);
 void FastIO(); void UseFile();
 const int MOD = 1000000007;
 
-void solve(){
+void Ramez(){
 
 }
 
@@ -52,7 +52,7 @@ int main() {
     FastIO();
     int t = 1;
     // cin >> t;
-    while (t--) solve();
+    while (t--) Ramez();
     return 0;
 }
 
@@ -132,10 +132,19 @@ vector<pll> getPrimeFactors(ll n){
   return primeFactors;
 }
 
+ll pwmod(ll b, ll p) {
+    if (!p) return 1LL;
+    ll ret = pwmod(b, p >> 1LL);
+    ret = mul(ret,ret);
+    if (p & 1LL)
+        ret = mul(ret,b);
+    return ret;
+}
+
 ll add(ll a, ll b) {return ((a%MOD) + (b%MOD))%MOD;}
 ll mul(ll a, ll b) {return ((a%MOD) * (b%MOD))%MOD;}
 ll sub(ll a, ll b) {return ((((a%MOD) - (b%MOD))%MOD)+MOD)%MOD;}
-ll divide(ll a, ll b) { return mul(a, pow(b, MOD-2)); }
+ll divide(ll a, ll b) { return mul(a, pwmod(b, MOD-2)); }
 
 vll linearSieve(ll n){
   vector<bool> isPr(n+1, 1); 
@@ -177,15 +186,6 @@ ll nCr(ll n, ll r){
 const ll N = 1e6 + 2;
 
 vll fac(N), inv(N);
-
-ll pwmod(ll b, ll p) {
-    if (!p) return 1LL;
-    ll ret = pwmod(b, p >> 1LL);
-    ret = mul(ret,ret);
-    if (p & 1LL)
-        ret = mul(ret,b);
-    return ret;
-}
  
 void buildFacAndInvFac(){
     fac[0] = 1;
