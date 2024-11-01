@@ -34,42 +34,46 @@ void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 
 
 int main() {
-    FastIO();
-    int t = 1;
-    cin >> t;
-    while (t--) {
-        int n; cin >> n;
-        string s; cin >> s;
+  FastIO();
+  int t = 1;
+  cin >> t;
+  while (t--) {
+    int n; cin >> n;
+    string s; cin >> s;
 
-        stack<int> st;
-        int cost = 0;
+    stack<int> st;
+    int cost = 0;
 
-        for (int i = 0; i < n; i += 2) {
-            if (!st.empty()) {
-                cost += (i - st.top());
-                st.pop();
-                if (s[i + 1] == ')' && !st.empty()) {
-                    cost += (i + 1 - st.top());
-                    st.pop();
-                } else if(s[i + 1] == ')' && st.empty()){
-                    cost++;
-                }
-                else if (s[i + 1] == '(') {
-                    st.push(i + 1);
-                }
-            }
-            else if (s[i + 1] == '(') {
-                st.push(i);
-                st.push(i + 1);
-            }
-            else if (s[i + 1] == ')') {
-                cost++;
-            }
+    for (int i = 0; i < n; i += 2) {
+      if (!st.empty()) {
+        cost += (i - st.top());
+        st.pop();
+
+        if (s[i + 1] == ')'){
+          if(!st.empty()){
+            cost += (i + 1 - st.top());
+            st.pop();
+          } else {
+            cost++;
+          }
         }
-
-        cout << cost << "\n";
+        else if (s[i + 1] == '(') {
+          st.push(i + 1);
+        }
+      } else {
+        if (s[i + 1] == '(') {
+          st.push(i);
+          st.push(i + 1);
+        }
+        else {
+          cost++;
+        }
+      }
     }
-    return 0;
+
+    cout << cost << "\n";
+  }
+  return 0;
 }
 
 /*
