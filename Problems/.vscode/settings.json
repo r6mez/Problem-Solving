@@ -1,0 +1,20 @@
+{
+    "files.associations": {
+        "iosfwd": "cpp",
+        "iostream": "cpp",
+        "set": "cpp",
+        "ostream": "cpp",
+        "algorithm": "cpp",
+        "queue": "cpp",
+        "deque": "cpp",
+        "format": "cpp",
+        "list": "cpp",
+        "vector": "cpp",
+        "xstring": "cpp",
+        "utility": "cpp",
+        "cmath": "cpp",
+        "cstdlib": "cpp",
+        "iomanip": "cpp",
+        "xtree": "cpp"
+    }
+}
