@@ -27,7 +27,6 @@ void Ramez() {
 
         auto it = lower_bound(a.begin(), a.end(), d);
 
-
         if(*it == d){
             ll i = it - a.begin();
             ll ans = b[i];
