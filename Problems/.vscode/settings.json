@@ -16,6 +16,7 @@
         "cstdlib": "cpp",
         "iomanip": "cpp",
         "xtree": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "ratio": "cpp"
     }
 }
