@@ -1,7 +1,7 @@
 /*
 I tought I could bring an end to the world suffering,
 But when every equation was solved
-all it remained was fields of dreamless solitude.
+all it remained were fields of dreamless solitude.
 */
 #include <bits/stdc++.h>
 using namespace std;
