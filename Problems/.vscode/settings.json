@@ -17,6 +17,12 @@
         "iomanip": "cpp",
         "xtree": "cpp",
         "xutility": "cpp",
-        "ratio": "cpp"
+        "ratio": "cpp",
+        "xhash": "cpp",
+        "array": "cpp",
+        "initializer_list": "cpp",
+        "ranges": "cpp",
+        "span": "cpp",
+        "xiosbase": "cpp"
     }
 }

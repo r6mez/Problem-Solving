@@ -16,6 +16,8 @@ void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 int MOD = 1000000007;
 
+// Got hacked on this solution, It's fast + solve the problem 
+// in 10 minutes but what a sad story huh ?
 void Ramez() {
     ll n, m, k; cin >> n >> m >> k;
     vi a(m); cin >> a;
@@ -39,8 +41,44 @@ void Ramez() {
     } else {
         string ans(m, '0');
         int question = *(dontKnow.begin());
-        int i = lower_bound(all(a), question) - a.begin();
-        ans[i] = '1';
+        auto it = lower_bound(all(a), question);
+        if(it != a.end() && *it == question){
+            int i = it - a.begin();
+            ans[i] = '1';
+        }
+        cout << ans << "\n";
+    }
+}
+
+void Ramez2(){
+    ll n, m, k; cin >> n >> m >> k;
+    vll a(m); cin >> a;
+    vll q(k); cin >> q;
+
+    vll freq(n+1);
+    for (int i = 0; i < k; i++){
+        freq[q[i]]++;
+    }
+    
+    vll unknown;
+    for (int i = 1; i <= n; i++){
+        if(freq[i] == 0) unknown.push_back(i); 
+    }
+
+    if(unknown.size() == 0){
+        string ans(m, '1');
+        cout << ans << "\n";
+    } else if (unknown.size() >= 2){
+        string ans(m, '0');
+        cout << ans << "\n";
+    } else {
+        string ans(m, '0');
+        ll question = unknown[0];
+        auto it = lower_bound(all(a), question);
+        if(it != a.end() && *it == question){
+            int i = it - a.begin();
+            ans[i] = '1';
+        }
         cout << ans << "\n";
     }
 }
