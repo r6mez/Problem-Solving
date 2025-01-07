@@ -23,6 +23,7 @@
         "initializer_list": "cpp",
         "ranges": "cpp",
         "span": "cpp",
-        "xiosbase": "cpp"
+        "xiosbase": "cpp",
+        "stack": "cpp"
     }
 }
