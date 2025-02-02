@@ -21,18 +21,13 @@ void Solve() {
     a.push_back(0);
 
     int i = 0;
-    while (i < n){
+    while (i <= n && i+1 <= k){
         if(i+1 == k){
             cout << "YES\n";
             return;
         }
-        
-        if(i < n) i += a[i];   
 
-        if(i >= n) {
-            cout << "YES\n";
-            return;
-        } 
+        i += a[i];
     }
 
     if(i == n) cout << "YES\n";
@@ -47,8 +42,6 @@ NOTES:
 int32_t main() {
     // UseFile();
     FastIO();
-    int t = 1;
-    // cin >> t;
-    while (t--) Solve();
+    Solve();
     return 0;
 }
