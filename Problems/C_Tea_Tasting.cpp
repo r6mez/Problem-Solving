@@ -18,20 +18,39 @@ int MOD = 1000000007;
 
 void Ramez() {
     int n; cin >> n;
-    vi a(n); cin >> a;
 
-    ll ans = 0;
+    vll a(n), b(n); cin >> a >> b;
 
-    ans += n;
-    for (int i = 3; i <= n; i += 2) ans += n - i + 1;
+    ll rem = 0;
+    multiset<ll> ms;
 
-
-    cout << ans << "\n";
+    for (int i = 0; i < n; ++i) {
+        ms.insert(a[i] + rem);
+        ll sum = 0;
+        while (!ms.empty() && *ms.begin() - rem <= b[i]){
+            if (*ms.begin() - rem > 0) {
+                sum += *ms.begin();
+                sum -= rem;
+            }
+            ms.erase(ms.begin());
+        }
+        sum += (b[i] * ms.size());
+        if (ms.empty())
+            rem = 0;
+        else
+            rem += b[i];
+        cout << sum << " ";
+    }
+    cout << endl;
 }
 
 /*
-NOTES:ِ
-m + (m/3 + 1)
+NOTES:
+10 20 15
+1  12 9
+0  6  9
+
+
 */
 
 int main() {

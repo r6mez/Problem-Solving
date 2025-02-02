@@ -10,35 +10,37 @@ using namespace std;
 #define vll  vector<ll>
 #define pll  pair<ll, ll>
 #define all(v)  v.begin(), v.end()
-template<typename T> ostream& operator<<(ostream& os, vector<T>& v) { for (auto& i : v) os << i << ' '; return os; }
-template<typename T> istream& operator>>(istream& is, vector<T>& v) { for (auto& i : v) is >> i; return is; }
+template<typename T> ostream& operator<<(ostream& os, vector<T>& v){ for (auto& i : v) os << i << ' '; return os; }
+template<typename T> istream& operator>>(istream& is, vector<T>& v){ for (auto& i : v) is >> i; return is; }
 void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 int MOD = 1000000007;
 
 void Ramez() {
-    int n; cin >> n;
-    vi a(n); cin >> a;
-
-    ll ans = 0;
-
-    ans += n;
-    for (int i = 3; i <= n; i += 2) ans += n - i + 1;
-
-
-    cout << ans << "\n";
+    int s, n; cin >> s >> n;
+    vector<pair<int, int>> dragons(n);
+    for (int i = 0; i < n; i++) cin >> dragons[i].first >> dragons[i].second;   
+    sort(all(dragons));
+    for (int i = 0; i < n; i++) {
+        if (s <= dragons[i].first) {
+            cout << "NO\n";
+            return;
+        }
+        s += dragons[i].second;
+    }
+    cout << "YES\n";
 }
-
+ 
 /*
-NOTES:ِ
-m + (m/3 + 1)
+NOTES:
+
 */
 
 int main() {
     // UseFile();
     FastIO();
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) Ramez();
     return 0;
 }

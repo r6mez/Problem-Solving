@@ -25,6 +25,8 @@
         "span": "cpp",
         "xiosbase": "cpp",
         "stack": "cpp",
-        "bitset": "cpp"
+        "bitset": "cpp",
+        "ios": "cpp",
+        "numeric": "cpp"
     }
 }
