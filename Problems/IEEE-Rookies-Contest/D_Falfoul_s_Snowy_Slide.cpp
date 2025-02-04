@@ -14,62 +14,43 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 int  dx[] = { -1,   1,   0,   0 }; int  dy[] = { 0,   0,  -1,   1 }; char dir[] = { 'U', 'D', 'L', 'R' };
 int MOD = 1000000007;
 
+void dfs(int x, int y, unordered_map<int, vi> &rows, unordered_map<int, vi> &cols, set<pii> &visited){
+    if (visited.count({x, y})) return;
+
+    visited.insert({x, y});
+
+    for (int yy : rows[x]) dfs(x, yy, rows, cols, visited);
+    for (int xx : cols[y]) dfs(xx, y, rows, cols, visited);
+}
+
 
 void Solve() {
     int n; cin >> n;
-    vector<vi> a(10, vi(10));
 
-    for (int i = 0; i < n; i++) {
-        int x, y; cin >> x >> y;
-        a[x][y]++;
+    vector<pii> points(n);
+
+    for (int i = 0; i < n; i++){
+        cin >> points[i].first >> points[i].second;
+    }
+    
+
+    unordered_map<int, vi> rows, cols;
+    for (auto [x, y] : points) {
+        rows[x].push_back(y);
+        cols[y].push_back(x);
     }
 
-    int total = 0;
-    for (int i = 1; i < a.size(); i++) {
-        for (int j = 1; j < a.size(); j++) {
-            if (a[i][j]) {
-                bool hasNighbour = false;
-                for (int k = 0; k < 4; k++) {
-                    if (a[i + dx[k]][j + dy[k]]) hasNighbour = true;
-                }
+    set<pii> visited;
 
-                if (hasNighbour == false) {
-                    queue<pii> q;
-                    q.push({ i, j });
-
-                    while (!q.empty()) {
-                        auto [x, y] = q.front();
-                        q.pop();
-
-                        if (a[x][y]) {
-                            total += abs(x - i) + abs(y - j);
-                            for (int q = min(i, x) + 1; q < max(i, x); q++) {
-                                a[q][j]++;
-                            }
-                            for (int q = min(j, y) + 1; q < max(j, y); q++) {
-                                a[x][q]++;
-                            }
-
-                            cout << i << " " << j << "\n";
-                            for (int f = 0; f < a.size(); f++) {
-                                cout << a[f] << "\n";
-                            }
-                            cout << "\n";
-                        }
-                        else {
-                            for (int k = 0; k < 4; k++) {
-                                q.push({ i + dx[k], j + dy[k] });
-                            }
-                        }
-
-                        bool foundN = false;
-                    }
-                }
-            }
+    int components = 0;
+    for (auto [x, y] : points) {
+        if (!visited.count({x, y})) {
+            components++;
+            dfs(x, y, rows, cols, visited);
         }
     }
 
-    cout << total << "\n";
+    cout << components - 1 << "\n";
 }
 
 /*

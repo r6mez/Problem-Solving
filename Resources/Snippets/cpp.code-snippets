@@ -1,0 +1,282 @@
+{
+	"prefixSum2D": {
+		"scope": "cpp",
+		"prefix": "prefixSum",
+		"body": [
+			"vector<vi> prefixSum2D(vector<vi>& a) {",
+			"    vector<vi> b(a.size(), vi(a[0].size()));",
+			"    for (int i = 0; i < a.size(); i++) {",
+			"        partial_sum(all(a[i]), b[i].begin());",
+			"    }",
+			"    for (int i = 0; i < a[0].size(); i++) {",
+			"        for (int j = 1; j < a.size(); j++) {",
+			"            b[j][i] += b[j - 1][i];",
+			"        }",
+			"    }",
+			"    return b;",
+			"}"
+		],
+		"description": "Generate a 2D prefix sum array from a 2D input array"
+	},
+
+	"sumOfSquare": {
+        "scope": "cpp",
+        "prefix": "sumOfSquare",
+        "body": [
+            "int sumOfSquare(int x1, int y1, int x2, int y2, vector<vi>& a) {",
+            "    return (a[x2][y2] - a[x1 - 1][y2] - a[x2][y1 - 1]) + a[x1 - 1][y1 - 1];",
+            "}"
+        ],
+        "description": "Calculate the sum of a sub-square in a 2D prefix sum array."
+    },
+
+    "getDivisors": {
+        "scope": "cpp",
+        "prefix": "getDivisors",
+        "body": [
+            "vi getDivisors(int n) {",
+            "    vi divs;",
+            "    for (int i = 1; i * i <= n; i++) {",
+            "        if (n % i == 0) {",
+            "            divs.push_back(i);",
+            "            if (i * i != n) divs.push_back(n / i);",
+            "        }",
+            "    }",
+            "    return divs;",
+            "}"
+        ],
+        "description": "Get all divisors of a number."
+    },
+
+    "isPrime": {
+        "scope": "cpp",
+        "prefix": "isPrime",
+        "body": [
+            "bool isPrime(int n) {",
+            "    if (n == 2) return true;",
+            "    if (n == 1 || n % 2 == 0) return false;",
+            "    for (int i = 3; i * i <= n; i += 2) {",
+            "        if (n % i == 0) return false;",
+            "    }",
+            "    return true;",
+            "}"
+        ],
+        "description": "Check if a number is prime."
+    },
+
+    "isPrimeOptimized": {
+        "scope": "cpp",
+        "prefix": "isPrimeOptimized",
+        "body": [
+            "bool isPrime(int n, vi& primes) {",
+            "    if (n < 2) return false;",
+            "    for (int p : primes) {",
+            "        if (p * p > n) break;",
+            "        if (n % p == 0) return false;",
+            "    }",
+            "    return true;",
+            "}"
+        ],
+        "description": "Optimized prime check using a list of primes up to sqrt(n)."
+    },
+
+    "getPrimeFactors": {
+        "scope": "cpp",
+        "prefix": "getPrimeFactors",
+        "body": [
+            "vector<pll> getPrimeFactors(int n) {",
+            "    vector<pll> primeFactors;",
+            "    for (int i = 2; i * i <= n; i++) {",
+            "        if (n % i == 0) {",
+            "            int count = 0;",
+            "            while (n % i == 0) n /= i, count++;",
+            "            primeFactors.push_back({i, count});",
+            "        }",
+            "    }",
+            "    if (n > 1) primeFactors.push_back({n, 1});",
+            "    return primeFactors;",
+            "}"
+        ],
+        "description": "Get all prime factors of a number along with their counts."
+    },
+
+	"modularArithmetic": {
+        "scope": "cpp",
+        "prefix": "modOps",
+        "body": [
+            "int add(int a, int b) { return ((a % MOD) + (b % MOD)) % MOD; }",
+            "int mul(int a, int b) { return ((a % MOD) * (b % MOD)) % MOD; }",
+            "int sub(int a, int b) { return ((((a % MOD) - (b % MOD)) % MOD) + MOD) % MOD; }",
+            "int divide(int a, int b) { return mul(a, pwmod(b, MOD - 2)); }"
+        ],
+        "description": "Provides functions for modular addition, multiplication, subtraction, and division."
+    },
+
+    "pwmod": {
+        "scope": "cpp",
+        "prefix": "pwmod",
+        "body": [
+            "int pwmod(int b, int p) {",
+            "    if (!p) return 1LL;",
+            "    int ret = pwmod(b, p >> 1LL);",
+            "    ret = mul(ret, ret);",
+            "    if (p & 1LL)",
+            "        ret = mul(ret, b);",
+            "    return ret;",
+            "}"
+        ],
+        "description": "Calculate b^p % MOD using modular exponentiation."
+    },
+
+    "linearSieve": {
+        "scope": "cpp",
+        "prefix": "linearSieve",
+        "body": [
+            "vi linearSieve(int n) {",
+            "    vector<bool> isPr(n + 1, 1);",
+            "    vi primes;",
+            "    isPr[0] = isPr[1] = 0;",
+            "    for (int i = 2; i <= n; i++) {",
+            "        if (isPr[i]) primes.push_back(i);",
+            "        for (int p : primes) {",
+            "            if (i * p >= n + 1) break;",
+            "            isPr[i * p] = 0;",
+            "            if (i % p == 0) break;",
+            "        }",
+            "    }",
+            "    return primes;",
+            "}"
+        ],
+        "description": "Generate primes up to n using a linear sieve algorithm."
+    },
+
+    "nPr": {
+        "scope": "cpp",
+        "prefix": "nPr",
+        "body": [
+            "int nPr(int n, int r) {",
+            "    int ans = 1;",
+            "    for (int i = (n - r) + 1; i <= n; i++) {",
+            "        ans *= i;",
+            "        ans %= MOD;",
+            "    }",
+            "    return ans;",
+            "}"
+        ],
+        "description": "Returns the number of permutations nPr"
+    },
+
+	"nCr": {
+        "scope": "cpp",
+        "prefix": "nCr",
+        "body": [
+            "int nCr(int n, int r) {",
+            "    int ans = 1;",
+            "    int div = 1; // r!",
+            "    for (int i = r + 1; i <= n; i++) {",
+            "        ans = ans * i;",
+            "        ans /= div;",
+            "        div++;",
+            "    }",
+            "    return ans;",
+            "}"
+        ],
+        "description": "Returns the number of combinations nCr"
+    },
+
+	"nCr2": {
+        "scope": "cpp",
+        "prefix": "nCr2",
+        "body": [
+            "const int SizeMax = 1e6 + 2;",
+            "",
+            "vi fac(0), inv(0);",
+            "",
+            "void buildFacAndInvFac() {",
+            "    fac.resize(SizeMax);",
+            "    inv.resize(SizeMax);",
+            "    fac[0] = 1;",
+            "    for (int i = 1; i < SizeMax; ++i) {",
+            "        fac[i] = mul(fac[i - 1], i);",
+            "    }",
+            "    inv[0] = 1;",
+            "    for (int i = 1; i < SizeMax; ++i) {",
+            "        inv[i] = pwmod(fac[i], MOD - 2);",
+            "    }",
+            "}",
+            "",
+            "int nCr2(int n, int r) {",
+            "    if (r > n) return 0;",
+            "    return mul(mul(fac[n], inv[n - r]), inv[r]);",
+            "}"
+        ],
+        "description": "Builds factorials and modular inverses, and computes nCr using precomputed values."
+    },
+
+    "SegmentTree": {
+        "scope": "cpp",
+        "prefix": "SegmentTree",
+        "body": [
+            "class SegmentTree {",
+            "public:",
+            "    int size;",
+            "    vector<int> sums, mins, maxs;",
+            "    SegmentTree(int n) {",
+            "        size = 1;",
+            "        while (size < n) size *= 2;",
+            "        sums.assign(2 * size, 0LL);",
+            "        mins.assign(2 * size, LLONG_MAX);",
+            "        maxs.assign(2 * size, LLONG_MIN);",
+            "    }",
+            "    void build(const vi& a) { build(a, 0, 0, size); }",
+            "    void update(int i, int v) { update(i, v, 0, 0, size); }",
+            "    int sumSeg(int l, int r) { return sumSeg(l, r, 0, 0, size); }",
+            "    int minSeg(int l, int r) { return minSeg(l, r, 0, 0, size); }",
+            "    int maxSeg(int l, int r) { return maxSeg(l, r, 0, 0, size); }",
+            "private:",
+            "    void build(const vi& a, int x, int lx, int rx) {",
+            "        if (rx - lx == 1) {",
+            "            if (lx < (int)a.size()) {",
+            "                sums[x] = a[lx];",
+            "                mins[x] = a[lx];",
+            "                maxs[x] = a[lx];",
+            "            }",
+            "            return;",
+            "        }",
+            "        int mid = (lx + rx) / 2;",
+            "        build(a, 2 * x + 1, lx, mid);",
+            "        build(a, 2 * x + 2, mid, rx);",
+            "        sums[x] = sums[2 * x + 1] + sums[2 * x + 2];",
+            "        mins[x] = min(mins[2 * x + 1], mins[2 * x + 2]);",
+            "        maxs[x] = max(maxs[2 * x + 1], maxs[2 * x + 2]);",
+            "    }",
+            "    void update(int i, int v, int x, int lx, int rx) {",
+            "        if (rx - lx == 1) {",
+            "            sums[x] = v;",
+            "            mins[x] = v;",
+            "            maxs[x] = v;",
+            "            return;",
+            "        }",
+            "        int mid = (lx + rx) / 2;",
+            "        if (i < mid) {",
+            "            update(i, v, 2 * x + 1, lx, mid);",
+            "        } else {",
+            "            update(i, v, 2 * x + 2, mid, rx);",
+            "        }",
+            "        sums[x] = sums[2 * x + 1] + sums[2 * x + 2];",
+            "        mins[x] = min(mins[2 * x + 1], mins[2 * x + 2]);",
+            "        maxs[x] = max(maxs[2 * x + 1], maxs[2 * x + 2]);",
+            "    }",
+            "    int sumSeg(int l, int r, int x, int lx, int rx) {",
+            "        if (lx >= r || l >= rx) return 0;",
+            "        if (lx >= l && rx <= r) return sums[x];",
+            "        int mid = (lx + rx) / 2;",
+            "        int left = sumSeg(l, r, 2 * x + 1, lx, mid);",
+            "        int right = sumSeg(l, r, 2 * x + 2, mid, rx);",
+            "        return left + right;",
+            "    }",
+            "};"
+        ],
+        "description": "Class implementation of a Segment Tree with sum, min, and max queries."
+    }
+}

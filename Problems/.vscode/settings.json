@@ -27,6 +27,7 @@
         "stack": "cpp",
         "bitset": "cpp",
         "ios": "cpp",
-        "numeric": "cpp"
+        "numeric": "cpp",
+        "unordered_map": "cpp"
     }
 }
