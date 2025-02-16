@@ -3,9 +3,9 @@ I tought I could bring an end to the world suffering,
 But when every equation was solved
 all it remained were fields of dreamless solitude.
 */
-// A. Dubstep
-// URL: https://codeforces.com/problemset/problem/208/A
-// Time: 2/12/2025, 12:43:49 PM
+// B. Letter
+// URL: https://codeforces.com/contest/43/problem/B
+// Time: 2/13/2025, 12:48:15 AM
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
@@ -21,21 +21,32 @@ int MOD = 1000000007;
 
 
 void Ramez() {
-    string s; cin >> s;
-    bool space = false;
-    for (int i = 0; i < s.size(); ){
-        if(s[i] == 'W' && s[i+1] == 'U' && s[i+2] == 'B') {
-            i += 3;
-            if(!space){
-                cout << " ";
-                space = true;
-            }
-        } else {
-            cout << s[i];
-            i++;
-            space = false;
+    string head, text;
+    getline(cin, head);
+    getline(cin, text);
+    vi freq(55, 0);
+    for (char c : head) {
+        if (c != ' ') {
+            if (islower(c))
+                freq[c - 'a' + 26]++;
+            else
+                freq[c - 'A']++;
         }
     }
+    for (char c : text) {
+        if (c != ' ') {
+            if (islower(c)) {
+                if (!freq[c - 'a' + 26])
+                    return void(cout << "NO\n");
+                freq[c - 'a' + 26]--;
+            } else {
+                if (!freq[c - 'A'])
+                    return void(cout << "NO\n");
+                freq[c - 'A']--;
+            }
+        }
+    }
+    cout << "YES\n";
 }
 
 /*

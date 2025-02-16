@@ -3,9 +3,9 @@ I tought I could bring an end to the world suffering,
 But when every equation was solved
 all it remained were fields of dreamless solitude.
 */
-// A. Dubstep
-// URL: https://codeforces.com/problemset/problem/208/A
-// Time: 2/12/2025, 12:43:49 PM
+// B. Following Directions
+// URL: https://codeforces.com/contest/1791/problem/B
+// Time: 2/12/2025, 12:25:45 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
@@ -21,21 +21,19 @@ int MOD = 1000000007;
 
 
 void Ramez() {
-    string s; cin >> s;
-    bool space = false;
-    for (int i = 0; i < s.size(); ){
-        if(s[i] == 'W' && s[i+1] == 'U' && s[i+2] == 'B') {
-            i += 3;
-            if(!space){
-                cout << " ";
-                space = true;
-            }
-        } else {
-            cout << s[i];
-            i++;
-            space = false;
-        }
-    }
+    int n;
+	cin >> n;
+	string s;
+	cin >> s;
+	int x = 0, y = 0;
+	for (int i = 0; i < n; i++) {
+		if (s[i] == 'L') {x--;}
+		if (s[i] == 'R') {x++;}
+		if (s[i] == 'D') {y--;}
+		if (s[i] == 'U') {y++;}
+		if (x == 1 && y == 1) {cout << "YES\n"; return;}
+	}	
+	cout << "NO\n";
 }
 
 /*
@@ -47,7 +45,7 @@ int32_t main() {
     // UseFile();
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) Ramez();
     return 0;
 }
