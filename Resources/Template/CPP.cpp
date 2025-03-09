@@ -35,4 +35,3 @@ int32_t main() {
     while (t--) Ramez();
     return 0;
 }
-

@@ -4,8 +4,8 @@ But when every equation was solved
 all that remained were fields of dreamless solitude.
 */
 // D. Kefa and Dishes
-// URL: https://codeforces.com/problemset/problem/580/d
-// Time: 3/1/2025, 2:02:38 PM
+// URL: https://codeforces.com/contest/580/problem/D
+// Time: 3/6/2025, 8:08:11 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -21,10 +21,10 @@ const int MOD = 1000000007;
 int n, m, k;
 int dishes[20];
 int bonus[20][20];
-
+ 
 // dp[mask][last] stores the maximum additional satisfaction obtainable starting from state (mask, last).
 int dp[1 << 18][20];
-
+ 
 int rec(int mask, int last) {
     if (__builtin_popcount(mask) == m)
         return 0;
@@ -43,7 +43,7 @@ int rec(int mask, int last) {
     dp[mask][last] = best;
     return best;
 }
-
+ 
 void Ramez() {
     cin >> n >> m >> k;
     for (int i = 0; i < n; i++){
@@ -82,4 +82,3 @@ int32_t main() {
     while (t--) Ramez();
     return 0;
 }
-
