@@ -1,7 +1,7 @@
 /*
-I tought I could bring an end to the world suffering,
-But when every equation was solved
-all that remained were fields of dreamless solitude.
+    I thought I could bring an end to the world's suffering,
+    But when every equation was solved all that remained
+    were fields of dreamless solitude.
 */
 // {{problemName}}
 // URL: {{problemURL}}
