@@ -1,11 +1,11 @@
 /*
-I tought I could bring an end to the world suffering,
-But when every equation was solved
-all that remained were fields of dreamless solitude.
+    I thought I could bring an end to the world's suffering,
+    But when every equation was solved all that remained
+    were fields of dreamless solitude.
 */
 // C. Solve Equation
 // URL: https://codeforces.com/group/c3FDl9EUi9/contest/264941/problem/C
-// Time: 2/19/2025, 10:34:22 PM
+// Time: 3/12/2025, 11:00:06 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -16,19 +16,19 @@ template<typename T> ostream& operator<<(ostream& os, vector<T>& v) { for (auto&
 template<typename T> istream& operator>>(istream& is, vector<T>& v) { for (auto& i : v) is >> i; return is; }
 void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
-int MOD = 1000000007;
+const int MOD = 1000000007;
 
 void Ramez() {
     double c, time; cin >> c >> time;
-    
-    double l = 0, r = 1e10;
-    while(l + 0.000001 < r){
-        double mid = (l + r) / 2;
-        if(c * mid * log2(mid) <= time) l = mid;
-        else r = mid;
+
+    double l = 0, r = 2e9 + 10;
+    while(l + 1e-6 < r){
+        double n = (l + r)/2;
+        if(c * n * log2(n) <= time) l = n;
+        else r = n;
     }
-    
-    cout << fixed << setprecision(9) << l << "\n";
+
+    cout << fixed << setprecision(6) << l << "\n";
 }
 
 /*
@@ -44,4 +44,3 @@ int32_t main() {
     while (t--) Ramez();
     return 0;
 }
-

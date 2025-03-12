@@ -1,11 +1,11 @@
 /*
-I tought I could bring an end to the world suffering,
-But when every equation was solved
-all that remained were fields of dreamless solitude.
+    I thought I could bring an end to the world's suffering,
+    But when every equation was solved all that remained
+    were fields of dreamless solitude.
 */
 // C. Kefa and Company
 // URL: https://codeforces.com/group/3nQaj5GMG5/contest/376466/problem/C
-// Time: 3/9/2025, 2:30:08 PM
+// Time: 3/12/2025, 11:40:37 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -20,32 +20,32 @@ const int MOD = 1000000007;
 
 void Ramez() {
     int n, d; cin >> n >> d;
-    vector<pii> a(n);
+    vector<pii> friends(n);
     for (int i = 0; i < n; i++){
-        cin >> a[i].first >> a[i].second;
+        cin >> friends[i].first >> friends[i].second;
     }
 
-    sort(all(a));
-
-    vi pre(n); pre[0] = a[0].second;
+    sort(all(friends));
+    
+    vi pre(n); pre[0] = friends[0].second;
     for (int i = 1; i < n; i++){
-        pre[i] = a[i].second + pre[i-1];
+        pre[i] = pre[i - 1] + friends[i].second;
     }
-
-    int maxMoney = 0;
+    
+    int maxSum = 0;
     for (int i = 0; i < n; i++){
-        int j = upper_bound(all(a), make_pair(a[i].first + d, 0LL)) - a.begin();
+        int j = upper_bound(all(friends), make_pair(friends[i].first + d, 0LL)) - friends.begin();
         j--;
-        int currMoney = pre[j] - (i > 0 ? pre[i - 1] : 0);
-        maxMoney = max(maxMoney, currMoney);
+        int currSum = pre[j] - (i > 0? pre[i - 1] : 0);
+        maxSum = max(maxSum, currSum);
     }
-
-    cout << maxMoney << "\n";
+    
+    cout << maxSum;
 }
 
 /*
 NOTES:
-
+{friends[i].first + d, 0}
 */
 
 int32_t main() {
