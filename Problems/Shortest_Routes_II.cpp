@@ -3,9 +3,9 @@
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// E. Maximum distinct
-// URL: https://codeforces.com/group/c3FDl9EUi9/contest/264941/problem/E
-// Time: 3/13/2025, 12:02:59 AM
+// Shortest Routes II
+// URL: https://cses.fi/problemset/task/1672
+// Time: 3/26/2025, 8:08:37 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -18,30 +18,37 @@ void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007;
 
+// Floyd-Warshall Algorithm
 void Ramez() {
-    int n, k; cin >> n >> k;
-    string s; cin >> s;
+    int n, m, q; cin >> n >> m >> q;
 
+    vector<vi> dis(n + 1, vi(n + 1, LLONG_MAX));
 
-
-    map<char, int> mp;
-
-    for (int i = 0; i < k; i++){
-        mp[s[i]]++;
+    for (int i = 1; i <= n; i++) {
+        dis[i][i] = 0;
     }
 
-    int maxDistinct = mp.size();
-    for (int i = 0; i < n - 1 - k; i++){
-        mp[s[i + k]]++;
 
-        mp[s[i]]--;
-        if(mp[s[i]] == 0) mp.erase(s[i]);
-
-        int currDistinct = mp.size();
-        maxDistinct = max(maxDistinct, currDistinct);
+    for (int i = 0; i < m; i++) {
+        int a, b, c; cin >> a >> b >> c;
+        dis[a][b] = min(dis[a][b], c);
+        dis[b][a] = min(dis[b][a], c);
     }
-    
-    cout << maxDistinct;
+
+    for (int k = 1; k <= n; k++) {
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (dis[i][k] < LLONG_MAX && dis[k][j] < LLONG_MAX)
+                    dis[i][j] = min(dis[i][j], dis[i][k] + dis[k][j]);
+            }
+        }
+    }
+
+    while (q--) {
+        int a, b; cin >> a >> b;
+        if (dis[a][b] == LLONG_MAX) cout << "-1\n";
+        else cout << dis[a][b] << "\n";
+    }
 }
 
 /*

@@ -3,9 +3,9 @@
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// B. Random Teams
-// URL: https://codeforces.com/contest/478/problem/B
-// Time: 3/26/2025, 10:52:33 PM
+// D. Place of the Olympiad
+// URL: https://codeforces.com/contest/2091/problem/D
+// Time: 3/25/2025, 5:05:21 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -18,23 +18,22 @@ void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007;
 
-
-int pairs(int n){
-  return n*(n-1)/2;  
+bool can(int x, int n, int m, int k) {
+    if (k == 0) return true;
+    return k <= n * ((m / (x + 1)) * x + min(x, (m % (x + 1))));
 }
 
-void Ramez(){
-  int people, teams; cin >> people >> teams;
 
-  int members = people/teams, kemala3adad = people%teams;
+void Ramez() {
+    int n, m, k; cin >> n >> m >> k;
 
-  int minCount = (teams - kemala3adad) * pairs(members) + (kemala3adad) * pairs(members + 1);
-
-  int bigTeamMemebers = people - (teams - 1);
-
-  int maxCount = pairs(bigTeamMemebers);
-
-  cout << minCount << " " << maxCount;
+    int l = 0, r = m + 1;
+    while(l + 1 < r){
+        int mid = (l + r) / 2;
+        if(can(mid, n, m, k)) r = mid;
+        else l = mid;
+    }
+    cout << r << "\n";
 }
 
 /*
@@ -46,7 +45,7 @@ int32_t main() {
     // UseFile();
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) Ramez();
     return 0;
 }

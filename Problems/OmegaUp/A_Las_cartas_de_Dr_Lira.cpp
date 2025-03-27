@@ -1,11 +1,11 @@
 /*
-    I thought I could bring an end to the world's suffering,
-    But when every equation was solved all that remained
-    were fields of dreamless solitude.
+I tought I could bring an end to the world suffering,
+But when every equation was solved
+all that remained were fields of dreamless solitude.
 */
-// E. Maximum distinct
-// URL: https://codeforces.com/group/c3FDl9EUi9/contest/264941/problem/E
-// Time: 3/13/2025, 12:02:59 AM
+// A. Las cartas de Dr. Lira
+// URL: https://omegaup.com/arena/gsoc2025/practice/#problems/CartasDrLira
+// Time: 3/3/2025, 10:15:42 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -19,29 +19,21 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007;
 
 void Ramez() {
-    int n, k; cin >> n >> k;
+    int n; cin >> n;
     string s; cin >> s;
-
-
-
-    map<char, int> mp;
-
-    for (int i = 0; i < k; i++){
-        mp[s[i]]++;
+    int evenBlacks = 0, oddBlacks = 0;
+    for (int i = 0; i < n; i++) {
+        if (i % 2 == 0 && s[i] == 'B')  evenBlacks++;
+        if (i % 2 == 1 && s[i] == 'B')  oddBlacks++;
     }
 
-    int maxDistinct = mp.size();
-    for (int i = 0; i < n - 1 - k; i++){
-        mp[s[i + k]]++;
-
-        mp[s[i]]--;
-        if(mp[s[i]] == 0) mp.erase(s[i]);
-
-        int currDistinct = mp.size();
-        maxDistinct = max(maxDistinct, currDistinct);
+    int oddIndecies = n/2;
+    int evenIndecies = n - oddIndecies;
+    if(evenBlacks > oddBlacks){
+        cout << evenIndecies - evenBlacks + oddBlacks << endl;
+    } else {
+        cout << oddIndecies - oddBlacks + evenBlacks << endl;
     }
-    
-    cout << maxDistinct;
 }
 
 /*
@@ -57,3 +49,4 @@ int32_t main() {
     while (t--) Ramez();
     return 0;
 }
+

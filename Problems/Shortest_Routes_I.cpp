@@ -3,9 +3,9 @@
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// B. Random Teams
-// URL: https://codeforces.com/contest/478/problem/B
-// Time: 3/26/2025, 10:52:33 PM
+// Shortest Routes I
+// URL: https://cses.fi/problemset/task/1671
+// Time: 3/26/2025, 7:36:38 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -18,23 +18,34 @@ void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007;
 
+// Dijkstra Algorithm
+void Ramez() {
+    int n, m; cin >> n >> m;
+    vector<vector<pii>> adj(n + 1);
+    for (int i = 0; i < m; i++) {
+        int a, b, c; cin >> a >> b >> c;
+        adj[a].push_back({ b, c });
+    }
 
-int pairs(int n){
-  return n*(n-1)/2;  
-}
+    vi vis(n + 1), dis(n + 1);
+    priority_queue<pii, vector<pii>, greater<pii>> pq; // {cost, node}
+    pq.push({ 0, 1 });
 
-void Ramez(){
-  int people, teams; cin >> people >> teams;
+    while (!pq.empty()) {
+        auto [parentCost, parent] = pq.top(); pq.pop();
+        if (vis[parent]) continue;
+        vis[parent] = 1; dis[parent] = parentCost;
 
-  int members = people/teams, kemala3adad = people%teams;
+        for (auto [child, childCost] : adj[parent]) {
+            if (!vis[child]) {
+                pq.push({ parentCost + childCost, child });
+            }
+        }
+    }
 
-  int minCount = (teams - kemala3adad) * pairs(members) + (kemala3adad) * pairs(members + 1);
-
-  int bigTeamMemebers = people - (teams - 1);
-
-  int maxCount = pairs(bigTeamMemebers);
-
-  cout << minCount << " " << maxCount;
+    for (int i = 1; i <= n; i++) {
+        cout << dis[i] << " ";
+    }
 }
 
 /*

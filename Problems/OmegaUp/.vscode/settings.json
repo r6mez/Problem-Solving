@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "*.sqlbook": "sql",
+        "*.ndjson": "jsonl",
+        "*.dbclient-js": "javascript",
+        "iostream": "cpp",
+        "queue": "cpp",
+        "xtree": "cpp",
+        "vector": "cpp",
+        "utility": "cpp",
+        "stack": "cpp"
+    }
+}

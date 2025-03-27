@@ -1,11 +1,3 @@
-/*
-    I thought I could bring an end to the world's suffering,
-    But when every equation was solved all that remained
-    were fields of dreamless solitude.
-*/
-// B. Random Teams
-// URL: https://codeforces.com/contest/478/problem/B
-// Time: 3/26/2025, 10:52:33 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -18,23 +10,16 @@ void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007;
 
+void Ramez() {
+    int n; cin >> n;
+    int a[n];
+    for (int i = 0; i < n; i++){
+        cin >> a[i];
+    }
 
-int pairs(int n){
-  return n*(n-1)/2;  
-}
-
-void Ramez(){
-  int people, teams; cin >> people >> teams;
-
-  int members = people/teams, kemala3adad = people%teams;
-
-  int minCount = (teams - kemala3adad) * pairs(members) + (kemala3adad) * pairs(members + 1);
-
-  int bigTeamMemebers = people - (teams - 1);
-
-  int maxCount = pairs(bigTeamMemebers);
-
-  cout << minCount << " " << maxCount;
+    for (int i = 0; i < n; i++){
+        cout << a[i] << " ";
+    }
 }
 
 /*

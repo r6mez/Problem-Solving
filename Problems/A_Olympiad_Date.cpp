@@ -3,9 +3,9 @@
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// B. Random Teams
-// URL: https://codeforces.com/contest/478/problem/B
-// Time: 3/26/2025, 10:52:33 PM
+// A. Olympiad Date
+// URL: https://codeforces.com/contest/2091/problem/0
+// Time: 3/25/2025, 4:42:37 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -18,23 +18,22 @@ void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007;
 
+void Ramez() {
+    multiset<int> should = {0, 0, 1, 3, 2, 0, 2, 5};
+    
+    int n; cin >> n;
+    vi a(n); cin >> a;
 
-int pairs(int n){
-  return n*(n-1)/2;  
-}
+    for (int i = 0; i < n; i++){
+        int x = a[i];
+        if(should.count(x)) should.erase(should.find(x));
+        if(should.empty()) {
+            cout << i + 1 << "\n";
+            return;
+        }
+    }
 
-void Ramez(){
-  int people, teams; cin >> people >> teams;
-
-  int members = people/teams, kemala3adad = people%teams;
-
-  int minCount = (teams - kemala3adad) * pairs(members) + (kemala3adad) * pairs(members + 1);
-
-  int bigTeamMemebers = people - (teams - 1);
-
-  int maxCount = pairs(bigTeamMemebers);
-
-  cout << minCount << " " << maxCount;
+    cout << "0\n";
 }
 
 /*
@@ -46,7 +45,7 @@ int32_t main() {
     // UseFile();
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) Ramez();
     return 0;
 }

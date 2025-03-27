@@ -3,9 +3,9 @@
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// B. Random Teams
-// URL: https://codeforces.com/contest/478/problem/B
-// Time: 3/26/2025, 10:52:33 PM
+// F. Igor and Mountain
+// URL: https://codeforces.com/contest/2091/problem/F
+// Time: 3/25/2025, 6:19:14 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -18,23 +18,20 @@ void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007;
 
+void Ramez() {
+    int n, m, d; cin >> n >> m >> d;
+    vector<string> s(n); cin >> s;
 
-int pairs(int n){
-  return n*(n-1)/2;  
-}
+    vector<vi> holds(n);
 
-void Ramez(){
-  int people, teams; cin >> people >> teams;
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < m; j++){
+            if(s[i][j] == '#') holds[i].push_back(j);
+        }
+    }
+    
+    
 
-  int members = people/teams, kemala3adad = people%teams;
-
-  int minCount = (teams - kemala3adad) * pairs(members) + (kemala3adad) * pairs(members + 1);
-
-  int bigTeamMemebers = people - (teams - 1);
-
-  int maxCount = pairs(bigTeamMemebers);
-
-  cout << minCount << " " << maxCount;
 }
 
 /*

@@ -19,8 +19,28 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 int  dx[] = { -1,   1,   0,   0 }; int  dy[] = { 0,   0,  -1,   1 }; char dir[] = { 'U', 'D', 'L', 'R' };
 int MOD = 1000000007;
 
-void Ramez() {
+bool isPrime(int n) {
+    if (n == 2) return true;
+    if (n == 1 || n % 2 == 0) return false;
+    for (int i = 3; i * i <= n; i += 2) {
+        if (n % i == 0) return false;
+    }
+    return true;
+}
 
+void Ramez() {
+    int n = 100;
+    
+    for (int i = 1; i <= n; i++){
+        for (int j = i + 1; j < n; j++){
+            int f = lcm(i, j)/gcd(i, j);
+            if(isPrime(f)) {
+                cout << i << " " << j << "\n";
+            }
+        }       
+        cout << "\n";
+    }
+    
 }
 
 /*
