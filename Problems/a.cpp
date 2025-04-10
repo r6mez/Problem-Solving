@@ -19,28 +19,79 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 int  dx[] = { -1,   1,   0,   0 }; int  dy[] = { 0,   0,  -1,   1 }; char dir[] = { 'U', 'D', 'L', 'R' };
 int MOD = 1000000007;
 
-bool isPrime(int n) {
-    if (n == 2) return true;
-    if (n == 1 || n % 2 == 0) return false;
-    for (int i = 3; i * i <= n; i += 2) {
-        if (n % i == 0) return false;
+int n = 10;
+
+bool isSorted(vi &a){
+    for (int i = 0; i < n - 1; i++){
+        if(a[i] > a[i + 1]) return false;
     }
     return true;
 }
 
-void Ramez() {
-    int n = 100;
-    
-    for (int i = 1; i <= n; i++){
-        for (int j = i + 1; j < n; j++){
-            int f = lcm(i, j)/gcd(i, j);
-            if(isPrime(f)) {
-                cout << i << " " << j << "\n";
-            }
-        }       
-        cout << "\n";
+bool noOnes(vi &a){
+    for (int i = 0; i < n; i++){
+        if(a[i] == 1) return false;
     }
+    return true;
+}
+
+void construct(int i, vi a){
+    if(i == n){
+        if(noOnes(a)) return;
+
+        vi copy(a);
+
+        vector<pii> ops;
+        
+        while (true) {
+            int lastZero = -1, firstOne = -1, lastOne = -1, firstTwo = -1;
+            for (int i = 0; i < n; i++) {
+                if (a[i] == 0) lastZero = i;
     
+                if (firstOne == -1 && a[i] == 1) firstOne = i;
+                if (a[i] == 1) lastOne = i;
+    
+                if (firstTwo == -1 && a[i] == 2) firstTwo = i;
+            }
+    
+            if (firstOne != -1 && firstOne < lastZero) {
+                swap(a[firstOne], a[lastZero]);
+                ops.push_back({ firstOne + 1, lastZero + 1 });
+            }
+            else if (lastOne != -1 && lastOne < lastZero) {
+                swap(a[lastOne], a[lastZero]);
+                ops.push_back({ lastOne + 1, lastZero + 1 });
+            }
+            else if (firstTwo != -1 && firstTwo < lastOne) {
+                swap(a[firstTwo], a[lastOne]);
+                ops.push_back({ firstTwo + 1, lastOne + 1 });
+            } else break;
+    
+            // cout << a << "\n";
+        }
+    
+        // cout << "\n" << a << "\n";
+    
+        cout << ops.size() << "\n";
+        for (auto [u, v] : ops) {
+            cout << u << " " << v << "\n";
+        }
+        
+        return;
+    }
+
+    a[i] = 0;
+    construct(i + 1, a);
+    a[i] = 1;
+    construct(i + 1, a);
+    a[i] = 2;
+    construct(i + 1, a);
+}
+
+
+void Ramez() {
+    vi a(n, 0);
+    construct(0, a);
 }
 
 /*
@@ -50,7 +101,7 @@ NOTES:
 
 int32_t main() {
     // UseFile();
-    FastIO();
+    // FastIO();
     int t = 1;
     // cin >> t;
     while (t--) Ramez();
