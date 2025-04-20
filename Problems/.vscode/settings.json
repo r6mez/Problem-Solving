@@ -79,5 +79,10 @@
         "xloctime": "cpp",
         "xmemory": "cpp",
         "xtr1common": "cpp"
-    }
+    },
+    "cph.general.saveLocation": "Trash",
+    "cph.general.defaultLanguage": "cpp",
+    "cph.general.defaultLanguageTemplateFileLocation": "Problem-Solving/Resources/Template/CPP.cpp",
+    "cph.general.firstTime": false,
+    "cph.general.timeOut": 5000
 }
