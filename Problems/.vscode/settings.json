@@ -78,7 +78,16 @@
         "xlocnum": "cpp",
         "xloctime": "cpp",
         "xmemory": "cpp",
-        "xtr1common": "cpp"
+        "xtr1common": "cpp",
+        "forward_list": "cpp",
+        "string_view": "cpp",
+        "flat_map": "cpp",
+        "flat_set": "cpp",
+        "generator": "cpp",
+        "stacktrace": "cpp",
+        "text_encoding": "cpp",
+        "regex": "cpp",
+        "valarray": "cpp"
     },
     "cph.general.saveLocation": "Trash",
     "cph.general.defaultLanguage": "cpp",
