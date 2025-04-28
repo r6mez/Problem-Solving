@@ -3,9 +3,9 @@
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// C. Card Game
-// URL: https://codeforces.com/contest/2104/problem/C
-// Time: 4/28/2025, 6:18:11 PM
+// A. Three Decks
+// URL: https://codeforces.com/contest/2104/problem/0
+// Time: 4/28/2025, 5:38:22 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -19,39 +19,25 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007;
 
 void Ramez() {
-    int n; cin >> n;
-    string s; cin >> s;
-
-    vi a, b;
-    for (int i = 0; i < n; i++) {
-        if (s[i] == 'A') a.push_back(i + 1);
-        else b.push_back(i + 1);
+    int a, b, c; cin >> a >> b >> c;
+    int sum = a + b + c;
+    if(sum % 3 != 0){
+        cout << "NO\n";
+        return;
     }
 
-    for (int A : a) {
-        bool won = false;
-        for (int B : b) {
-            if(!(A != 1 || B != n)) continue;
-            if ((B == 1 && A == n) || (B > A)) {
-                won = true;
-                break;
-            }
-        }
-        if (!won) {
-            cout << "Alice\n";
-            return;
-        }
-    }
-    cout << "Bob\n";
+    if(2*b - a <= c) cout << "YES\n";
+    else cout << "NO\n";
 }
 
 /*
 NOTES:
-BBBAAA
-ABBAAB
+1 2 4
+2 2 3
 
-ABAB
-BBAA
+3 5 10
+5 5 8
+6 6 6
 
 */
 

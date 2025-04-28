@@ -3,9 +3,9 @@
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// C. Card Game
-// URL: https://codeforces.com/contest/2104/problem/C
-// Time: 4/28/2025, 6:18:11 PM
+// B. Move to the End
+// URL: https://codeforces.com/contest/2104/problem/B
+// Time: 4/28/2025, 5:49:41 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -20,38 +20,38 @@ const int MOD = 1000000007;
 
 void Ramez() {
     int n; cin >> n;
-    string s; cin >> s;
-
-    vi a, b;
+    vi a(n + 5);
     for (int i = 0; i < n; i++) {
-        if (s[i] == 'A') a.push_back(i + 1);
-        else b.push_back(i + 1);
+        cin >> a[i];
     }
 
-    for (int A : a) {
-        bool won = false;
-        for (int B : b) {
-            if(!(A != 1 || B != n)) continue;
-            if ((B == 1 && A == n) || (B > A)) {
-                won = true;
-                break;
-            }
-        }
-        if (!won) {
-            cout << "Alice\n";
-            return;
-        }
+    vi suff(n + 5);
+    for (int i = n - 1; i >= 0; i--) {
+        suff[i] = a[i] + suff[i + 1];
     }
-    cout << "Bob\n";
+
+    vector<pii> s;
+    for (int i = 0; i < n; i++) {
+        s.emplace_back(a[i], i);
+    }
+
+    sort(all(s));
+
+    cout << max(s[n - 1].first, a[n - 1]) << " ";
+
+    for (int k = 1; k <= n - 1; k++) {
+        int idx = n - k;            
+        while (!s.empty() && s.back().second >= idx) {
+            s.pop_back();
+        }
+        int best_prefix = s.empty() ? 0LL : s.back().first;
+        cout << (suff[idx] + best_prefix) << ' ';
+    }
+    cout << "\n";
 }
 
 /*
 NOTES:
-BBBAAA
-ABBAAB
-
-ABAB
-BBAA
 
 */
 
