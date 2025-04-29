@@ -21,12 +21,15 @@ const int MOD = 1000000007;
 void Ramez() {
     int a, b, c; cin >> a >> b >> c;
     int sum = a + b + c;
+
     if(sum % 3 != 0){
         cout << "NO\n";
         return;
     }
 
-    if(2*b - a <= c) cout << "YES\n";
+    int target = sum / 3;
+    if(a > target || b > target) cout << "NO\n";
+    else if((target - a) + (target - b) <= (c - target)) cout << "YES\n";
     else cout << "NO\n";
 }
 

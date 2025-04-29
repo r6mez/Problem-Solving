@@ -20,12 +20,12 @@ const int MOD = 1000000007;
 
 void Ramez() {
     int n; cin >> n;
-    vi a(n + 5);
+    vi a(n + 1);
     for (int i = 0; i < n; i++) {
         cin >> a[i];
     }
 
-    vi suff(n + 5);
+    vi suff(n + 1);
     for (int i = n - 1; i >= 0; i--) {
         suff[i] = a[i] + suff[i + 1];
     }
@@ -37,16 +37,16 @@ void Ramez() {
 
     sort(all(s));
 
-    cout << max(s[n - 1].first, a[n - 1]) << " ";
+    for (int k = 0; k <= n - 1; k++) {
+        int idx = n - k;          
 
-    for (int k = 1; k <= n - 1; k++) {
-        int idx = n - k;            
         while (!s.empty() && s.back().second >= idx) {
             s.pop_back();
         }
-        int best_prefix = s.empty() ? 0LL : s.back().first;
-        cout << (suff[idx] + best_prefix) << ' ';
+
+        cout << (suff[idx] + s.back().first) << ' ';
     }
+    
     cout << "\n";
 }
 

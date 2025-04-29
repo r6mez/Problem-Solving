@@ -18,6 +18,19 @@ void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007;
 
+vector<vi> prefixSum2D(vector<vi>& a) {
+    vector<vi> b(a.size(), vi(a[0].size()));
+    for (int i = 0; i < a.size(); i++) {
+        partial_sum(all(a[i]), b[i].begin());
+    }
+    for (int i = 0; i < a[0].size(); i++) {
+        for (int j = 1; j < a.size(); j++) {
+            b[j][i] += b[j - 1][i];
+        }
+    }
+    return b;
+}
+
 void Ramez() {
     int n; cin >> n;
     string s; cin >> s;
@@ -29,19 +42,21 @@ void Ramez() {
     }
 
     for (int A : a) {
-        bool won = false;
+        bool BobWon = false;
         for (int B : b) {
-            if(!(A != 1 || B != n)) continue;
+            if(A == 1 && B == n) continue;
             if ((B == 1 && A == n) || (B > A)) {
-                won = true;
+                BobWon = true;
                 break;
             }
         }
-        if (!won) {
+
+        if (BobWon == false) {
             cout << "Alice\n";
             return;
         }
     }
+
     cout << "Bob\n";
 }
 
