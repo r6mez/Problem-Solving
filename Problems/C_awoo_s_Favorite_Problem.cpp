@@ -3,9 +3,9 @@
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// C. Card Game
-// URL: https://codeforces.com/contest/2104/problem/C
-// Time: 4/28/2025, 6:18:11 PM
+// C. awoo's Favorite Problem
+// URL: https://codeforces.com/problemset/problem/1697/C
+// Time: 4/29/2025, 8:03:45 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -20,40 +20,46 @@ const int MOD = 1000000007;
 
 void Ramez() {
     int n; cin >> n;
-    string s; cin >> s;
+    string s, t; cin >> s >> t;
 
-    vi a, b;
     for (int i = 0; i < n; i++) {
-        if (s[i] == 'A') a.push_back(i + 1);
-        else b.push_back(i + 1);
-    }
+        if (s[i] != t[i]){
+            int o = i + 1;
+            while (o < n && s[o] == s[i]){
+                o++;
+            }
 
-    for (int A : a) {
-        bool BobWon = false;
-        for (int B : b) {
-            if(A == 1 && B == n) continue;
-            if ((B == 1 && A == n) || (B > A)) {
-                BobWon = true;
-                break;
+            if (t[i] == s[o] && ((s[i] == 'a' && s[o] == 'b') || (s[i] == 'b' && s[o] == 'c'))){
+                swap(s[i], s[o]);
             }
         }
-
-        if (BobWon == false) {
-            cout << "Alice\n";
-            return;
-        }
     }
 
-    cout << "Bob\n";
+    if (s == t) cout << "YES\n";
+    else cout << "NO\n";
 }
 
 /*
 NOTES:
-BBBAAA
-ABBAAB
+we can move the a here abbbb to any position after it
+we can move the b here bcccc to any position after it
 
-ABAB
-BBAA
+abbabc
+abbacb
+babacb
+bbaacb
+
+bbaacb -> YES
+
+bcaabababc
+cbaabababc
+cbbaaababc
+cbbabaaabc
+cbbababaac
+
+cbbababaac
+
+
 
 */
 

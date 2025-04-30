@@ -93,5 +93,11 @@
     "cph.general.defaultLanguage": "cpp",
     "cph.general.defaultLanguageTemplateFileLocation": "Clones/Problem-Solving/Resources/Template/CPP.cpp",
     "cph.general.firstTime": false,
-    "cph.general.timeOut": 5000
+    "cph.general.timeOut": 5000,
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    }
 }

@@ -3,9 +3,9 @@
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// C. Card Game
-// URL: https://codeforces.com/contest/2104/problem/C
-// Time: 4/28/2025, 6:18:11 PM
+// E. Do You Love Your Hero and His Two-Hit Multi-Target Attacks?
+// URL: https://codeforces.com/problemset/problem/2072/E
+// Time: 4/30/2025, 2:24:34 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -18,42 +18,48 @@ void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007;
 
+int sum(int n){
+    return (n*(n + 1))/2;
+}
+
+
 void Ramez() {
-    int n; cin >> n;
-    string s; cin >> s;
+    int k; cin >> k;
+    vector<pii> p;
 
-    vi a, b;
-    for (int i = 0; i < n; i++) {
-        if (s[i] == 'A') a.push_back(i + 1);
-        else b.push_back(i + 1);
-    }
+    int dups;
+    int rem = k;
+    int x = 1, y = 0;
 
-    for (int A : a) {
-        bool BobWon = false;
-        for (int B : b) {
-            if(A == 1 && B == n) continue;
-            if ((B == 1 && A == n) || (B > A)) {
-                BobWon = true;
-                break;
-            }
+    while(rem > 0){
+        int l = 0, r = k + 5;
+        while(l + 1 < r){
+            int mid = (l + r)/2;
+            if(rem - sum(mid - 1) >= 0) l = mid;
+            else r = mid;
         }
 
-        if (BobWon == false) {
-            cout << "Alice\n";
-            return;
+        dups = l;
+        for (int i = 0; i < dups; i++){
+            p.push_back({x, y + (i + 1)});
         }
+        
+        x++;
+        y += dups;
+        rem -= sum(dups - 1);
     }
 
-    cout << "Bob\n";
+    cout << p.size() << "\n";
+    for (int i = 0; i < p.size(); i++){
+        auto [x, y] = p[i];
+        cout << x << " " << y << "\n";
+    }
+
+    cout << "\n";
 }
 
 /*
 NOTES:
-BBBAAA
-ABBAAB
-
-ABAB
-BBAA
 
 */
 
