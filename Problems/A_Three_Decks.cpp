@@ -1,10 +1,11 @@
 /*
+    I thought I could bring an end to the world's suffering,
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// {{problemName}}
-// URL: {{problemURL}}
-// Time: {{time}}
+// A. Three Decks
+// URL: https://codeforces.com/contest/2104/problem/0
+// Time: 4/28/2025, 5:38:22 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -18,11 +19,28 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007;
 
 void Ramez() {
+    int a, b, c; cin >> a >> b >> c;
+    int sum = a + b + c;
 
+    if(sum % 3 != 0){
+        cout << "NO\n";
+        return;
+    }
+
+    int target = sum / 3;
+    if(a > target || b > target) cout << "NO\n";
+    else if((target - a) + (target - b) <= (c - target)) cout << "YES\n";
+    else cout << "NO\n";
 }
 
 /*
 NOTES:
+1 2 4
+2 2 3
+
+3 5 10
+5 5 8
+6 6 6
 
 */
 
@@ -30,7 +48,7 @@ int32_t main() {
     // UseFile();
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) Ramez();
     return 0;
 }

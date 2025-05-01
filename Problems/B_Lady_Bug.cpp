@@ -1,10 +1,11 @@
 /*
+    I thought I could bring an end to the world's suffering,
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// {{problemName}}
-// URL: {{problemURL}}
-// Time: {{time}}
+// B. Lady Bug
+// URL: https://codeforces.com/problemset/problem/2092/B
+// Time: 4/26/2025, 11:09:14 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -18,7 +19,19 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007;
 
 void Ramez() {
-
+    int n; cin >> n;
+    string a, b; cin >> a >> b;
+    int cnt1 = 0, cnt2 = 0;
+    for (int i = 0; i < n; ++i) {
+        if (i & 1) {
+            cnt2 += a[i] == '0';
+            cnt1 += b[i] == '0';
+        } else {
+            cnt1 += a[i] == '0';
+            cnt2 += b[i] == '0';
+        }
+    }
+    cout << (cnt1 >= (n + 1) / 2 && cnt2 >= n / 2 ? "Yes" : "No") << '\n';
 }
 
 /*
@@ -30,7 +43,7 @@ int32_t main() {
     // UseFile();
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) Ramez();
     return 0;
 }

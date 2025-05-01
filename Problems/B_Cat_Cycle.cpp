@@ -1,10 +1,11 @@
 /*
+    I thought I could bring an end to the world's suffering,
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// {{problemName}}
-// URL: {{problemURL}}
-// Time: {{time}}
+// B. Cat Cycle
+// URL: https://codeforces.com/problemset/problem/1487/B
+// Time: 4/25/2025, 11:25:26 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -18,7 +19,9 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007;
 
 void Ramez() {
-
+    int n, k; cin >> n >> k;
+    k--;
+    cout << (k + (n % 2) * k / (n / 2)) % n + 1 << "\n";
 }
 
 /*
@@ -30,7 +33,7 @@ int32_t main() {
     // UseFile();
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) Ramez();
     return 0;
 }

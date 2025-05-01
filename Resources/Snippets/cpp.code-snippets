@@ -213,7 +213,7 @@
         "description": "Builds factorials and modular inverses, and computes nCr using precomputed values."
     },
 
-    "SegmentTree": {
+    "Segment Tree": {
         "scope": "cpp",
         "prefix": "SegmentTree",
         "body": [
@@ -278,5 +278,76 @@
             "};"
         ],
         "description": "Class implementation of a Segment Tree with sum, min, and max queries."
-    }
+    },
+
+    "Graph Directions": {
+        "scope": "cpp",
+        "prefix": "graphDirections",
+        "body": [
+            "int  dx[] = { -1,   1,   0,   0 }; int  dy[] = { 0,   0,  -1,   1 }; char dir[] = { 'U', 'D', 'L', 'R' };",
+        ],
+        "description": "Three arrays that simplifiy the process of directing a graph"
+    },
+
+    "digitDP": {
+        "scope": "cpp",
+        "prefix": "digitDP",
+        "body": [
+            "// Digit Dp",
+            "int dp[/*max Index*/][/*state */][2]; // dp[pos][state][tight]",
+            "string num;",
+            "",
+            "int solveDP(int pos, int state, bool tight) {",
+            "    if (pos == num.size()) {",
+            "        return /* what we're calculating */;",
+            "    }",
+            "",
+            "    if (dp[pos][state][tight] != -1) return dp[pos][state][tight];",
+            "    ",
+            "    int res = 0;",
+            "    int limit = tight ?  (num[pos] - '0') : 9;",
+            "    ",
+            "    for (int digit = 0; digit <= limit; digit++) {",
+            "        bool newTight = tight && (digit == limit);",
+            "        res += solveDP(pos + 1, /*state modification*/, newTight) ;",
+            "    }",
+            "    dp[pos][state][tight] = res;",
+            "    return res;",
+            "}",
+        ],
+        "description": "Template for digit DP"
+    },
+
+    "Topological Sort": {
+        "scope": "cpp",
+        "prefix": "topologicalSort",
+        "body": [
+            "//A topological sort takes a directed acyclic graph (DAG) and produces ",
+            "//a linear ordering of its vertices such that for every directed edge",
+            "// u → v, u comes before v in that order.",
+            "// Returns a vector of nodes in a valid order; if a cycle exists, the size will be < n. ",
+            "// useful for: Scheduling with Dependencies, Course Prerequisites, ",
+            "vi topologicalSort(int n, vector<vi>& adj, vi& inDeg) {",
+            "    queue<int> q;",
+            "    for (int i = 1; i <= n; i++) {",
+            "        if (inDeg[i] == 0)",
+            "            q.push(i);",
+            "    }",
+            "",
+            "    vi order;",
+            "",
+            "    while (!q.empty()) {",
+            "        int parent = q.front(); q.pop();",
+            "        order.push_back(parent);",
+            "        for (int child : adj[parent]) {",
+            "            if (--inDeg[child] == 0)",
+            "                q.push(child);",
+            "        }",
+            "    }",
+            "    ",
+            "    return order;",
+            "}",
+        ],
+        "description": "Topological Sort for Directed Acyclic Graphs (DAGs)"
+    },
 }

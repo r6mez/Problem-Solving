@@ -1,10 +1,11 @@
 /*
+    I thought I could bring an end to the world's suffering,
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// {{problemName}}
-// URL: {{problemURL}}
-// Time: {{time}}
+// F. ⅓ оf а Рrоblеm
+// URL: https://codeforces.com/problemset/problem/2095/F
+// Time: 4/28/2025, 3:18:48 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long

@@ -3,9 +3,9 @@
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// C. Card Game
-// URL: https://codeforces.com/contest/2104/problem/C
-// Time: 4/28/2025, 6:18:11 PM
+// F. Sum and Product
+// URL: https://codeforces.com/problemset/problem/1857/F
+// Time: 4/27/2025, 5:53:45 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -20,40 +20,45 @@ const int MOD = 1000000007;
 
 void Ramez() {
     int n; cin >> n;
-    string s; cin >> s;
-
-    vi a, b;
-    for (int i = 0; i < n; i++) {
-        if (s[i] == 'A') a.push_back(i + 1);
-        else b.push_back(i + 1);
+    map<int, int> freq;
+    for (int i = 0; i < n; i++){
+        int x; cin >> x;
+        freq[x]++;
     }
+    
 
-    for (int A : a) {
-        bool BobWon = false;
-        for (int B : b) {
-            if(A == 1 && B == n) continue;
-            if ((B == 1 && A == n) || (B > A)) {
-                BobWon = true;
-                break;
-            }
+    int q; cin >> q;
+    while(q--){
+        int x, y; cin >> x >> y;
+        int D = x*x - 4*y;
+        if (D < 0) {
+            cout << 0 << " ";
+            continue;
         }
-
-        if (BobWon == false) {
-            cout << "Alice\n";
-            return;
+        int sq = sqrt(D);
+        if (sq * sq != D) {
+            cout << 0 << " ";
+            continue;
+        }
+        int i1 = (x + sq);
+        int i2 = (x - sq);
+        if (i1 % 2 != 0 || i2 % 2 != 0) {
+            cout << 0 << " ";
+            continue;
+        }
+        i1 /= 2;
+        i2 /= 2;
+        if (i1 == i2) {
+            cout << freq[i1] * (freq[i1]-1) / 2 << " ";
+        } else {
+            cout << freq[i1] * freq[i2] << " ";
         }
     }
-
-    cout << "Bob\n";
+    cout << "\n";
 }
 
 /*
 NOTES:
-BBBAAA
-ABBAAB
-
-ABAB
-BBAA
 
 */
 
