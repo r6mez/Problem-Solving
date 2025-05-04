@@ -2,9 +2,9 @@
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// B. SUMdamental Decomposition
-// URL: https://codeforces.com/contest/2108/problem/B
-// Time: 5/2/2025, 8:05:00 PM
+// K. Kingdom Power C.
+// URL: https://codeforces.com/gym/104375/problem/K
+// Time: 5/2/2025, 9:19:01 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -18,18 +18,7 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007;
 
 void Ramez() {
-    int n, x;cin >> n >> x;
-    int bits = __builtin_popcountll(x);
-    if (n <= bits) { cout << x << "\n";return; }
-    if ((n - bits) % 2 == 0)cout << x + n - bits << "\n";
-    else {
-        if (x > 1) { cout << x + n - bits + 1 << "\n";return; }
-        if (x == 1) { cout << n + 3 << "\n";return; }
-        else {
-            if (n == 1) { cout << -1 << "\n";return; }
-            else cout << n + 3 << "\n";
-        }
-    }
+
 }
 
 /*
@@ -41,7 +30,7 @@ int32_t main() {
     // UseFile();
     FastIO();
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) Ramez();
     return 0;
 }

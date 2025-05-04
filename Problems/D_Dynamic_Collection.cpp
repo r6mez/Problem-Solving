@@ -2,10 +2,11 @@
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// B. SUMdamental Decomposition
-// URL: https://codeforces.com/contest/2108/problem/B
-// Time: 5/2/2025, 8:05:00 PM
+// D. Dynamic Collection
+// URL: https://codeforces.com/gym/104375/problem/D
+// Time: 5/2/2025, 8:33:51 PM
 #include <bits/stdc++.h>
+#include <algorithm>
 using namespace std;
 #define int    long long
 #define vi     vector<int>
@@ -18,16 +19,28 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007;
 
 void Ramez() {
-    int n, x;cin >> n >> x;
-    int bits = __builtin_popcountll(x);
-    if (n <= bits) { cout << x << "\n";return; }
-    if ((n - bits) % 2 == 0)cout << x + n - bits << "\n";
-    else {
-        if (x > 1) { cout << x + n - bits + 1 << "\n";return; }
-        if (x == 1) { cout << n + 3 << "\n";return; }
-        else {
-            if (n == 1) { cout << -1 << "\n";return; }
-            else cout << n + 3 << "\n";
+    int n, q; cin >> n >> q;
+    vi a(n); cin >> a;
+
+    sort(a.begin(), a.end());
+
+    while(q--){
+        int ops; cin >> ops;
+        if(ops == 1){
+            int k; cin >> k;
+            auto it = lower_bound(all(a), k);
+            if(it == a.end()) a.push_back(k), n++;
+            else if(*it == k) continue;
+            else {
+                *it = k;
+            }
+        } else {
+            // cout << a << "\n";
+            int x, y; cin >> x >> y;
+            // cout << x << " " << y << " : \n";
+            int i = lower_bound(all(a), x) - a.begin(), j = upper_bound(all(a), y) - a.begin();
+            int answer = j - i;
+            cout << answer << "\n";
         }
     }
 }
@@ -41,7 +54,7 @@ int32_t main() {
     // UseFile();
     FastIO();
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) Ramez();
     return 0;
 }
