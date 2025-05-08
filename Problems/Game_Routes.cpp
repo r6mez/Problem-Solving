@@ -1,10 +1,10 @@
-a/*
+/*
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// A. Aliases
-// URL: https://codeforces.com/gym/104375/problem/A
-// Time: 5/2/2025, 8:25:44 PM
+// Game Routes
+// URL: https://cses.fi/problemset/task/1681
+// Time: 5/7/2025, 10:05:26 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -17,25 +17,30 @@ void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007;
 
+
 void Ramez() {
-    int n; cin >> n;
-    map<string, int> freq;
-    while(n--){
-        int x; cin >> x;
-        string name = "";
-        while(x--){
-            string word; cin >> word;
-            name += word[0];
-        }    
-        freq[name]++;
+    int n, m; cin >> n >> m;
+    vector<vi> adj(n + 1);
+    for (int i = 0; i < m; i++){
+        int u, v; cin >> u >> v;
+        adj[u].push_back(v);
     }
     
-    int counter = 0;
-    for(auto [name, f] : freq){
-        if(f == 1) counter++;
-    }
+    vi ways(n + 1, -1);
 
-    cout << counter;
+    function<int(int)> dfs = [&](int u) -> int {
+        if(u == n) return 1;
+        if(ways[u] != -1) return ways[u];
+
+        int ans = 0;
+        for (int v : adj[u]){
+            ans = (ans + dfs(v))%MOD;
+        }
+        
+        return ways[u] = ans;
+    };
+
+    cout << dfs(1);
 }
 
 /*

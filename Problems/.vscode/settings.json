@@ -6,9 +6,9 @@
         "clang-diagnostic-error"
     ],
     "files.associations": {
+        "*.dbclient-js": "javascript",
         "*.sqlbook": "sql",
         "*.ndjson": "jsonl",
-        "*.dbclient-js": "javascript",
         "array": "cpp",
         "chrono": "cpp",
         "deque": "cpp",
@@ -101,6 +101,8 @@
         "thread": "cpp",
         "typeindex": "cpp",
         "typeinfo": "cpp",
-        "variant": "cpp"
-    }
+        "variant": "cpp",
+        "rope": "cpp"
+    },
+    "cph.general.saveLocation": ""
 }

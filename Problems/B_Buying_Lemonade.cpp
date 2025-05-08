@@ -1,11 +1,12 @@
-a/*
+/*
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// A. Aliases
-// URL: https://codeforces.com/gym/104375/problem/A
-// Time: 5/2/2025, 8:25:44 PM
+// B. Buying Lemonade
+// URL: https://codeforces.com/problemset/problem/2024/B
+// Time: 5/4/2025, 10:08:13 PM
 #include <bits/stdc++.h>
+#include <algorithm>
 using namespace std;
 #define int    long long
 #define vi     vector<int>
@@ -18,28 +19,39 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007;
 
 void Ramez() {
-    int n; cin >> n;
-    map<string, int> freq;
-    while(n--){
-        int x; cin >> x;
-        string name = "";
-        while(x--){
-            string word; cin >> word;
-            name += word[0];
-        }    
-        freq[name]++;
-    }
-    
-    int counter = 0;
-    for(auto [name, f] : freq){
-        if(f == 1) counter++;
+    int n, k; cin >> n >> k;
+    vi a(n); cin >> a;
+
+    sort(all(a));
+
+    function<bool(int)> can = [&](int m) -> bool {
+        int sum = 0, last = 0;
+        for (int i = 0; i <= m; i++){
+            int added = (a[i] - last) * (n - i);
+            if(sum + added >= k) return true;
+            sum += added;
+            last = a[i];
+        }
+        return false;
+    };
+
+
+    int l = -1, r = n;
+    while(l + 1 < r){
+        int mid = (l + r)/2;
+        if(can(mid)) r = mid;
+        else l = mid;
     }
 
-    cout << counter;
+    cout << k + r << "\n";
 }
 
 /*
 NOTES:
+1 3 6 7 
+m = 2
+sum = 4 + 6  
+
 
 */
 
@@ -47,7 +59,7 @@ int32_t main() {
     // UseFile();
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) Ramez();
     return 0;
 }

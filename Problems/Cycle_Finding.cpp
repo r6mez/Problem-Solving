@@ -25,56 +25,63 @@ struct edge {
 // Bellman-Ford Algorithm (Negative Cycles Detection)
 void Ramez() {
     int n, m; cin >> n >> m;
-
     vector<edge> edges;
-
     for (int i = 0; i < m; i++) {
         int u, v, w; cin >> u >> v >> w;
         edges.push_back({ u, v, w });
     }
 
-    // Initialize distances for all nodes to 0 to detect cycles in any component.
-    const int INF = 1e18;
-    vi dist(n + 1, 0), parent(n + 1, -1);
+    vi dis(n + 1, 0), parent(n + 1, -1);
 
-    int x = -1;
-    // Relax edges n times.
+   
+    // Relaxation (n - 1) times
     for (int i = 0; i < n; i++) {
-        x = -1;
         for (int j = 0; j < m; j++) {
             auto [u, v, w] = edges[j];
-            if (dist[v] > dist[u] + w) {
-                dist[v] = dist[u] + w;
+            if (dis[v] > dis[u] + w) {
+                dis[v] = dis[u] + w;
                 parent[v] = u;
-                x = v;
             }
+        }
+    }
+
+    // if any edge can still be relaxed, that means there's a cycle
+    int x = -1;
+    for (int i = 0; i < m; i++){
+        auto [u, v, w] = edges[i];
+        if (dis[v] > dis[u] + w) {
+            dis[v] = dis[u] + w;
+            parent[v] = u;
+            x = v;
         }
     }
 
     if (x == -1) {
         cout << "NO\n";
+        return;
     }
-    else {
-        // x is a vertex that was relaxed in the nth iteration.
-        // Walk back n times to ensure we are on a cycle.
-        int y = x;
-        for (int i = 0; i < n; i++) {
-            y = parent[y];
-        }
 
-        // Reconstruct the cycle.
-        vector<int> cycle;
-        for (int cur = y;; cur = parent[cur]) {
-            cycle.push_back(cur);
-            if (cur == y && cycle.size() > 1) break;
-        }
 
-        reverse(all(cycle));
+    // x is a vertex that was relaxed in the nth iteration.
+   // To ensure we are inside the cycle, move n steps from x
+   int y = x;
+   for (int i = 0; i < n; i++) {
+       y = parent[y];
+   }
 
-        cout << "YES\n";
-        cout << cycle << "\n";
-    }
+   // Reconstruct the cycle
+   vector<int> cycle;
+   int curr = y;
+   do {
+       cycle.push_back(curr);
+       curr = parent[curr];
+   } while (curr != y);
+   cycle.push_back(y);
+   reverse(all(cycle));
+
+   cout << "YES\n" << cycle;
 }
+
 /*
 NOTES:
 

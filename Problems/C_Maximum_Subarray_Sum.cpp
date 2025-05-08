@@ -1,10 +1,10 @@
-a/*
+/*
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// A. Aliases
-// URL: https://codeforces.com/gym/104375/problem/A
-// Time: 5/2/2025, 8:25:44 PM
+// C. Maximum Subarray Sum
+// URL: https://codeforces.com/contest/2107/problem/C
+// Time: 5/5/2025, 11:49:12 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -18,24 +18,7 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007;
 
 void Ramez() {
-    int n; cin >> n;
-    map<string, int> freq;
-    while(n--){
-        int x; cin >> x;
-        string name = "";
-        while(x--){
-            string word; cin >> word;
-            name += word[0];
-        }    
-        freq[name]++;
-    }
-    
-    int counter = 0;
-    for(auto [name, f] : freq){
-        if(f == 1) counter++;
-    }
 
-    cout << counter;
 }
 
 /*
@@ -47,7 +30,7 @@ int32_t main() {
     // UseFile();
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) Ramez();
     return 0;
 }

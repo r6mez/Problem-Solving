@@ -1,110 +1,86 @@
-// Ramez Medhat
-// problem: Round Trip
-// URL: https://cses.fi/problemset/task/1669  
-// Start: 7/4/2024, 5:57:58 PM
-#include <iostream>
-#include <algorithm>
-#include <cmath>
-#include <cstring>
-#include <string>
-#include <vector>
-#include <stack>
-#include <queue>
-#include <map>
-#include <set>
-#include <bitset>
-#include <numeric>
+/*
+    But when every equation was solved all that remained
+    were fields of dreamless solitude.
+*/
+// Round Trip
+// URL: https://cses.fi/problemset/task/1669
+// Time: 5/8/2025, 1:52:13 AM
+#include <bits/stdc++.h>
 using namespace std;
-#define ll long long
-#define ull unsigned long long
-#define vi vector<int>
-#define vll vector<long long>
-#define all(v)  v.begin(), v.end()
-#define search(vec, item) find(all(vec), item) != vec.end()
-vector<vi> repGraph(int n, int m);
-template<typename T>
-ostream& operator<<(ostream& os, const vector<T>& v) {
-    for (const auto& i : v) os << i << ' ';
-    return os;
-}
-template<typename T>
-istream& operator>>(istream& is, vector<T>& v) {
-    for (auto& i : v) is >> i;
-    return is;
-}
+#define int    long long
+#define vi     vector<int>
+#define pii    pair<int, int>
+#define all(v) v.begin(), v.end()
+template<typename T> ostream& operator<<(ostream& os, vector<T>& v) { for (auto& i : v) os << i << ' '; return os; }
+template<typename T> istream& operator>>(istream& is, vector<T>& v) { for (auto& i : v) is >> i; return is; }
+void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
+void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
+const int MOD = 1000000007;
 
-int repeatedNode = 0;
-vi cycle;
-bool found = false;
 
-bool dfs(int node, int parent, vector<vi>& graph, vector<int>& visited, vector<int>& parentTrack) {
-    visited[node] = 1;
-    parentTrack[node] = parent;
 
-    for (int child : graph[node]) {
-        if (child == parent) continue;
-        if (visited[child] == 0) {
-            if (dfs(child, node, graph, visited, parentTrack)) {
+void Ramez() {
+    int n, m; cin >> n >> m;
+    vector<vi> adj(n + 1);
+    for (int i = 0; i < m; i++){
+        int u, v; cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    vi vis(n + 1, 0), parent(n + 1 , -1);
+    int start = -1, end = -1;
+
+    function<bool(int, int)> dfs = [&](int u, int p) -> bool {
+        vis[u] = true;
+        parent[u] = p;
+
+        for(int v : adj[u]){
+            if(v == p) continue;
+            
+            if(vis[v]){
+                start = v;
+                end  = u;
                 return true;
-            }
-        } else if (visited[child] == 1) {
-            repeatedNode = child;
-            cycle.push_back(child);
-            int current = node;
-            while (current != child) {
-                cycle.push_back(current);
-                current = parentTrack[current];
-            }
-            cycle.push_back(child);
-            reverse(cycle.begin(), cycle.end());
-            return true;
+            } 
+
+            if(dfs(v, u)) return true;
         }
-    }
 
-    visited[node] = 2;
-    return false;
-}
+        return false;
+    };
 
-void solve() {
-    int n, m;
-    cin >> n >> m;
-    vector<vi> graph = repGraph(n, m);
-
-    vector<int> visited(n + 1);
-    vector<int> parentTrack(n + 1, -1);
+    int found = false;
     for (int i = 1; i <= n; i++) {
-        if (dfs(i, -1, graph, visited, parentTrack)) {
-            cout << cycle.size() << endl;
-            for (int node : cycle) {
-                cout << node << " ";
-            }
-            cout << endl;
-            return;
+        if (!vis[i] && dfs(i, -1)) {
+            found = true;
+            break;
         }
     }
+    
+    if(!found){
+        cout << "IMPOSSIBLE";
+        return;
+    }
+    
+    vi path;
+    path.push_back(start);
+    for (int x = end; x != start; x = parent[x]) path.push_back(x);
+    path.push_back(start);
 
-    cout << "IMPOSSIBLE\n";
+    cout << path.size() << "\n" << path;
 }
 
+/*
+NOTES:
 
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
+*/
+
+int32_t main() {
+    // UseFile();
+    FastIO();
     int t = 1;
     // cin >> t;
-    while (t--) {
-        solve();
-    }
+    while (t--) Ramez();
     return 0;
-}
-
-vector<vi> repGraph(int n, int m) {
-    vector<vi> graph(n + 1);
-    for (int i = 0; i < m; i++) {
-        int x, y;
-        cin >> x >> y;
-        graph[x].push_back(y);
-        graph[y].push_back(x);
-    }
-    return graph;
 }

@@ -59,7 +59,6 @@ void Ramez() {
             hasPositiveCycle[v] = true;
         }
     }
-    
 
     /*
     However, simply detecting an edge that can be relaxed doesn't tell us which vertices
