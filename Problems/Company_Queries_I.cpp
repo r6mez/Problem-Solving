@@ -2,12 +2,12 @@
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// Planets Queries I
-// URL: https://cses.fi/problemset/task/1750
-// Time: 5/8/2025, 8:45:09 PM
+// Company Queries I
+// URL: https://cses.fi/problemset/task/1687
+// Time: 5/13/2025, 6:00:47 PM
 #include <bits/stdc++.h>
 using namespace std;
-// #define int    long long
+#define int    long long
 #define vi     vector<int>
 #define pii    pair<int, int>
 #define all(v) v.begin(), v.end()
@@ -24,11 +24,11 @@ private:
 
 public:
     Tree(int n, const vi &parents) {
-        MAXPOW = ceil(log2(1e9 + 5));
+        MAXPOW = ceil(log2(n));
         up.assign(n+1, vi(MAXPOW + 1, -1));
 
-        for (int v = 1; v <= n; ++v) {
-            up[v][0] = parents[v - 1]; 
+        for (int v = 2; v <= n; ++v) {
+            up[v][0] = parents[v - 2];
         }
 
         for (int k = 1; k <= MAXPOW; ++k) {
@@ -41,7 +41,7 @@ public:
         }
     }
 
-    int kth_parent(int n, int k) {
+    int kth_parent(int n, int k) const {
         for (int bit = 0; bit <= MAXPOW && n != -1; ++bit) {
             if (k & (1 << bit)) {
                 n = up[n][bit];
@@ -54,7 +54,7 @@ public:
 
 void Ramez() {
     int n, q; cin >> n >> q;
-    vi parents(n); cin >> parents;
+    vi parents(n - 1); cin >> parents;
 
     Tree t(n, parents);
 
@@ -66,7 +66,7 @@ void Ramez() {
 
 /*
 NOTES:
-1 2
+
 */
 
 int32_t main() {

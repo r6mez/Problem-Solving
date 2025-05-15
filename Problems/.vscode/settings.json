@@ -102,7 +102,9 @@
         "typeindex": "cpp",
         "typeinfo": "cpp",
         "variant": "cpp",
-        "rope": "cpp"
+        "rope": "cpp",
+        "netfwd": "cpp",
+        "slist": "cpp"
     },
     "cph.general.saveLocation": ""
 }
