@@ -25,7 +25,7 @@ struct Fenwick {
     T f(T& a, T& b) { return a + b; }
     Fenwick(int size) : n(size), B1(size + 1, unit), B2(size + 1, unit) {}
 
-private:
+private
     void updateBIT(vector<T>& B, int i, T v) {
         for (; i <= n; i += i & -i) B[i] = f(B[i], v);
     }
