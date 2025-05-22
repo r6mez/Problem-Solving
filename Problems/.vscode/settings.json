@@ -99,7 +99,9 @@
         "variant": "cpp",
         "rope": "cpp",
         "netfwd": "cpp",
-        "slist": "cpp"
+        "slist": "cpp",
+        "flat_map": "cpp",
+        "flat_set": "cpp"
     },
     "cph.general.saveLocation": ""
 }
