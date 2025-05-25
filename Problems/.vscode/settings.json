@@ -103,5 +103,6 @@
         "flat_map": "cpp",
         "flat_set": "cpp"
     },
-    "cph.general.saveLocation": ""
+    "cph.general.saveLocation": "",
+    "discord.enabled": true
 }
