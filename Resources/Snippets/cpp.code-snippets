@@ -1,25 +1,24 @@
 {
-	"prefixSum2D": {
-		"scope": "cpp",
-		"prefix": "prefixSum",
-		"body": [
-			"vector<vi> prefixSum2D(vector<vi>& a) {",
-			"    vector<vi> b(a.size(), vi(a[0].size()));",
-			"    for (int i = 0; i < a.size(); i++) {",
-			"        partial_sum(all(a[i]), b[i].begin());",
-			"    }",
-			"    for (int i = 0; i < a[0].size(); i++) {",
-			"        for (int j = 1; j < a.size(); j++) {",
-			"            b[j][i] += b[j - 1][i];",
-			"        }",
-			"    }",
-			"    return b;",
-			"}"
-		],
-		"description": "Generate a 2D prefix sum array from a 2D input array"
-	},
-
-	"sumOfSquare": {
+    "prefixSum2D": {
+        "scope": "cpp",
+        "prefix": "prefixSum",
+        "body": [
+            "vector<vi> prefixSum2D(vector<vi>& a) {",
+            "    vector<vi> b(a.size(), vi(a[0].size()));",
+            "    for (int i = 0; i < a.size(); i++) {",
+            "        partial_sum(all(a[i]), b[i].begin());",
+            "    }",
+            "    for (int i = 0; i < a[0].size(); i++) {",
+            "        for (int j = 1; j < a.size(); j++) {",
+            "            b[j][i] += b[j - 1][i];",
+            "        }",
+            "    }",
+            "    return b;",
+            "}"
+        ],
+        "description": "Generate a 2D prefix sum array from a 2D input array"
+    },
+    "sumOfSquare": {
         "scope": "cpp",
         "prefix": "sumOfSquare",
         "body": [
@@ -29,7 +28,6 @@
         ],
         "description": "Calculate the sum of a sub-square in a 2D prefix sum array."
     },
-
     "getDivisors": {
         "scope": "cpp",
         "prefix": "getDivisors",
@@ -47,7 +45,6 @@
         ],
         "description": "Get all divisors of a number."
     },
-
     "isPrime": {
         "scope": "cpp",
         "prefix": "isPrime",
@@ -63,7 +60,6 @@
         ],
         "description": "Check if a number is prime."
     },
-
     "isPrimeOptimized": {
         "scope": "cpp",
         "prefix": "isPrimeOptimized",
@@ -79,7 +75,6 @@
         ],
         "description": "Optimized prime check using a list of primes up to sqrt(n)."
     },
-
     "getPrimeFactors": {
         "scope": "cpp",
         "prefix": "getPrimeFactors",
@@ -99,8 +94,7 @@
         ],
         "description": "Get all prime factors of a number along with their counts."
     },
-
-	"modularArithmetic": {
+    "modularArithmetic": {
         "scope": "cpp",
         "prefix": "modOps",
         "body": [
@@ -111,7 +105,6 @@
         ],
         "description": "Provides functions for modular addition, multiplication, subtraction, and division."
     },
-
     "pwmod": {
         "scope": "cpp",
         "prefix": "pwmod",
@@ -127,7 +120,6 @@
         ],
         "description": "Calculate b^p % MOD using modular exponentiation."
     },
-
     "linearSieve": {
         "scope": "cpp",
         "prefix": "linearSieve",
@@ -149,7 +141,6 @@
         ],
         "description": "Generate primes up to n using a linear sieve algorithm."
     },
-
     "nPr": {
         "scope": "cpp",
         "prefix": "nPr",
@@ -165,8 +156,7 @@
         ],
         "description": "Returns the number of permutations nPr"
     },
-
-	"nCr": {
+    "nCr": {
         "scope": "cpp",
         "prefix": "nCr",
         "body": [
@@ -183,8 +173,7 @@
         ],
         "description": "Returns the number of combinations nCr"
     },
-
-	"nCr2": {
+    "nCr2": {
         "scope": "cpp",
         "prefix": "nCr2",
         "body": [
@@ -212,7 +201,6 @@
         ],
         "description": "Builds factorials and modular inverses, and computes nCr using precomputed values."
     },
-
     "Segment Tree": {
         "scope": "cpp",
         "prefix": "SegmentTree",
@@ -239,7 +227,6 @@
         ],
         "description": "Segment tree for point update range quary"
     },
-
     "Graph Directions": {
         "scope": "cpp",
         "prefix": "graphDirections",
@@ -250,7 +237,6 @@
         ],
         "description": "Three arrays that simplifiy the process of directing a graph"
     },
-
     "digitDP": {
         "scope": "cpp",
         "prefix": "digitDP",
@@ -279,7 +265,6 @@
         ],
         "description": "Template for digit DP"
     },
-
     "Topological Sort": {
         "scope": "cpp",
         "prefix": "topologicalSort",
@@ -312,7 +297,6 @@
         ],
         "description": "Topological Sort for Directed Acyclic Graphs (DAGs)"
     },
-
     "Graph Read Input": {
         "scope": "cpp",
         "prefix": "graphRead",
@@ -327,48 +311,152 @@
         ],
         "description": "Read graph input"
     },
-
-    "Fenwick Tree": {
+    "FenwickPURQ": {
         "scope": "cpp",
-        "prefix": "fenwick",
+        "prefix": "FenwickPURQ",
         "body": [
-            "struct Fenwick {",
-            "    int n; vi B1, B2;",
-            "    Fenwick(int size)",
-            "        : n(size), B1(n + 1, 0), B2(n + 1, 0) {",
+            "struct FenwickPURQ {    ",
+            "    int n;",
+            "    vi f;",
+            "",
+            "    void add(int idx, int val) {",
+            "        for (; idx <= n; idx += idx & -idx) f[idx] += val;",
+            "    }",
+            "    ",
+            "    int prefix(int idx) {",
+            "        int res = 0;",
+            "        for (; idx > 0; idx -= idx & -idx) res += f[idx];",
+            "        return res;",
+            "    }",
+            "    ",
+            "    FenwickPURQ(int size) : n(size), f(n + 1, 0) {}",
+            "",
+            "    int rangeQuery(int l, int r) {",
+            "        return prefix(r) - prefix(l - 1);",
             "    }",
             "",
-            "private:",
-            "    void update(vi& B, int i, int v) {",
-            "        for (; i <= n; i += i & -i) B[i] += v;",
-            "    }",
-            "",
-            "    int prefixSum(int x) const {",
-            "        int res1 = 0, res2 = 0;",
-            "        for (int i = x; i > 0; i -= i & -i) {",
-            "            res1 += B1[i];",
-            "            res2 += B2[i];",
+            "    int lower_bound(int v){",
+            "        int sum = 0, pos = 0;",
+            "        for(int i = ceil(log2(n)); i >= 0; i--){",
+            "            int nextPos = pos + (1 << i);",
+            "            if(pos + (1 << i) < n && sum + f[nextPos] < v){",
+            "                sum += f[nextPos];",
+            "                pos = nextPos;",
+            "            }",
             "        }",
-            "        return res1 * x - res2;",
-            "    }",
-            "",
-            "public:",
-            "    void rangeAdd(int l, int r, int v) {",
-            "        update(B1, l, v);",
-            "        update(B1, r + 1, -v);",
-            "        update(B2, l, v * (l - 1));",
-            "        update(B2, r + 1, -v * r);",
-            "    }",
-            "",
-            "    int rangeSum(int l, int r) const {",
-            "        return prefixSum(r) - prefixSum(l - 1);",
+            "        return pos + 1;",
             "    }",
             "};",
         ],
-        "description": "Fenwick tree for range add range sum"
+        "description": "Fenwick tree"
     },
-
-
+    "FenwickRUPQ": {
+        "scope": "cpp",
+        "prefix": "FenwickRUPQ",
+        "body": [
+            "struct FenwickRUPQ {",
+            "    int n;",
+            "    vi f;",
+            "    FenwickRUPQ(int _n) : n(_n), f(n + 1, 0) {}",
+            "",
+            "    void update(int idx, int val) {",
+            "        for (; idx <= n; idx += idx & -idx)",
+            "            f[idx] += val;",
+            "    }",
+            "",
+            "    void rangeAdd(int l, int r, int val) {",
+            "        update(l, val);",
+            "        if (r + 1 <= n) update(r + 1, -val);",
+            "    }",
+            "",
+            "    int pointQuery(int idx) {",
+            "        int res = 0;",
+            "        for (; idx > 0; idx -= idx & -idx) res += f[idx];",
+            "        return res;",
+            "    }",
+            "};",
+        ],
+        "description": "Fenwick tree"
+    },
+    "FenwickRURQ": {
+        "scope": "cpp",
+        "prefix": "FenwickRURQ",
+        "body": [
+            "struct FenwickRURQ {",
+            "    int n;",
+            "    vi B1, B2;",
+            "    FenwickRURQ(int size) : n(size), B1(n+1, 0), B2(n+1, 0) {}",
+            "",
+            "    void add(vi& f, int idx, int val) {",
+            "        for (; idx <= n; idx += idx & -idx) f[idx] += val;",
+            "    }",
+            "",
+            "    int prefix(vi& f, int idx){",
+            "        int res = 0;",
+            "        for (; idx > 0; idx -= idx & -idx) res += f[idx];",
+            "        return res;",
+            "    }",
+            "",
+            "    void rangeUpdate(int l, int r, int val) {",
+            "        add(B1, l, val);",
+            "        add(B1, r + 1, -val);",
+            "        add(B2, l, val * (l - 1));",
+            "        add(B2, r + 1, -val * r);",
+            "    }",
+            "",
+            "    int prefixQuery(int idx){",
+            "        int sumB1 = prefix(B1, idx);",
+            "        int sumB2 = prefix(B2, idx);",
+            "        return sumB1 * idx - sumB2;",
+            "    }",
+            "",
+            "    int rangeQuery(int l, int r){",
+            "        return prefixQuery(r) - prefixQuery(l - 1);",
+            "    }",
+            "};",
+        ],
+        "description": "Fenwick tree"
+    },
+    "Fenwick2D": {
+        "scope": "cpp",
+        "prefix": "Fenwick2D",
+        "body": [
+            "struct Fenwick2D {",
+            "    int n, m;",
+            "    vector<vector<int>> bit;",
+            "",
+            "    Fenwick2D(int _n, int _m)",
+            "      : n(_n), m(_m),",
+            "        bit(n + 1, vector<int>(m + 1, 0)) {}",
+            "",
+            "    void update(int x, int y, int val) {",
+            "        for (int i = x; i <= n; i += i & -i) {",
+            "            for (int j = y; j <= m; j += j & -j) {",
+            "                bit[i][j] += val;",
+            "            }",
+            "        }",
+            "    }",
+            "",
+            "    int prefixSum(int x, int y) const {",
+            "        int res = 0;",
+            "        for (int i = x; i > 0; i -= i & -i) {",
+            "            for (int j = y; j > 0; j -= j & -j) {",
+            "                res += bit[i][j];",
+            "            }",
+            "        }",
+            "        return res;",
+            "    }",
+            "",
+            "    int rangeSum(int x1, int y1, int x2, int y2) const {",
+            "        return prefixSum(x2, y2)",
+            "             - prefixSum(x1 - 1, y2)",
+            "             - prefixSum(x2, y1 - 1)",
+            "             + prefixSum(x1 - 1, y1 - 1);",
+            "    }",
+            "};",
+        ],
+        "description": "Fenwick tree"
+    },
     "ordered_set": {
         "scope": "cpp",
         "prefix": "ordered_set",
