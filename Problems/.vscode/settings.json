@@ -101,7 +101,10 @@
         "netfwd": "cpp",
         "slist": "cpp",
         "flat_map": "cpp",
-        "flat_set": "cpp"
+        "flat_set": "cpp",
+        "strstream": "cpp",
+        "queue": "cpp",
+        "stack": "cpp"
     },
     "cph.general.saveLocation": "",
     "discord.enabled": true
