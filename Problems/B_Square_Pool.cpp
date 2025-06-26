@@ -2,9 +2,9 @@
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// Exponentiation
-// URL: https://cses.fi/problemset/task/1095
-// Time: 6/25/2025, 6:13:50 PM
+// B. Square Pool
+// URL: https://codeforces.com/contest/2120/problem/B
+// Time: 6/21/2025, 5:52:06 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -15,21 +15,16 @@ template<typename T> ostream& operator<<(ostream& os, vector<T>& v) { for (auto&
 template<typename T> istream& operator>>(istream& is, vector<T>& v) { for (auto& i : v) is >> i; return is; }
 void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
-const int m = 1000000007;
-
-int powmod(int a, int b, int m) {
-    int result = 1;
-    while (b > 0) {
-        if (b & 1) result = (result * a) % m;
-        a = (a * a) % m;
-        b /= 2;
-    }
-    return result;
-}
+const int MOD = 1000000007;
 
 void Ramez() {
-    int a, b; cin >> a >> b;
-    cout << powmod(a, b, m) << "\n";
+    int n, s; cin >> n >> s;
+    int cnt = 0;
+    for (int i = 0; i < n; i++) {
+        int dx, dy, x, y; cin >> dx >> dy >> x >> y;
+        if(((x * dx) % s + s)%s == ((y * dy) % s + s)%s) cnt++;
+    }
+    cout << cnt << "\n";
 }
 
 /*

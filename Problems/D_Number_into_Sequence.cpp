@@ -40,10 +40,11 @@ void Ramez() {
 
     pii maxFactor = {0, INT_MIN};
     for (int i = 0; i < prfc.size(); i++){
+        cout << prfc[i].first << " " << prfc[i].second << "\n";
         if(maxFactor.second < prfc[i].second){
             maxFactor = prfc[i];
         }
-    }
+    } 
 
     for (int i = 1; i < maxFactor.second; i++){
         result.push_back(maxFactor.first);
