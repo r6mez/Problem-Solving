@@ -2,9 +2,9 @@
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// H. GCD
-// URL: https://codeforces.com/group/MWSDmqGsZm/contest/223338/problem/H
-// Time: 6/26/2025, 2:57:18 PM
+// C. Lucky Numbers
+// URL: https://codeforces.com/contest/630/problem/C
+// Time: 6/26/2025, 3:59:33 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -17,23 +17,23 @@ void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007;
 
-
-int gcd(int a, int b){
-    while(b != 0){
-        a %= b;
-        swap(a, b);
+int pw(int a, int b) {
+    int result = 1;
+    while (b > 0) {
+        if (b & 1) result = result * a;
+        a = a * a;
+        b /= 2;
     }
-    return a;
+    return result;
 }
-
-int lcm(int a, int b){
-    return (a * b)/gcd(a, b);
-}
-
 
 void Ramez() {
-    int a, b; cin >> a >> b;
-    cout << gcd(a, b) << " " << lcm(a, b);
+    int n; cin >> n;
+    int cnt = 0;
+    for (int i = 1; i <= n; i++){
+        cnt += pw(2LL, i);
+    }
+    cout << cnt << "\n";
 }
 
 /*

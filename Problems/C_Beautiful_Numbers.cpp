@@ -1,3 +1,10 @@
+/*
+    But when every equation was solved all that remained
+    were fields of dreamless solitude.
+*/
+// C. Beautiful Numbers
+// URL: https://codeforces.com/contest/300/problem/C
+// Time: 7/4/2025, 10:13:03 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -8,7 +15,7 @@ template<typename T> ostream& operator<<(ostream& os, vector<T>& v) { for (auto&
 template<typename T> istream& operator>>(istream& is, vector<T>& v) { for (auto& i : v) is >> i; return is; }
 void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
-const int MOD = 1e9 + 7;
+const int MOD = 1000000007;
 
 namespace combinatorics {
     vector<int> fact, inv, invFact;
@@ -30,12 +37,12 @@ namespace combinatorics {
 
     void init(int n) {
         fact.resize(n + 1); inv.resize(n + 1); invFact.resize(n + 1);
-        fact[0] = fact[1] = inv[0] = inv[1] = invFact[0] = invFact[1] = 1; 
-        for (int i = 2; i <= n; ++i){
+        fact[0] = fact[1] = inv[0] = inv[1] = invFact[0] = invFact[1] = 1;
+        for (int i = 2; i <= n; ++i) {
             fact[i] = fact[i - 1] * i % MOD;
             inv[i] = MOD - ((MOD / i) * inv[MOD % i]) % MOD;
             invFact[i] = invFact[i - 1] * inv[i] % MOD;
-        } 
+        }
     }
 
     int nPr(int n, int r) {
@@ -48,43 +55,48 @@ namespace combinatorics {
         return fact[n] * invFact[r] % MOD * invFact[n - r] % MOD;
     }
 
-    int nPrLinear(int n, int r){
+    int nPrLinear(int n, int r) {
         int answer = 1;
-        for (int i = n - r + 1; i <= n; i++){
+        for (int i = n - r + 1; i <= n; i++) {
             answer = multiply(answer, i);
         }
         return answer;
     }
 
-    int nCrLinear(int n, int r){
+    int nCrLinear(int n, int r) {
         int answer = 1;
-        for (int i = r + 1; i <= n; i++){
+        for (int i = r + 1; i <= n; i++) {
             answer = multiply(answer, i);
             answer = divide(answer, i - r);
         }
         return answer;
     }
-
-    int StarsAndPars(int n, int r) { return nCr(n + r - 1, r - 1); }
 };
-
 using namespace combinatorics;
 
+bool isExcellent(int val, int a, int b) {
+    while (val > 0) {
+        if (val % 10 == a || val % 10 == b) {
+            val /= 10;
+        } else return false;
+    }
+    return true;
+}
 
 void Ramez() {
-    init(2e6);
-    string s; cin >> s;
-    int answer = fact[s.size()];
-    vi freq(26);
-    for (int i = 0; i < s.size(); i++){
-        freq[s[i] - 'a']++;
-    }
+    init(1e6);
+    int a, b, n; cin >> a >> b >> n;
     
-    for(int x : freq){
-        answer = divide(answer, fact[x]);
+    int ans = 0;
+    for (int i = 0; i <= n; i++) {
+        int sum = a * i + b * (n - i);
+        if (isExcellent(sum, a, b)) {
+            ans += nCr(n, i);
+            ans %= MOD;
+        }
     }
 
-    cout << answer;
+    cout << ans;
 }
 
 /*

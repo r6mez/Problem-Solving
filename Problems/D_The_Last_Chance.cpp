@@ -2,9 +2,9 @@
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// H. GCD
-// URL: https://codeforces.com/group/MWSDmqGsZm/contest/223338/problem/H
-// Time: 6/26/2025, 2:57:18 PM
+// D. The Last Chance
+// URL: https://codeforces.com/group/zJtqriSgdw/contest/616532/problem/D
+// Time: 6/28/2025, 7:37:26 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -18,22 +18,26 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007;
 
 
-int gcd(int a, int b){
-    while(b != 0){
-        a %= b;
-        swap(a, b);
-    }
-    return a;
-}
-
-int lcm(int a, int b){
-    return (a * b)/gcd(a, b);
-}
-
-
 void Ramez() {
-    int a, b; cin >> a >> b;
-    cout << gcd(a, b) << " " << lcm(a, b);
+    map<string, string> codes = {
+        {"000", "AND"},
+        {"001", "ADD"},
+        {"010", "LDA"},
+        {"011", "STA"},
+        {"100", "BUN"},
+        {"101", "BSA"},
+        {"110", "ISZ"},
+    };
+
+    string s;
+    
+    while (cin >> s) {
+        string op = s.substr(1, 3), add = s.substr(4, 12);
+        stringstream hexAddress;
+        hexAddress << hex << uppercase << setfill('0') << setw(3) << stoul(add, nullptr, 2);        
+        string addressHex = hexAddress.str();
+        cout << codes[op] + " " + addressHex << endl;
+    }
 }
 
 /*

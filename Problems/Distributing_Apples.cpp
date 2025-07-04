@@ -1,3 +1,10 @@
+/*
+    But when every equation was solved all that remained
+    were fields of dreamless solitude.
+*/
+// Distributing Apples
+// URL: https://cses.fi/problemset/task/1716
+// Time: 7/4/2025, 9:52:48 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -8,7 +15,7 @@ template<typename T> ostream& operator<<(ostream& os, vector<T>& v) { for (auto&
 template<typename T> istream& operator>>(istream& is, vector<T>& v) { for (auto& i : v) is >> i; return is; }
 void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
-const int MOD = 1e9 + 7;
+const int MOD = 1000000007;
 
 namespace combinatorics {
     vector<int> fact, inv, invFact;
@@ -64,27 +71,12 @@ namespace combinatorics {
         }
         return answer;
     }
-
-    int StarsAndPars(int n, int r) { return nCr(n + r - 1, r - 1); }
 };
-
 using namespace combinatorics;
 
-
 void Ramez() {
-    init(2e6);
-    string s; cin >> s;
-    int answer = fact[s.size()];
-    vi freq(26);
-    for (int i = 0; i < s.size(); i++){
-        freq[s[i] - 'a']++;
-    }
-    
-    for(int x : freq){
-        answer = divide(answer, fact[x]);
-    }
-
-    cout << answer;
+    int n, m; cin >> n >> m;
+    cout << nCrLinear(n + m - 1, n - 1);
 }
 
 /*

@@ -2,9 +2,9 @@
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// H. GCD
-// URL: https://codeforces.com/group/MWSDmqGsZm/contest/223338/problem/H
-// Time: 6/26/2025, 2:57:18 PM
+// B. Sherlock and his girlfriend
+// URL: https://codeforces.com/contest/776/problem/B
+// Time: 7/2/2025, 9:41:52 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -18,22 +18,23 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007;
 
 
-int gcd(int a, int b){
-    while(b != 0){
-        a %= b;
-        swap(a, b);
-    }
-    return a;
-}
-
-int lcm(int a, int b){
-    return (a * b)/gcd(a, b);
-}
-
-
 void Ramez() {
-    int a, b; cin >> a >> b;
-    cout << gcd(a, b) << " " << lcm(a, b);
+    int n; cin >> n; n++;
+    int cnt = 0;
+    vector<bool> isPrime(n+1, true);
+    for (int i = 2; i <= n; i++) {
+        if (!isPrime[i]) continue;
+        cnt++;
+        for (int j = i * i; j <= n; j += i){
+            isPrime[j] = false;
+        }
+    }
+
+    cout << (n <= 3? 1 : 2) << "\n";
+    for (int i = 2; i <= n; i++){
+        if(isPrime[i]) cout << 1 << " ";
+        else cout << 2 << " ";
+    }
 }
 
 /*

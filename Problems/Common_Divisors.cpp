@@ -2,9 +2,9 @@
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// H. GCD
-// URL: https://codeforces.com/group/MWSDmqGsZm/contest/223338/problem/H
-// Time: 6/26/2025, 2:57:18 PM
+// Common Divisors
+// URL: https://cses.fi/problemset/task/1081/
+// Time: 7/2/2025, 8:09:18 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -18,22 +18,27 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007;
 
 
-int gcd(int a, int b){
-    while(b != 0){
-        a %= b;
-        swap(a, b);
-    }
-    return a;
-}
-
-int lcm(int a, int b){
-    return (a * b)/gcd(a, b);
-}
-
-
 void Ramez() {
-    int a, b; cin >> a >> b;
-    cout << gcd(a, b) << " " << lcm(a, b);
+    int n; cin >> n;
+    vi a(n); cin >> a;
+
+    const int M = 1e6;
+    vector<int> freq(M + 1, 0);
+
+    for (int i = 0; i < n; i++) {
+        freq[a[i]]++;
+    }
+
+    for (int g = M; g >= 1; --g) {
+        int cnt = 0;
+        for (int m = g; m <= M; m += g) {
+            cnt += freq[m];
+            if (cnt >= 2) {
+                cout << g << "\n";
+                return;
+            }
+        }
+    }
 }
 
 /*

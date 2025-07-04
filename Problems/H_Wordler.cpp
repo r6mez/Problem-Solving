@@ -2,9 +2,9 @@
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
-// H. GCD
-// URL: https://codeforces.com/group/MWSDmqGsZm/contest/223338/problem/H
-// Time: 6/26/2025, 2:57:18 PM
+// H. Wordler
+// URL: https://codeforces.com/group/zJtqriSgdw/contest/616532/problem/H
+// Time: 6/28/2025, 6:51:52 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -17,23 +17,33 @@ void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007;
 
-
-int gcd(int a, int b){
-    while(b != 0){
-        a %= b;
-        swap(a, b);
-    }
-    return a;
-}
-
-int lcm(int a, int b){
-    return (a * b)/gcd(a, b);
-}
-
-
 void Ramez() {
-    int a, b; cin >> a >> b;
-    cout << gcd(a, b) << " " << lcm(a, b);
+    string word = "THEME";
+    string s; cin >> s;
+    int n = word.size();
+
+    map<char, int> cnt;
+    for (char c : word) cnt[c]++;
+    vector<string> result(n, "a333");
+
+    for (int i = 0; i < n; i++) {
+        if (s[i] == word[i]) {
+            result[i] = "GREEN";
+            cnt[s[i]]--;
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (result[i] != "a333") continue;  
+        if (cnt[s[i]]) {
+            result[i] = "YELLOW";
+            cnt[s[i]]--;
+        } else {
+            result[i] = "GREY";
+        }
+    }
+
+    cout << result;
 }
 
 /*
