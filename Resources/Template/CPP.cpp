@@ -1,6 +1,6 @@
 /*
-    But when every equation was solved all that remained
-    were fields of dreamless solitude.
+    I was alone in an empty universe.
+    A universe too small and at the same time... too infinite.
 */
 // {{problemName}}
 // URL: {{problemURL}}
@@ -17,8 +17,9 @@ void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007;
 
-void Ramez() {
 
+void Ramez() {
+    
 }
 
 /*
