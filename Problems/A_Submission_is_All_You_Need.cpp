@@ -1,3 +1,10 @@
+/*
+    I was alone in an empty universe.
+    A universe too small and at the same time... too infinite.
+*/
+// A. Submission is All You Need
+// URL: https://codeforces.com/contest/2130/problem/0
+// Time: 7/31/2025, 5:39:42 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -8,44 +15,34 @@ template<typename T> ostream& operator<<(ostream& os, vector<T>& v) { for (auto&
 template<typename T> istream& operator>>(istream& is, vector<T>& v) { for (auto& i : v) is >> i; return is; }
 void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
-const int MOD = 1e9 + 7;
+const int MOD = 1000000007;
 
-struct DSU {
-    vector<int> parent, size;
-    int count; // of component
 
-    DSU(int n) : parent(n + 1), size(n + 1, 1), count(n) { iota(all(parent), 0); }
+void Ramez() {
+    int n; cin >> n;
+    multiset<int> s;
 
-    int find(int i) { return (parent[i] == i ? i : (parent[i] = find(parent[i]))); }
-
-    bool same(int i, int j) { return find(i) == find(j); }
-
-    int getSize(int i) { return size[find(i)]; }
-
-    int merge(int i, int j) {
-        if ((i = find(i)) == (j = find(j))) return -1;
-        else --count;
-        if (size[i] > size[j]) swap(i, j);
-        parent[i] = j;
-        size[j] += size[i];        
-        return j;
+    int sum = 0;
+    for (int i = 0; i < n; i++) {
+        int x; cin >> x;
+        sum += x;
+        if(x == 0) sum++;
     }
-};
 
-
-void Ramez(){
-
+    cout << sum << "\n";
 }
-/*
-NOTES:
 
+/*
+get the current mex
+select between
+mex + (sum - mex(mex - 1)/2) and sum
 */
 
 int32_t main() {
     // UseFile();
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) Ramez();
     return 0;
 }

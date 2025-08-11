@@ -1,6 +1,5 @@
 /*
-    I was alone in an empty universe.
-    A universe too small and at the same time... too infinite.
+    One day, I'm gonna grow wings
 */
 // {{problemName}}
 // URL: {{problemURL}}
@@ -13,17 +12,15 @@ using namespace std;
 #define all(v) v.begin(), v.end()
 template<typename T> ostream& operator<<(ostream& os, vector<T>& v) { for (auto& i : v) os << i << ' '; return os; }
 template<typename T> istream& operator>>(istream& is, vector<T>& v) { for (auto& i : v) is >> i; return is; }
-void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
+void FastIO() { cin.tie(nullptr)->sync_with_stdio(false); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007;
 
+void solve() {
 
-void Ramez() {
-    
 }
 
 /*
-NOTES:
 
 */
 
@@ -32,6 +29,6 @@ int32_t main() {
     FastIO();
     int t = 1;
     // cin >> t;
-    while (t--) Ramez();
+    while (t--) solve();
     return 0;
 }

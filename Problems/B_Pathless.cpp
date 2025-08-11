@@ -1,10 +1,10 @@
 /*
-    But when every equation was solved all that remained
-    were fields of dreamless solitude.
+    I was alone in an empty universe.
+    A universe too small and at the same time... too infinite.
 */
-// B. Parking
-// URL: https://codeforces.com/edu/course/2/lesson/7/2/practice/contest/289391/problem/B
-// Time: 6/22/2025, 4:05:54 PM
+// B. Pathless
+// URL: https://codeforces.com/contest/2130/problem/B
+// Time: 7/31/2025, 6:17:47 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -17,37 +17,38 @@ void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007;
 
-struct DSU {
-    vector<int> parent, size;
-    DSU(int n) : parent(n + 1), size(n + 1, 1) { iota(all(parent), 0); }
-
-    int find(int i) {
-        return (parent[i] == i ? i : (parent[i] = find(parent[i])));
-    }
-};
 
 void Ramez() {
-    int n; cin >> n;
-    DSU dsu(n);
+    int n, s; cin >> n >> s;
+    vi a(n);
+    int sum = 0, c0 = 0, c1 = 0, c2 = 0;
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+        if (a[i] == 0) c0++;
+        else if (a[i] == 1) c1++;
+        else c2++;
+        sum += a[i];
+    }
 
-    for (int i = 0; i < n; ++i) {
-        int p; cin >> p;
-        int freeSlot = dsu.find(p);
-        cout << freeSlot << " ";
-        dsu.parent[freeSlot] = dsu.find((freeSlot % n) + 1);
+    if (s < sum || s - sum == 1) {
+        while(c0--) cout << 0 << ' ';
+        while(c2--) cout << 2 << ' ';
+        while(c1--) cout << 1 << ' ';
+        cout << "\n";
+    } else {
+        cout << -1 << "\n";
     }
 }
 
 /*
-NOTES:
-
+s < n
 */
 
 int32_t main() {
     // UseFile();
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) Ramez();
     return 0;
 }

@@ -1,3 +1,10 @@
+/*
+    I was alone in an empty universe.
+    A universe too small and at the same time... too infinite.
+*/
+// H. Hebron: A City of Ancient Heritage
+// URL: https://codeforces.com/group/Rilx5irOux/contest/537316/problem/H
+// Time: 7/25/2025, 9:47:31 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -8,34 +15,25 @@ template<typename T> ostream& operator<<(ostream& os, vector<T>& v) { for (auto&
 template<typename T> istream& operator>>(istream& is, vector<T>& v) { for (auto& i : v) is >> i; return is; }
 void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
-const int MOD = 1e9 + 7;
+const int MOD = 1000000007;
 
-struct DSU {
-    vector<int> parent, size;
-    int count; // of component
 
-    DSU(int n) : parent(n + 1), size(n + 1, 1), count(n) { iota(all(parent), 0); }
-
-    int find(int i) { return (parent[i] == i ? i : (parent[i] = find(parent[i]))); }
-
-    bool same(int i, int j) { return find(i) == find(j); }
-
-    int getSize(int i) { return size[find(i)]; }
-
-    int merge(int i, int j) {
-        if ((i = find(i)) == (j = find(j))) return -1;
-        else --count;
-        if (size[i] > size[j]) swap(i, j);
-        parent[i] = j;
-        size[j] += size[i];        
-        return j;
+void Ramez() {
+    int n, k; cin >> n >> k;
+    vi a(n + 1);
+    int x = 1;
+    for (int i = 1; i <= n; i++){
+        for (int j = i; j <= n; j += k){
+            if(a[j] != 0) break;
+            a[j] = x++;
+        }
     }
-};
-
-
-void Ramez(){
-
+    
+    for (int i = 1; i <= n; i++){
+        cout << a[i] << " ";
+    }
 }
+
 /*
 NOTES:
 

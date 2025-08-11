@@ -1,10 +1,3 @@
-/*
-    But when every equation was solved all that remained
-    were fields of dreamless solitude.
-*/
-// B. Parking
-// URL: https://codeforces.com/edu/course/2/lesson/7/2/practice/contest/289391/problem/B
-// Time: 6/22/2025, 4:05:54 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -17,29 +10,47 @@ void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007;
 
-struct DSU {
-    vector<int> parent, size;
-    DSU(int n) : parent(n + 1), size(n + 1, 1) { iota(all(parent), 0); }
-
-    int find(int i) {
-        return (parent[i] == i ? i : (parent[i] = find(parent[i])));
-    }
-};
 
 void Ramez() {
     int n; cin >> n;
-    DSU dsu(n);
-
-    for (int i = 0; i < n; ++i) {
-        int p; cin >> p;
-        int freeSlot = dsu.find(p);
-        cout << freeSlot << " ";
-        dsu.parent[freeSlot] = dsu.find((freeSlot % n) + 1);
+    vi  g(n + 1), sub(n + 1); 
+    for (int i = 1; i <= n; i++){
+        cin >> g[i];
     }
+    
+    vector<vi> adj(n + 1);
+    for (int i = 0; i < n - 1; i++){
+        int u, v; cin >> u >> v;
+        adj[u].push_back(v);
+        // adj[v].push_back(u);
+    }
+
+    
+    function<void(int)> dfs = [&](int u) -> void {
+        sub[u] = 1;
+        for(int v : adj[u]){
+            dfs(v);
+            sub[u] += sub[v];
+            g[u] = gcd(g[u], g[v]);
+        }
+    };
+
+    cout << g << "\n";
+
+    dfs(1);
+
+    cout << g << "\n";
+    cout << sub << "\n";
+
+    int ans = 0;
+    for (int i = 1; i <= n; i++){
+        ans = max(ans, g[i] * sub[i]);
+    }
+
+    cout << ans << "\n";
 }
 
 /*
-NOTES:
 
 */
 
@@ -47,7 +58,7 @@ int32_t main() {
     // UseFile();
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) Ramez();
     return 0;
 }

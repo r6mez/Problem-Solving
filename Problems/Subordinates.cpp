@@ -1,3 +1,10 @@
+/*
+    I was alone in an empty universe.
+    A universe too small and at the same time... too infinite.
+*/
+// Subordinates
+// URL: https://cses.fi/problemset/task/1674
+// Time: 8/7/2025, 4:13:55 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int    long long
@@ -8,36 +15,35 @@ template<typename T> ostream& operator<<(ostream& os, vector<T>& v) { for (auto&
 template<typename T> istream& operator>>(istream& is, vector<T>& v) { for (auto& i : v) is >> i; return is; }
 void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
-const int MOD = 1e9 + 7;
+const int MOD = 1000000007;
 
-struct DSU {
-    vector<int> parent, size;
-    int count; // of component
+const int maxN = 2e5;
+int sz[maxN+1];
+vi G[maxN+1];
 
-    DSU(int n) : parent(n + 1), size(n + 1, 1), count(n) { iota(all(parent), 0); }
-
-    int find(int i) { return (parent[i] == i ? i : (parent[i] = find(parent[i]))); }
-
-    bool same(int i, int j) { return find(i) == find(j); }
-
-    int getSize(int i) { return size[find(i)]; }
-
-    int merge(int i, int j) {
-        if ((i = find(i)) == (j = find(j))) return -1;
-        else --count;
-        if (size[i] > size[j]) swap(i, j);
-        parent[i] = j;
-        size[j] += size[i];        
-        return j;
+void dfs(int u){
+    sz[u] = 1;
+    for(int v : G[u]){
+        dfs(v);
+        sz[u] += sz[v];
     }
-};
-
-
-void Ramez(){
-
 }
+
+void Ramez() {
+    int n; cin >> n;
+    for (int v = 2; v <= n; v++){
+        int u; cin >> u;
+        G[u].push_back(v);
+    }
+    
+    dfs(1);
+
+    for (int i = 1; i <= n; i++){
+        cout << sz[i] - 1 << " ";
+    }
+}
+
 /*
-NOTES:
 
 */
 
