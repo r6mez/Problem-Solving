@@ -35,7 +35,10 @@
         "ranges": "cpp",
         "stacktrace": "cpp",
         "text_encoding": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "bitset": "cpp",
+        "queue": "cpp",
+        "stack": "cpp"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }
