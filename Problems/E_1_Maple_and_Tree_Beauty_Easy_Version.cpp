@@ -1,9 +1,9 @@
 /*
     One day, I'm gonna grow wings
 */
-// Creating Strings
-// URL: https://cses.fi/problemset/task/1622
-// Time: 9/24/2025, 7:27:55 PM
+// E1. Maple and Tree Beauty (Easy Version)
+// URL: https://codeforces.com/contest/2139/problem/E1
+// Time: 9/8/2025, 8:48:50 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -15,37 +15,10 @@ template<typename T> ostream& operator<<(ostream& os, vector<T>& v) { for (auto&
 template<typename T> istream& operator>>(istream& is, vector<T>& v) { for (auto& i : v) is >> i; return is; }
 void FastIO() { cin.tie(nullptr)->sync_with_stdio(false); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
-const int MOD = 1000000007, INF = 2e18;
-
-string s;
-int n; 
-vector<string> permutations;
-
-void permute(int i) {
-    if(i == n) {
-        permutations.push_back(s);
-        return;
-    }
-
-    permute(i + 1);
-    for (int j = i + 1; j < n; j++){
-        swap(s[i], s[j]);
-        permute(i + 1);
-        swap(s[i], s[j]);
-    }
-}
+const int MOD = 1000000007;
 
 void solve() {
-    cin >> s;
-    n = s.size();
-    permute(0);
-    sort(all(permutations));
-    permutations.erase(unique(all(permutations)), permutations.end());
-    cout << permutations.size() << "\n";
-    for (int i = 0; i < permutations.size(); i++){
-        cout << permutations[i] << "\n";
-    }
-    
+
 }
 
 /*

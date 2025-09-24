@@ -1,9 +1,9 @@
 /*
     One day, I'm gonna grow wings
 */
-// E. Three Strings
-// URL: https://codeforces.com/problemset/problem/2050/E
-// Time: 9/13/2025, 5:01:37 PM
+// F - LCS
+// URL: https://atcoder.jp/contests/dp/tasks/dp_f?lang=en
+// Time: 9/13/2025, 1:51:33 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -17,39 +17,51 @@ void FastIO() { cin.tie(nullptr)->sync_with_stdio(false); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007, INF = 2e18;
 
-string a, b, c;
-int A, B, C;
+string a, b;
+int n, m;
 
-const int N = 1e3 + 1;
+const int N = 3001; 
 int dp[N][N];
 
-int calc(int i, int j, int k) {
-    if (i == A && j == B) return 0;
-    if (k == C) return INF;
-
+int calc(int i, int j){
+    if(i == n || j == m) return 0;
     if(dp[i][j] != -1) return dp[i][j];
+    if(a[i] == b[j]) return dp[i][j] = calc(i + 1, j + 1) + 1;
+    return dp[i][j] = max(calc(i + 1, j), calc(i, j + 1));
+}
 
-    int ans = INF;
-    if (i < A) ans = min(ans, calc(i + 1, j, k + 1) + (a[i] != c[k]));
-    if (j < B) ans = min(ans, calc(i, j + 1, k + 1) + (b[j] != c[k]));
-    return dp[i][j] = ans;
+string answer = "";
+
+void build(int i, int j){
+    if(i == n || j == m) return;
+    if(a[i] == b[j]) {
+        answer += a[i];
+        build(i + 1, j + 1);
+    } else {
+        if(calc(i + 1, j) > calc(i, j + 1)){
+            build(i + 1, j);
+        } else {
+            build(i, j + 1);
+        }
+    }
 }
 
 void solve() {
     memset(dp, -1, sizeof(dp));
-    cin >> a >> b >> c;
-    A = a.size(), B = b.size(), C = c.size();
-    cout << calc(0, 0, 0) << "\n";
+    cin >> a >> b;
+    n = a.size(); m = b.size();
+    build(0, 0);
+    cout << answer;
 }
 
 /*
-
+dp[i][j] = length of LCS between the first i characters of string X and the first j characters of string Y.
 */
 
 signed main() {
     // UseFile();
     FastIO();
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
 }

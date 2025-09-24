@@ -1,9 +1,9 @@
 /*
     One day, I'm gonna grow wings
 */
-// Creating Strings
-// URL: https://cses.fi/problemset/task/1622
-// Time: 9/24/2025, 7:27:55 PM
+// E. Sleeping Schedule
+// URL: https://codeforces.com/problemset/problem/1324/E
+// Time: 9/13/2025, 4:30:21 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -17,35 +17,27 @@ void FastIO() { cin.tie(nullptr)->sync_with_stdio(false); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007, INF = 2e18;
 
-string s;
-int n; 
-vector<string> permutations;
+int n, h, l, r; 
+vi a;
 
-void permute(int i) {
-    if(i == n) {
-        permutations.push_back(s);
-        return;
-    }
+const int H = 2001, N = 2001;
+int dp[N][H];
+int calc(int i, int currH){
+    if(i == n) return 0;
+    if(dp[i][currH] != -1) return dp[i][currH];
 
-    permute(i + 1);
-    for (int j = i + 1; j < n; j++){
-        swap(s[i], s[j]);
-        permute(i + 1);
-        swap(s[i], s[j]);
-    }
+    int nxt1 = (currH + a[i]) % h;
+    int nxt2 = (currH + a[i] - 1 + h) % h;
+    return dp[i][currH] = max(calc(i+1, nxt1) + (l <= nxt1 && nxt1 <= r),
+               calc(i+1, nxt2) + (l <= nxt2 && nxt2 <= r));
 }
 
 void solve() {
-    cin >> s;
-    n = s.size();
-    permute(0);
-    sort(all(permutations));
-    permutations.erase(unique(all(permutations)), permutations.end());
-    cout << permutations.size() << "\n";
-    for (int i = 0; i < permutations.size(); i++){
-        cout << permutations[i] << "\n";
-    }
-    
+    memset(dp, -1, sizeof(dp));
+    cin >> n >> h >> l >> r;
+    a.resize(n);
+    cin >> a;
+    cout << calc(0, 0);
 }
 
 /*

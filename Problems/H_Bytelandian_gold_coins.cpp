@@ -1,9 +1,9 @@
 /*
     One day, I'm gonna grow wings
 */
-// Creating Strings
-// URL: https://cses.fi/problemset/task/1622
-// Time: 9/24/2025, 7:27:55 PM
+// H - Bytelandian gold coins
+// URL: https://vjudge.net/contest/694272#problem/H
+// Time: 9/13/2025, 4:08:39 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -17,35 +17,16 @@ void FastIO() { cin.tie(nullptr)->sync_with_stdio(false); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007, INF = 2e18;
 
-string s;
-int n; 
-vector<string> permutations;
+unordered_map<int, int> dp;
 
-void permute(int i) {
-    if(i == n) {
-        permutations.push_back(s);
-        return;
-    }
-
-    permute(i + 1);
-    for (int j = i + 1; j < n; j++){
-        swap(s[i], s[j]);
-        permute(i + 1);
-        swap(s[i], s[j]);
-    }
+int calc(int n){
+    if(n == 0) return 0;
+    if(dp.find(n) != dp.end()) return dp[n];
+    return dp[n] = max(n, calc(n / 2) + calc(n / 3) + calc(n / 4));
 }
 
 void solve() {
-    cin >> s;
-    n = s.size();
-    permute(0);
-    sort(all(permutations));
-    permutations.erase(unique(all(permutations)), permutations.end());
-    cout << permutations.size() << "\n";
-    for (int i = 0; i < permutations.size(); i++){
-        cout << permutations[i] << "\n";
-    }
-    
+    int n; while(cin >> n) cout << calc(n) << "\n";
 }
 
 /*

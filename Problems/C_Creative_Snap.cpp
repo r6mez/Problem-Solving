@@ -1,9 +1,9 @@
 /*
     One day, I'm gonna grow wings
 */
-// Creating Strings
-// URL: https://cses.fi/problemset/task/1622
-// Time: 9/24/2025, 7:27:55 PM
+// C. Creative Snap
+// URL: https://codeforces.com/problemset/problem/1111/C
+// Time: 9/22/2025, 8:12:56 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -17,35 +17,28 @@ void FastIO() { cin.tie(nullptr)->sync_with_stdio(false); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007, INF = 2e18;
 
-string s;
-int n; 
-vector<string> permutations;
+int n, k, A, B; 
+vi pos;
 
-void permute(int i) {
-    if(i == n) {
-        permutations.push_back(s);
-        return;
+int calc(int l, int r){
+    if(l == r) {
+        if(binary_search(all(pos), l)) return B;
+        return A;
     }
 
-    permute(i + 1);
-    for (int j = i + 1; j < n; j++){
-        swap(s[i], s[j]);
-        permute(i + 1);
-        swap(s[i], s[j]);
-    }
+    int mid = (l + r) / 2;
+    int op1 = calc(l, mid) + calc(mid + 1, r);
+  
+    int na = upper_bound(all(pos), r) - lower_bound(all(pos), l);
+    int op2 = na > 0 ? B * na * (r - l + 1) : A;
+    return min(op1, op2);
 }
 
 void solve() {
-    cin >> s;
-    n = s.size();
-    permute(0);
-    sort(all(permutations));
-    permutations.erase(unique(all(permutations)), permutations.end());
-    cout << permutations.size() << "\n";
-    for (int i = 0; i < permutations.size(); i++){
-        cout << permutations[i] << "\n";
-    }
-    
+    cin >> n >> k >> A >> B;
+    pos.resize(k);
+    cin >> pos;
+    cout << calc(1, 1 << n);
 }
 
 /*

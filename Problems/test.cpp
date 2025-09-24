@@ -34,7 +34,10 @@ struct DSU {
 
 
 void Ramez(){
-
+    for (int i = 1; i <= 300; i++){
+        cout << i << " ";
+    }
+    
 }
 /*
 NOTES:

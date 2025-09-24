@@ -1,9 +1,9 @@
 /*
     One day, I'm gonna grow wings
 */
-// Creating Strings
-// URL: https://cses.fi/problemset/task/1622
-// Time: 9/24/2025, 7:27:55 PM
+// B. Dreamoon and WiFi
+// URL: https://codeforces.com/problemset/problem/476/B
+// Time: 9/24/2025, 7:12:01 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -17,35 +17,39 @@ void FastIO() { cin.tie(nullptr)->sync_with_stdio(false); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007, INF = 2e18;
 
-string s;
-int n; 
-vector<string> permutations;
+string original, received;
 
-void permute(int i) {
-    if(i == n) {
-        permutations.push_back(s);
+int total = 0, successful = 0;
+int expextedScore = 0;
+
+void calc(int i, int currSocre) {
+    if(i == original.size()){
+        if (currSocre == expextedScore) successful++;
+        total++;
         return;
     }
 
-    permute(i + 1);
-    for (int j = i + 1; j < n; j++){
-        swap(s[i], s[j]);
-        permute(i + 1);
-        swap(s[i], s[j]);
+    if(received[i] == '+') calc(i + 1, currSocre + 1);
+    else if(received[i] == '-') calc(i + 1, currSocre - 1);
+    else {
+        calc(i + 1, currSocre + 1);
+        calc(i + 1, currSocre - 1);
     }
 }
 
+
 void solve() {
-    cin >> s;
-    n = s.size();
-    permute(0);
-    sort(all(permutations));
-    permutations.erase(unique(all(permutations)), permutations.end());
-    cout << permutations.size() << "\n";
-    for (int i = 0; i < permutations.size(); i++){
-        cout << permutations[i] << "\n";
+    cin >> original >> received;
+
+    for (int i = 0; i < original.size(); i++){
+        if(original[i] == '+') expextedScore++;
+        else expextedScore--;
     }
-    
+
+    calc(0, 0);
+
+    double answer = (double)successful / total;
+    cout << fixed << setprecision(12) << answer << "\n";
 }
 
 /*

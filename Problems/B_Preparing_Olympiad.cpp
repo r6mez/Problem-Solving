@@ -1,9 +1,9 @@
 /*
     One day, I'm gonna grow wings
 */
-// Creating Strings
-// URL: https://cses.fi/problemset/task/1622
-// Time: 9/24/2025, 7:27:55 PM
+// B. Preparing Olympiad
+// URL: https://codeforces.com/problemset/problem/550/B
+// Time: 9/19/2025, 6:02:30 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -16,36 +16,23 @@ template<typename T> istream& operator>>(istream& is, vector<T>& v) { for (auto&
 void FastIO() { cin.tie(nullptr)->sync_with_stdio(false); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007, INF = 2e18;
+int n, l, r, x;
+vi a;
 
-string s;
-int n; 
-vector<string> permutations;
+int calc(int i, int sum, int mn, int mx){
+    if(i == n){
+        if(mx - mn >= x && (l <= sum && sum <= r)) return 1;
+        return 0;
+    } 
 
-void permute(int i) {
-    if(i == n) {
-        permutations.push_back(s);
-        return;
-    }
-
-    permute(i + 1);
-    for (int j = i + 1; j < n; j++){
-        swap(s[i], s[j]);
-        permute(i + 1);
-        swap(s[i], s[j]);
-    }
+    return calc(i + 1, sum, mn, mx) + calc(i + 1, sum + a[i], min(mn, a[i]), max(mx, a[i]));
 }
 
 void solve() {
-    cin >> s;
-    n = s.size();
-    permute(0);
-    sort(all(permutations));
-    permutations.erase(unique(all(permutations)), permutations.end());
-    cout << permutations.size() << "\n";
-    for (int i = 0; i < permutations.size(); i++){
-        cout << permutations[i] << "\n";
-    }
-    
+    cin >> n >> l >> r >> x;
+    a.resize(n);
+    cin >> a;
+    cout << calc(0, 0, INT_MAX, INT_MIN);
 }
 
 /*

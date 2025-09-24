@@ -1,9 +1,9 @@
 /*
     One day, I'm gonna grow wings
 */
-// Creating Strings
-// URL: https://cses.fi/problemset/task/1622
-// Time: 9/24/2025, 7:27:55 PM
+// B. Discounts
+// URL: https://codeforces.com/contest/2143/problem/B
+// Time: 9/17/2025, 5:52:31 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -17,35 +17,34 @@ void FastIO() { cin.tie(nullptr)->sync_with_stdio(false); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007, INF = 2e18;
 
-string s;
-int n; 
-vector<string> permutations;
-
-void permute(int i) {
-    if(i == n) {
-        permutations.push_back(s);
-        return;
-    }
-
-    permute(i + 1);
-    for (int j = i + 1; j < n; j++){
-        swap(s[i], s[j]);
-        permute(i + 1);
-        swap(s[i], s[j]);
-    }
-}
-
 void solve() {
-    cin >> s;
-    n = s.size();
-    permute(0);
-    sort(all(permutations));
-    permutations.erase(unique(all(permutations)), permutations.end());
-    cout << permutations.size() << "\n";
-    for (int i = 0; i < permutations.size(); i++){
-        cout << permutations[i] << "\n";
+    int n, k; cin >> n >> k;
+    vi a(n); cin >> a;
+    vi dis(k); cin >> dis;
+    sort(all(a), greater<int>());
+    sort(all(dis));
+
+    vi pre(n);
+    partial_sum(all(a), pre.begin());
+
+    int cost = 0, j = 0;
+    for (int i = 0; i < n; i++){
+        if(j < k){
+            int r = i + dis[j] - 2;
+            if(r >= n) {
+                cost += a[i];
+                continue;
+            }
+            int l = i;
+            cost += (r >= 0? pre[r] : 0) - (l ? pre[l - 1] : 0);
+            i += dis[j] - 1;
+            j++;
+        } else {
+            cost += a[i];
+        }
     }
     
+    cout << cost << "\n";
 }
 
 /*
@@ -56,6 +55,6 @@ signed main() {
     // UseFile();
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) solve();
 }

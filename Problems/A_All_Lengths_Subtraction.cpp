@@ -1,9 +1,9 @@
 /*
     One day, I'm gonna grow wings
 */
-// Creating Strings
-// URL: https://cses.fi/problemset/task/1622
-// Time: 9/24/2025, 7:27:55 PM
+// A. All Lengths Subtraction
+// URL: https://codeforces.com/contest/2143/problem/0
+// Time: 9/17/2025, 5:38:11 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -17,35 +17,31 @@ void FastIO() { cin.tie(nullptr)->sync_with_stdio(false); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007, INF = 2e18;
 
-string s;
-int n; 
-vector<string> permutations;
+void solve() {
+    int n; cin >> n;
+    vi a(n); cin >> a;
 
-void permute(int i) {
-    if(i == n) {
-        permutations.push_back(s);
+    if(n <= 2){
+        cout << "YES\n";
         return;
     }
 
-    permute(i + 1);
-    for (int j = i + 1; j < n; j++){
-        swap(s[i], s[j]);
-        permute(i + 1);
-        swap(s[i], s[j]);
+    int cntTops = 0, cntBottoms = 0;
+    for (int i = 1; i < n - 1; i++){
+        if(a[i-1] < a[i] && a[i] > a[i+1]) cntTops++;
+        if(a[i-1] > a[i] && a[i] < a[i+1]) cntBottoms++;
     }
-}
 
-void solve() {
-    cin >> s;
-    n = s.size();
-    permute(0);
-    sort(all(permutations));
-    permutations.erase(unique(all(permutations)), permutations.end());
-    cout << permutations.size() << "\n";
-    for (int i = 0; i < permutations.size(); i++){
-        cout << permutations[i] << "\n";
-    }
-    
+    int sorted = false;
+    int reverseSorted = false;
+    vi b(a);
+    sort(all(b));
+    if(a == b) sorted = true;
+    reverse(all(b));
+    if(a == b) reverseSorted = true;
+
+    if((cntTops == 1 && cntBottoms == 0) || sorted || reverseSorted) cout << "YES\n";
+    else cout << "NO\n";
 }
 
 /*
@@ -56,6 +52,6 @@ signed main() {
     // UseFile();
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) solve();
 }
