@@ -1,9 +1,9 @@
 /*
     One day, I'm gonna grow wings
 */
-// {{problemName}}
-// URL: {{problemURL}}
-// Time: {{time}}
+// A. Candies for Nephews
+// URL: https://codeforces.com/contest/2145/problem/A
+// Time: 10/6/2025, 5:36:02 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -18,7 +18,8 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007, INF = 2e18;
 
 void solve() {
-    
+    int n; cin >> n;
+    cout << (n%3 == 0 ? 0 : 3 - n%3) << "\n";
 }
 
 /*
@@ -29,6 +30,6 @@ signed main() {
     // UseFile();
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) solve();
 }

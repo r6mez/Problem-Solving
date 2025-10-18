@@ -1,9 +1,9 @@
 /*
     One day, I'm gonna grow wings
 */
-// {{problemName}}
-// URL: {{problemURL}}
-// Time: {{time}}
+// B. ShaFeiii's XOR Tournament
+// URL: https://codeforces.com/group/1CUdKCvauM/contest/638299/problem/B
+// Time: 10/5/2025, 8:06:58 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -18,7 +18,21 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007, INF = 2e18;
 
 void solve() {
-    
+    int n, m; cin >> n >> m;
+    vi a(n), b(m); cin >> a >> b;
+
+    int ans = 0;
+    if (m & 1) {
+        for (int i = 0; i < n; i++) {
+            ans ^= a[i];
+        }
+    }
+    if (n & 1) {
+        for (int i = 0; i < m; i++) {
+            ans ^= b[i];
+        }
+    }
+    cout << ans << '\n';
 }
 
 /*
@@ -29,6 +43,6 @@ signed main() {
     // UseFile();
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) solve();
 }

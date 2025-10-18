@@ -1,61 +1,58 @@
-/*
-I tought I could bring an end to the world suffering,
-But when every equation was solved
-all that remained were fields of dreamless solitude.
-*/
-// F. Empty array
-// URL: https://codeforces.com/group/3nQaj5GMG5/contest/372026/problem/F
-// Time: 2/22/2025, 6:31:09 PM
 #include <bits/stdc++.h>
 using namespace std;
-#define int    long long
-#define vi     vector<int>
-#define pii    pair<int, int>
-#define all(v) v.begin(), v.end()
-template<typename T> ostream& operator<<(ostream& os, vector<T>& v) { for (auto& i : v) os << i << ' '; return os; }
-template<typename T> istream& operator>>(istream& is, vector<T>& v) { for (auto& i : v) is >> i; return is; }
-void FastIO() { ios_base::sync_with_stdio(false); cin.tie(nullptr); }
-void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
-const int MOD = 1000000007;
+template <typename T>
+ostream& operator<<(ostream& os, vector<T>& v)
+{
+    for (auto& i : v)
+        os << i << ' ';
+    return os;
+}
+template <typename T>
+istream& operator>>(istream& is, vector<T>& v)
+{
+    for (auto& i : v)
+        is >> i;
+    return is;
+}
+using ll = long long;
+using ull = unsigned long long;
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-void Ramez() {
-    int n; cin >> n;
-    vi a(n); cin >> a;
-
-    map<int, int> freq;
-
-    for (int i = 0; i < n; i++) {
-        freq[a[i]]++;
-    }
-
-    while (true) {
-        bool printed = false;
-
-        for (auto &[number, f] : freq){
-            if (f > 0) {
-                cout << number << " ";
-                f--;
-                printed = true;
+    ll n;
+    cin >> n;
+    vector<ll> v(n);
+    vector <pair<ll, ll>> freq;
+    for (ll i = 0; i < n; i++) cin >> v[i];
+    sort(v.begin(), v.end());   //سورت هنا أهو
+    for (ll i = 0; i < n; i++) {
+        // cin >> v[i];
+        bool flag = false;
+        for (ll j = 0; j < freq.size(); j++) {
+            if (freq[j].first == v[i]) {
+                freq[j].second++;
+                flag = true;
             }
         }
-
-        cout << "\n";
-
-        if (printed == false) break;
+        if (flag == false) freq.push_back(make_pair(v[i], 1));
     }
-}
 
-/*
-NOTES:
 
-*/
+    //sort(freq.begin(), freq.end());
+    while (freq.size() > 0) {
+        for (ll i = 0; i < freq.size(); i++) {
+            if (freq[i].second > 0) {
+                cout << freq[i].first << ' ';
+                freq[i].second--;
+            }
+        }
+        cout << endl;
 
-int32_t main() {
-    // UseFile();
-    FastIO();
-    int t = 1;
-    // cin >> t;
-    while (t--) Ramez();
+        for (int i = 0; i < freq.size(); i++){
+            if(freq[i].second == 0) freq.erase(freq.begin() + i);
+        }
+    }
+
     return 0;
 }
-

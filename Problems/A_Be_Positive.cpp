@@ -1,9 +1,9 @@
 /*
     One day, I'm gonna grow wings
 */
-// {{problemName}}
-// URL: {{problemURL}}
-// Time: {{time}}
+// A. Be Positive
+// URL: https://codeforces.com/contest/2149/problem/A
+// Time: 9/25/2025, 5:36:11 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -18,7 +18,17 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007, INF = 2e18;
 
 void solve() {
-    
+    int n; cin >> n;
+    vi a(n); cin >> a;
+    int cnt = 0;
+    int prod = 1;
+    for (int i = 0; i < n; i++){
+        if(a[i] == 0) cnt++;
+        else prod *= a[i];
+    }
+
+    if(prod == -1) cnt += 2;
+    finish(cnt);
 }
 
 /*
@@ -29,6 +39,6 @@ signed main() {
     // UseFile();
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) solve();
 }

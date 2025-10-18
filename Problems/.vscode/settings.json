@@ -41,7 +41,8 @@
         "stack": "cpp",
         "complex": "cpp",
         "execution": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "variant": "cpp"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }
