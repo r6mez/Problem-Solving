@@ -13,9 +13,9 @@
 ⠀⠀⠀⠀⠀⠘⠿⠀⠀⠀⠀⠀⠈⠉⠙⠒⠒⠛⠉⠁⠀⠀⠀⠉⢳⡞⠉⠀⠀⠀⠀⠀
                                 
 */
-// {{problemName}}
-// URL: {{problemURL}}
-// Time: {{time}}
+// A. Shizuku Hoshikawa and Farm Legs
+// URL: https://codeforces.com/contest/2171/problem/A
+// Time: 11/20/2025, 4:36:20 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -30,7 +30,9 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007, INF = 2e18;
 
 void solve() {
-    
+    int n; cin >> n;
+    if(n & 1) finish(0);
+    finish(n/4 + 1);
 }
 
 /*
@@ -41,6 +43,6 @@ signed main() {
     // UseFile();
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) solve();
 }

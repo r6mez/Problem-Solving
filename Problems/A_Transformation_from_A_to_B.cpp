@@ -1,9 +1,9 @@
 /*
     One day, I'm gonna grow wings
 */
-// A. Domino piling
-// URL: https://codeforces.com/problemset/problem/50/A
-// Time: 10/24/2025, 3:59:59 PM
+// A. Transformation: from A to B
+// URL: https://codeforces.com/contest/727/problem/A
+// Time: 10/24/2025, 4:29:25 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -17,12 +17,37 @@ void FastIO() { cin.tie(nullptr)->sync_with_stdio(false); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007, INF = 2e18;
 
+int a, b;
+vi answer;
+
+bool go(int x){
+    if(x > b)
+        return false;
+    
+    if(x == b){
+        answer.push_back(x);
+        return true;
+    }
+
+    if(go(2 * x) || go(10 * x + 1)){
+        answer.push_back(x);
+        return true;
+    }
+    
+    return false;
+}
+
 void solve() {
-    int n, m; cin >> n >> m;
-    int totalArea = n * m;
-    int dominoArea = 2;
-    int count = totalArea / dominoArea;
-    cout << count << "\n";
+    cin >> a >> b;
+    if(go(a)){
+        reverse(all(answer));
+
+        cout << "YES\n";
+        cout << answer.size() << "\n";
+        cout << answer << "\n";
+    } else {
+        cout << "NO\n";
+    }
 }
 
 /*

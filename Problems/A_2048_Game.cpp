@@ -1,9 +1,9 @@
 /*
     One day, I'm gonna grow wings
 */
-// A. Domino piling
-// URL: https://codeforces.com/problemset/problem/50/A
-// Time: 10/24/2025, 3:59:59 PM
+// A. 2048 Game
+// URL: https://codeforces.com/contest/1221/problem/A
+// Time: 10/24/2025, 4:17:40 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -18,21 +18,36 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007, INF = 2e18;
 
 void solve() {
-    int n, m; cin >> n >> m;
-    int totalArea = n * m;
-    int dominoArea = 2;
-    int count = totalArea / dominoArea;
-    cout << count << "\n";
+    int n; cin >> n;
+    vi a(n); cin >> a;
+
+    map<int, int> freq;
+    for (int i = 0; i < n; i++){
+        freq[a[i]]++;
+    }
+
+    for (int i = 1; i < 2048; i*=2){
+        while(freq[i] >= 2){
+            freq[i] -= 2;
+            freq[i * 2] += 1;
+        }
+    }
+    
+    if(freq[2048]) finish("YES");
+    finish("NO");
 }
 
 /*
 
-*/
+2 2 2 2 2 2 2
 
+4 4 4 2
+8 4 2 
+*/
 signed main() {
     // UseFile();
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) solve();
 }

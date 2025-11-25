@@ -1,9 +1,9 @@
 /*
     One day, I'm gonna grow wings
 */
-// A. Domino piling
-// URL: https://codeforces.com/problemset/problem/50/A
-// Time: 10/24/2025, 3:59:59 PM
+// D. Caesar's Legions
+// URL: https://codeforces.com/problemset/problem/118/D
+// Time: 10/30/2025, 1:16:51 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -15,14 +15,31 @@ template<typename T> ostream& operator<<(ostream& os, vector<T>& v) { for (auto&
 template<typename T> istream& operator>>(istream& is, vector<T>& v) { for (auto& i : v) is >> i; return is; }
 void FastIO() { cin.tie(nullptr)->sync_with_stdio(false); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
-const int MOD = 1000000007, INF = 2e18;
+const int MOD = 100000000, INF = 2e18;
+
+int n1, n2, k1, k2;
+
+int dp[101][101][11][11];
+
+int count(int cnt1, int cnt2, int prev1, int prev2){
+    if(cnt1 > n1 || cnt2 > n2 || prev1 > k1 || prev2 > k2) return 0;
+    
+    auto &ret = dp[cnt1][cnt2][prev1][prev2];
+    
+    if(ret != -1) return ret;
+
+    if(cnt1 == n1 && cnt2 == n2){
+        return ret = 1;
+    }
+
+    return ret = (count(cnt1 + 1, cnt2, prev1 + 1, 0) + count(cnt1, cnt2 + 1, 0, prev2 + 1)) % MOD;
+}
+
 
 void solve() {
-    int n, m; cin >> n >> m;
-    int totalArea = n * m;
-    int dominoArea = 2;
-    int count = totalArea / dominoArea;
-    cout << count << "\n";
+    memset(dp, -1, sizeof(dp));
+    cin >> n1 >> n2 >> k1 >> k2;
+    cout << count(0, 0, 0, 0) % MOD << "\n";
 }
 
 /*

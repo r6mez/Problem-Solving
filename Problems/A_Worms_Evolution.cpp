@@ -1,9 +1,9 @@
 /*
     One day, I'm gonna grow wings
 */
-// A. Domino piling
-// URL: https://codeforces.com/problemset/problem/50/A
-// Time: 10/24/2025, 3:59:59 PM
+// A. Worms Evolution
+// URL: https://codeforces.com/problemset/problem/31/A
+// Time: 10/27/2025, 1:02:57 AM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -18,11 +18,20 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007, INF = 2e18;
 
 void solve() {
-    int n, m; cin >> n >> m;
-    int totalArea = n * m;
-    int dominoArea = 2;
-    int count = totalArea / dominoArea;
-    cout << count << "\n";
+    int n; cin >> n;
+    vi a(n); cin >> a;
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < n; j++){
+            for (int k = 0; k < n; k++){
+                if(a[i] == a[j] + a[k] && i != j && j != k && i != k){
+                    cout << i + 1 << " " << j + 1 << " " << k + 1 << "\n";
+                    return;
+                }
+            }
+        }
+    }
+
+    cout << "-1\n";
 }
 
 /*

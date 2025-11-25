@@ -1,9 +1,9 @@
 /*
     One day, I'm gonna grow wings
 */
-// A. Domino piling
-// URL: https://codeforces.com/problemset/problem/50/A
-// Time: 10/24/2025, 3:59:59 PM
+// C. Mail Stamps
+// URL: https://codeforces.com/problemset/problem/29/C
+// Time: 11/7/2025, 4:59:00 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -17,12 +17,37 @@ void FastIO() { cin.tie(nullptr)->sync_with_stdio(false); }
 void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout); }
 const int MOD = 1000000007, INF = 2e18;
 
+
+
 void solve() {
-    int n, m; cin >> n >> m;
-    int totalArea = n * m;
-    int dominoArea = 2;
-    int count = totalArea / dominoArea;
-    cout << count << "\n";
+    int n; cin >> n;
+    map<int, vi> adj;
+    for (int i = 0; i < n; i++){
+        int u, v; cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    int start = -1;
+    for(auto [u, children] : adj){
+        if(children.size() == 1) {
+            start = u;
+        }
+    }
+    
+    vi path;
+
+    function<void(int, int)> dfs = [&](int u, int p) -> void {
+        path.push_back(u);
+        for(int v : adj[u]){
+            if(v == p) continue;
+            dfs(v, u);
+        }
+    };
+    
+    dfs(start, -1);
+
+    cout << path;
 }
 
 /*

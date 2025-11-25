@@ -1,9 +1,9 @@
 /*
     One day, I'm gonna grow wings
 */
-// A. Domino piling
-// URL: https://codeforces.com/problemset/problem/50/A
-// Time: 10/24/2025, 3:59:59 PM
+// C. Three Parts of the Array
+// URL: https://codeforces.com/problemset/problem/1006/C
+// Time: 10/31/2025, 11:37:25 AM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -18,11 +18,24 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007, INF = 2e18;
 
 void solve() {
-    int n, m; cin >> n >> m;
-    int totalArea = n * m;
-    int dominoArea = 2;
-    int count = totalArea / dominoArea;
-    cout << count << "\n";
+    int n; cin >> n;
+    vi arr(n + 1), pref(n + 1);
+ 
+    for (int i = 1; i <= n; i++) cin >> arr[i];
+    for (int i = 1; i <= n; i++) pref[i] = pref[i - 1] + arr[i];
+ 
+    map<int,int> cnt;
+
+    for(int i = 1; i <= n - 1; i++) cnt[pref[i]]++;
+    int total = pref[n], ans = 0;
+
+    for(int a = 1; a <= n; a++){
+        int target = total - pref[a];
+        if(cnt[target] > 0) ans = max(ans, pref[a]);
+        cnt[pref[a]]--;
+    }
+   
+    cout << ans << "\n";
 }
 
 /*
