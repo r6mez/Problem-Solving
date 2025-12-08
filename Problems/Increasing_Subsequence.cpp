@@ -1,6 +1,9 @@
-// {{problemName}}
-// URL: {{problemURL}}
-// Time: {{time}}
+/*
+  الذكرى واخداني لمكان، أيام زمان  
+*/
+// Increasing Subsequence
+// URL: w
+// Time: 12/5/2025, 1:19:47 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -15,7 +18,17 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007, INF = 2e18;
 
 void solve() {
-    
+    int n; cin >> n;
+    vi a(n); cin >> a;
+    vi dp;
+
+	for (int i : a) {
+		int pos = lower_bound(all(dp), i) - dp.begin();
+		if (pos == dp.size()) dp.push_back(i);		
+		else dp[pos] = i;
+	}
+
+    cout << dp.size();
 }
 
 /*
