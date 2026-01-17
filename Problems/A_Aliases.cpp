@@ -1,4 +1,4 @@
-a/*
+/*
     But when every equation was solved all that remained
     were fields of dreamless solitude.
 */
