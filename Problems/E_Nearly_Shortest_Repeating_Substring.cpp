@@ -27,7 +27,7 @@ void solve() {
           }
         }
       }
-      if (satisfy > 0) {
+      if (satisfy > 0) { 
         cout << i << endl;
         return;
       }
