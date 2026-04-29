@@ -1,32 +1,25 @@
 {
     "prefixSum2D": {
         "scope": "cpp",
-        "prefix": "prefixSum",
+        "prefix": "prefixSum2D",
         "body": [
-            "vector<vi> prefixSum2D(vector<vi>& a) {",
-            "    vector<vi> b(a.size(), vi(a[0].size()));",
-            "    for (int i = 0; i < a.size(); i++) {",
-            "        partial_sum(all(a[i]), b[i].begin());",
-            "    }",
-            "    for (int i = 0; i < a[0].size(); i++) {",
-            "        for (int j = 1; j < a.size(); j++) {",
-            "            b[j][i] += b[j - 1][i];",
-            "        }",
-            "    }",
-            "    return b;",
-            "}"
+            "void prefixSum2D(vector<vi> &a) {",
+            "    for (int i = 0; i <= n; i++) ",
+            "        for (int j = 1; j <= m; j++) ",
+            "            a[i][j] += a[i][j - 1];    ",
+            "    for (int i = 0; i <= m; i++) ",
+            "        for (int j = 1; j <= n; j++) ",
+            "            a[j][i] += a[j - 1][i];",
+            "}",
+            "",
+            "int sumOfArea(int x1, int y1, int x2, int y2, vector<vi>& a) {",
+            "    return a[x2][y2] ",
+            "         - a[x1 - 1][y2]",
+            "         - a[x2][y1 - 1]",
+            "         + a[x1 - 1][y1 - 1];",
+            "}",
         ],
         "description": "Generate a 2D prefix sum array from a 2D input array"
-    },
-    "sumOfSquare": {
-        "scope": "cpp",
-        "prefix": "sumOfSquare",
-        "body": [
-            "int sumOfSquare(int x1, int y1, int x2, int y2, vector<vi>& a) {",
-            "    return (a[x2][y2] - a[x1 - 1][y2] - a[x2][y1 - 1]) + a[x1 - 1][y1 - 1];",
-            "}"
-        ],
-        "description": "Calculate the sum of a sub-square in a 2D prefix sum array."
     },
     "getDivisors": {
         "scope": "cpp",
@@ -79,18 +72,16 @@
         "scope": "cpp",
         "prefix": "getPrimeFactors",
         "body": [
-            "vector<pll> getPrimeFactors(int n) {",
-            "    vector<pll> primeFactors;",
+            "vi getPrimeFactors(int n) {",
+            "    vi p;",
             "    for (int i = 2; i * i <= n; i++) {",
             "        if (n % i == 0) {",
-            "            int count = 0;",
-            "            while (n % i == 0) n /= i, count++;",
-            "            primeFactors.push_back({i, count});",
+            "            while (n % i == 0) n /= i, p.push_back(i);",
             "        }",
             "    }",
-            "    if (n > 1) primeFactors.push_back({n, 1});",
-            "    return primeFactors;",
-            "}"
+            "    if (n > 1) p.push_back(n);",
+            "    return p;",
+            "}",
         ],
         "description": "Get all prime factors of a number along with their counts."
     },
