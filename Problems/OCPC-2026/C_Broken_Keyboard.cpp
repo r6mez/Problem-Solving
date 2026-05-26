@@ -1,6 +1,6 @@
-// A. Game
-// URL: https://codeforces.com/group/Rilx5irOux/contest/603453/problem/A
-// Time: 5/19/2026, 6:11:02 PM
+// C. Broken Keyboard
+// URL: https://codeforces.com/group/Rilx5irOux/contest/686782/problem/C
+// Time: 5/25/2026, 2:53:32 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -15,7 +15,26 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007, INF = 2e18;
 
 void solve() {
-    int n; cin >> n; cout << n - 1 << "\n";
+    string s, t; cin >> s >> t;
+    int n = s.size(), m = t.size();
+    int i = 0, j = 0;    
+    bool fix = false;
+    while(true){
+        if(i >= n && j >= m) break;
+        if(i < n && j < m && s[i] == t[j]){
+            if(j < m - 1 && s[i] == t[j + 1]){
+                i++; j+= 2;
+            } else if (fix == false){
+                fix = true;
+                i++; j++;
+            } else {
+                finish("NO");
+            }
+        } else {
+            finish("NO");
+        }
+    }
+    cout << "YES\n";
 }
 
 /*
@@ -26,6 +45,6 @@ signed main() {
     // UseFile();
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) solve();
 }

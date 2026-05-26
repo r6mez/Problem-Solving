@@ -1,6 +1,6 @@
-// A. Game
-// URL: https://codeforces.com/group/Rilx5irOux/contest/603453/problem/A
-// Time: 5/19/2026, 6:11:02 PM
+// K. Dice Flip Palindrome
+// URL: https://codeforces.com/group/Rilx5irOux/contest/686782/problem/K
+// Time: 5/25/2026, 2:20:45 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -15,7 +15,17 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007, INF = 2e18;
 
 void solve() {
-    int n; cin >> n; cout << n - 1 << "\n";
+    string s; cin >> s;
+    for (char &c : s) {
+        if(c == '1' || c == '6') c = '0';
+        else if(c == '2' || c == '5') c = '1';
+        else if(c == '3' || c == '4') c = '2';
+    }
+
+    string t = s;
+    reverse(all(t));
+    if(t == s) cout << "YES\n";
+    else cout << "NO\n";
 }
 
 /*

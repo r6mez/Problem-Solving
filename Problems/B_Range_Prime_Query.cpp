@@ -1,6 +1,6 @@
-// A. Game
-// URL: https://codeforces.com/group/Rilx5irOux/contest/603453/problem/A
-// Time: 5/19/2026, 6:11:02 PM
+// B. Range Prime Query
+// URL: https://codeforces.com/group/Rilx5irOux/contest/603453/problem/B
+// Time: 5/19/2026, 6:14:46 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -15,7 +15,21 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007, INF = 2e18;
 
 void solve() {
-    int n; cin >> n; cout << n - 1 << "\n";
+
+    vi primes(n);
+    isPrime[0] = isPrime[1] = false;
+    for (int i = 2; i <= n; i++) {
+        if (!isPrime[i]) continue;
+        primes.push_back(i); 
+        for (int j = i * i; j <= n; j += i){
+            isPrime[j] = false;
+        }
+    }
+    
+    int t; cin >> t;
+    while (t--) {
+
+    }
 }
 
 /*
@@ -25,7 +39,5 @@ void solve() {
 signed main() {
     // UseFile();
     FastIO();
-    int t = 1;
-    // cin >> t;
-    while (t--) solve();
+    solve();
 }

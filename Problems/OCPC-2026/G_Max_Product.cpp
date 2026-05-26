@@ -1,6 +1,6 @@
-// A. Game
-// URL: https://codeforces.com/group/Rilx5irOux/contest/603453/problem/A
-// Time: 5/19/2026, 6:11:02 PM
+// G. Max Product
+// URL: https://codeforces.com/group/Rilx5irOux/contest/686782/problem/G
+// Time: 5/25/2026, 2:32:04 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -15,7 +15,13 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007, INF = 2e18;
 
 void solve() {
-    int n; cin >> n; cout << n - 1 << "\n";
+    int n, k; cin >> n >> k;
+    vi a(n); cin >> a;
+    int prod = 1;
+    for (int i = 0; i < n; ++i) {
+        prod = (prod * abs(a[i])) % MOD;
+    }
+    cout << prod << "\n";
 }
 
 /*
@@ -26,6 +32,6 @@ signed main() {
     // UseFile();
     FastIO();
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) solve();
 }

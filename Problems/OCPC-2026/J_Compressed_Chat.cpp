@@ -1,6 +1,6 @@
-// A. Game
-// URL: https://codeforces.com/group/Rilx5irOux/contest/603453/problem/A
-// Time: 5/19/2026, 6:11:02 PM
+// J. Compressed Chat
+// URL: https://codeforces.com/group/Rilx5irOux/contest/686782/problem/J
+// Time: 5/25/2026, 2:16:56 PM
 #include <bits/stdc++.h>
 using namespace std;
 #define int         long long
@@ -15,7 +15,24 @@ void UseFile() { freopen("file.in", "r", stdin); freopen("file.out", "w", stdout
 const int MOD = 1000000007, INF = 2e18;
 
 void solve() {
-    int n; cin >> n; cout << n - 1 << "\n";
+    string a ,b  ,c ;
+    cin >> a >> b ;
+    for(int i = 0 ; i < a.length() -1 ; ++i )
+    {
+        if(a[i] != a[i+1])
+        {
+            c += a[i] ;
+        }
+    }
+    c+= a.back() ;
+    if(c == b )
+    {
+        cout << "YES\n" ;
+    }
+    else
+    {
+        cout << "NO\n" ;
+    }    
 }
 
 /*
