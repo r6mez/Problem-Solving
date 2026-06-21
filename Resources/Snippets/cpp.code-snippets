@@ -729,4 +729,38 @@
         ],
         "description": "Structure to get the kth ancestor and LCA."
     },
+    "DSU_ON_TREE": {
+        "scope": "cpp",
+        "prefix": "DSU_ON_TREE",
+        "body": [
+            "vector<set<int>> s;",
+            "",
+            "int merge(int a, int b){",
+            "    if(s[a].size() < s[b].size()) swap(a, b);",
+            "    for(int x : s[b]) s[a].insert(x);",
+            "    s[b].clear();",
+            "    return a;",
+            "}",
+        ]
+    },
+    "spf": {
+        "scope": "cpp",
+        "prefix": "spf",
+        "body": [
+            "const int MAX_VAL = 2e7 + 5;",
+            "int spf[MAX_VAL]; ",
+            "void sieve() { ",
+                "for (int i = 1; i < MAX_VAL; ++i) {  spf[i] = i;  }",
+                "for (int i = 2; i * i < MAX_VAL; ++i) {",
+                    "if (spf[i] == i) { ",
+                        "for (int j = i * i; j < MAX_VAL; j += i) {",
+                            "if (spf[j] == j) { ",
+                                "spf[j] = i;",
+                            "}",
+                        "}",
+                    "}",
+                "}",
+            "}",
+        ]
+    }
 }
