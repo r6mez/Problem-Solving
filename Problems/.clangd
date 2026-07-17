@@ -1,0 +1,4 @@
+CompileFlags:
+  Compiler: /usr/local/bin/g++-16
+  Add:
+    - -std=gnu++20
